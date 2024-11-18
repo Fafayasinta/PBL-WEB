@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
         $users = [
             [
                 'username' => 'admin',
-                'password' => 'admin123',
+                'password' => Hash::make('admin123'),
                 'nama' => 'Administrator',
                 'nip' => '123456789',
                 'email' => 'admin@example.com',
@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'username' => 'pimpinan',
-                'password' => 'pimpinan123',
+                'password' => Hash::make('pimpinan123'),
                 'nama' => 'Dr. Budi Santoso, M.Pd.',
                 'nip' => '987654321',
                 'email' => 'pimpinan@example.com',
@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'username' => 'dosen1',
-                'password' => 'dosen123',
+                'password' => Hash::make('dosen123'),
                 'nama' => 'Ani Wijaya, S.Pd., M.Pd.',
                 'nip' => '456789123',
                 'email' => 'dosen1@example.com',
@@ -50,7 +50,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'username' => 'dosen2',
-                'password' => 'dosen123',
+                'password' => Hash::make('dosen123'),
                 'nama' => 'Dr. Citra Dewi, M.Si.',
                 'nip' => '789123456',
                 'email' => 'dosen2@example.com',
@@ -59,22 +59,28 @@ class UserSeeder extends Seeder
             ]
         ];
 
-        // Insert users
+        // Insert users with validation
         foreach ($users as $user) {
-            UserModel::create($user);
+            if (!UserModel::where('username', $user['username'])->exists()) {
+                UserModel::create($user);
+            }
         }
 
-        // Membuat 10 dosen tambahan menggunakan faker
-        \Faker\Factory::create('id_ID')->each(function ($faker) use ($dosenLevel) {
-            UserModel::create([
-                'username' => 'dosen' . $faker->unique()->numberBetween(3, 12),
-                'password' => 'dosen123',
-                'nama' => $faker->name,
-                'nip' => $faker->unique()->numerify('##########'),
-                'email' => $faker->unique()->safeEmail,
-                'level_id' => $dosenLevel,
-                'email_verified_at' => now(),
-            ]);
-        }, 10);
+        // Membuat 10 dosen tambahan menggunakan Faker
+        $faker = \Faker\Factory::create('id_ID');
+        for ($i = 3; $i <= 12; $i++) {
+            $username = 'dosen' . $i;
+            if (!UserModel::where('username', $username)->exists()) {
+                UserModel::create([
+                    'username' => $username,
+                    'password' => Hash::make('dosen123'),
+                    'nama' => $faker->name,
+                    'nip' => $faker->unique()->numerify('##########'),
+                    'email' => $faker->unique()->safeEmail,
+                    'level_id' => $dosenLevel,
+                    'email_verified_at' => now(),
+                ]);
+            }
+        }
     }
 }
