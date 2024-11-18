@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DosenAnggotaController;
 use App\Http\Controllers\DosenPICController;
 use App\Http\Controllers\PimpinanController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('login', [AuthController::class, 'login'])->name('login');
+Route::post('login', [AuthController::class, 'postLogin']);
+Route::get('register', [AuthController::class, 'register']);
+Route::post('register', [AuthController::class, 'postregister']);
+Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
 
 Route::get('/admin', [AdminController::class, 'index']);
 Route::get('/pimpinan', [PimpinanController::class, 'index']);
