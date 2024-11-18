@@ -5,7 +5,6 @@ use App\Http\Controllers\DosenAnggotaController;
 use App\Http\Controllers\DosenPICController;
 use App\Http\Controllers\PimpinanController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,16 +18,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Halaman utama
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('login', [AuthController::class, 'login'])->name('login');
-Route::post('login', [AuthController::class, 'postLogin']);
-Route::get('register', [AuthController::class, 'register']);
-Route::post('register', [AuthController::class, 'postregister']);
-Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
 
-Route::get('/admin', [AdminController::class, 'index']);
-Route::get('/pimpinan', [PimpinanController::class, 'index']);
-Route::get('/dosenPIC', [DosenPICController::class, 'index']);
-Route::get('/dosenAnggota', [DosenAnggotaController::class, 'index']);
+// Authentication routes
+Route::get('login', [AuthController::class, 'login'])->name('login');
+Route::post('login', [AuthController::class, 'postlogin'])->name('postLogin');
+Route::get('register', [AuthController::class, 'register'])->name('register');
+Route::post('register', [AuthController::class, 'postRegister'])->name('postRegister');
+Route::get('logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+
+// Group routes untuk user yang sudah login
+Route::middleware(['auth'])->group(function () {
+    // Routes untuk admin
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+    });
+
+    // Routes untuk pimpinan
+    Route::middleware(['role:pimpinan'])->group(function () {
+        Route::get('/pimpinan', [PimpinanController::class, 'index'])->name('pimpinan.dashboard');
+    });
+
+    // Routes untuk dosen
+    Route::middleware(['role:dosen'])->group(function () {
+        Route::get('/dosen', [DosenPICController::class, 'index'])->name('dosen.dashboard');
+    });
+});
+

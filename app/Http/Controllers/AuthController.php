@@ -19,23 +19,49 @@ class AuthController extends Controller
         return view('auth.login');
     }
     public function postlogin(Request $request)
-    {
-        if ($request->ajax() || $request->wantsJson()) {
-            $credentials = $request->only('username', 'password');
-            if (Auth::attempt($credentials)) {
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Login Berhasil',
-                    'redirect' => url('/')
-                ]);
+{
+    // Proses login dengan AJAX atau JSON request
+    if ($request->ajax() || $request->wantsJson()) {
+        $credentials = $request->only('username', 'password');
+
+        if (Auth::attempt($credentials)) {
+            // Mendapatkan data pengguna yang sedang login
+            $user = Auth::user();
+
+            // Tentukan redirect berdasarkan level pengguna
+            $redirectUrl = '/'; // Default redirect
+            switch ($user->level->level_kode) {
+                case 'ADMIN':
+                    $redirectUrl = '/admin';
+                    break;
+                case 'PIMPINAN':
+                    $redirectUrl = '/pimpinan';
+                    break;
+                case 'DOSEN':
+                    $redirectUrl = '/dosen';
+                    break;
+                default:
+                    $redirectUrl = '/'; // Jika tidak memiliki level yang valid
             }
+
             return response()->json([
-                'status' => false,
-                'message' => 'Login Gagal'
+                'status' => true,
+                'message' => 'Login Berhasil',
+                'redirect' => url($redirectUrl),
             ]);
         }
-        return redirect('login');
+
+        // Jika login gagal
+        return response()->json([
+            'status' => false,
+            'message' => 'Login Gagal. Username atau password salah.',
+        ]);
     }
+
+    // Proses login tanpa AJAX
+    return redirect('login');
+}
+
     public function register()
     {
         $level = LevelModel::select('level_id', 'level_nama')->get();

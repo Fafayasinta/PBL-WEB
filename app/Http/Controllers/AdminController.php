@@ -15,6 +15,6 @@ class AdminController extends Controller
 
         $activeMenu = 'dashboard';
         
-        return view('admin.welcome', ['breadcrumb' => $breadcrumb, 'activeMenu' => $activeMenu]);
+        return view('admin.dashboard', ['breadcrumb' => $breadcrumb, 'activeMenu' => $activeMenu]);
     }
 }
