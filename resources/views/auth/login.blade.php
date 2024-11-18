@@ -127,23 +127,80 @@
       </div>
       <h1 class="title">DOSIMAL</h1>
       <p class="subtitle">JURUSAN TEKNOLOGI INFORMASI</p>
-      <form class="login-form">
+      <form action="{{url('login')}}" method="POST" id="form-login">
+        @csrf
         <p class="login-message">Login to your account</p>
         <div class="input-group">
           <i class="fas fa-user"></i>
-          <input type="text" placeholder="Username">
+          <input type="text" id="username" name="username" class="form-control" placeholder="Username">
         </div>
         <div class="input-group">
           <i class="fas fa-lock"></i>
-          <input type="password" placeholder="Password">
+          <input type="password" id="password" name="password" class="form-control" placeholder="Password">
         </div>
         <div class="remember-me">
           <input type="checkbox" id="remember">
           <label for="remember">Remember me</label>
-        </div>
+        </div> 
         <button type="submit" class="login-button">LOGIN</button>
       </form>
     </div>
   </div>
+  <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $(document).ready(function() {
+        $("#form-login").validate({
+            rules: {
+                username: {required: true, minlength: 4, maxlength: 20},
+                password: {required: true, minlength: 5, maxlength: 20}
+            },
+            submitHandler: function(form) {
+                $.ajax({
+                    url: form.action,
+                    type: form.method,
+                    data: $(form).serialize(),
+                    success: function(response) {
+                        if(response.status){
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.message,
+                            }).then(function() {
+                                window.location = response.redirect;
+                            });
+                        } else {
+                            $('.error-text').text('');
+                            $.each(response.msgField, function(prefix, val) {
+                                $('#error-'+prefix).text(val[0]);
+                            });
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Terjadi Kesalahan',
+                                text: response.message
+                            });
+                        }
+                    }
+                });
+                return false;
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.input-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    });
+</script>
 </body>
 </html>

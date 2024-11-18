@@ -18,7 +18,7 @@
       color: #808080 !important; /* Atau warna spesifik yang Anda inginkan */
   }
 
-  .form-control-sidebar {
+  .form-control-sidebar { 
       background-color: white !important; /* Mengatur latar belakang kotak pencarian menjadi putih */
       color: black !important; /* Mengatur warna teks menjadi hitam agar kontras dengan latar belakang */
   }

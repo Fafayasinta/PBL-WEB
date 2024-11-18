@@ -15,17 +15,18 @@
   <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
-              <a href="#" class="nav-link">
+            <a href="{{ url('/') }}" class="nav-link {{ ($activeMenu == 'dashboard')? 'active' : '' }}">
                   <i class="nav-icon fas fa-th"></i>
                   <p>Dashboard</p>
               </a>
           </li>
           <li class="nav-item">
-              <a href="#" class="nav-link">
+            <a href="{{ url('/profile') }}" class="nav-link {{ ($activeMenu == 'dashboard')? 'active' : '' }}">
                   <i class="nav-icon fas fa-address-card"></i>
                   <p>Profile</p>
               </a>
           </li>
+          <!-- DROPDOWN -->
           <li class="nav-header">KEGIATAN</li>
           <li class="nav-item">
               <a href="#" class="nav-link">
@@ -34,25 +35,25 @@
               </a>
               <ul class="nav nav-treeview">
                   <li class="nav-item">
-                      <a href="#" class="nav-link">
+                    <a href="{{ url('/jeniskegiatan') }}" class="nav-link {{ ($activeMenu == 'jeniskegiatan')? 'active' : '' }}">
                           <i class="far fa-circle nav-icon"></i>
                           <p>Kelola Jenis Kegiatan</p>
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a href="#" class="nav-link">
+                    <a href="{{ url('/jabatankegiatan') }}" class="nav-link {{ ($activeMenu == 'jabatankegiatan')? 'active' : '' }}">
                           <i class="far fa-circle nav-icon"></i>
                           <p>Kelola Jabatan Kegiatan</p>
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a href="#" class="nav-link">
+                    <a href="{{ url('/kegiatanjti') }}" class="nav-link {{ ($activeMenu == 'kegiatanjti')? 'active' : '' }}">
                           <i class="far fa-circle nav-icon"></i>
                           <p>Kelola Kegiatan JTI</p>
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a href="#" class="nav-link">
+                    <a href="{{ url('/kegiatannonjti') }}" class="nav-link {{ ($activeMenu == 'kegiatannonjti')? 'active' : '' }}">
                           <i class="far fa-circle nav-icon"></i>
                           <p>Kelola Kegiatan Non JTI</p>
                       </a>
