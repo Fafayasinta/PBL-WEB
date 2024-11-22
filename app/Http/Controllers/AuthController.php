@@ -11,93 +11,93 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    // Halaman login
     public function login()
     {
-        if (Auth::check()) { // jika sudah login, maka redirect ke halaman home
-            return redirect('/');
+        if (Auth::check()) {
+            return redirect('/'); // Redirect jika sudah login
         }
         return view('auth.login');
     }
+
+    // Proses login
     public function postlogin(Request $request)
 {
-    // Proses login dengan AJAX atau JSON request
-    if ($request->ajax() || $request->wantsJson()) {
-        $credentials = $request->only('username', 'password');
+    $request->validate([
+        'username' => 'required|string',
+        'password' => 'required|string',
+    ]);
 
-        if (Auth::attempt($credentials)) {
-            // Mendapatkan data pengguna yang sedang login
-            $user = Auth::user();
+    $credentials = $request->only('username', 'password');
 
-            // Tentukan redirect berdasarkan level pengguna
-            $redirectUrl = '/'; // Default redirect
-            switch ($user->level->level_kode) {
-                case 'ADMIN':
-                    $redirectUrl = '/admin';
-                    break;
-                case 'PIMPINAN':
-                    $redirectUrl = '/pimpinan';
-                    break;
-                case 'DOSEN':
-                    $redirectUrl = '/dosen';
-                    break;
-                default:
-                    $redirectUrl = '/'; // Jika tidak memiliki level yang valid
-            }
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user();
 
-            return response()->json([
-                'status' => true,
-                'message' => 'Login Berhasil',
-                'redirect' => url($redirectUrl),
-            ]);
+        $redirectUrl = '/';
+        switch ($user->level->level_kode ?? '') {
+            case 'ADMIN':
+                $redirectUrl = '/admin';
+                break;
+            case 'PIMPINAN':
+                $redirectUrl = '/pimpinan';
+                break;
+            case 'DOSEN':
+                $redirectUrl = '/dosen';
+                break;
         }
 
-        // Jika login gagal
         return response()->json([
-            'status' => false,
-            'message' => 'Login Gagal. Username atau password salah.',
+            'status' => true,
+            'message' => 'Login Berhasil',
+            'redirect' => url($redirectUrl),
         ]);
     }
 
-    // Proses login tanpa AJAX
-    return redirect('login');
+    return response()->json([
+        'status' => false,
+        'message' => 'Login Gagal. Username atau password salah.',
+    ]);
 }
 
+    // Halaman registrasi
     public function register()
     {
         $level = LevelModel::select('level_id', 'level_nama')->get();
         return view('auth.register')->with('level', $level);
     }
+
+    // Proses registrasi
     public function postRegister(Request $request)
     {
-        if ($request->ajax() || $request->wantsJson()) {
-            $rules = [
-                'level_id' => 'required|integer',
-                'username' => 'required|string|min:3|unique:m_user,username',
-                'nama' => 'required|string|max:100',
-                'password' => 'required|min:5'
-            ];
-            $validator = Validator::make($request->all(), $rules);
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Validasi Gagal',
-                    'msgField' => $validator->errors(),
-                ]);
-            }
-            // Hash password sebelum disimpan
-            $data = $request->all();
-            $data['password'] = Hash::make($request->password);
-            // Simpan data user
-            UserModel::create($data);
+        // Validasi input
+        $validator = Validator::make($request->all(), [
+            'level_id' => 'required|integer|exists:m_level,level_id',
+            'username' => 'required|string|min:3|unique:m_user,username',
+            'nama' => 'required|string|max:100',
+            'password' => 'required|string|min:5',
+        ]);
+
+        if ($validator->fails()) {
             return response()->json([
-                'status' => true,
-                'message' => 'Data user berhasil disimpan',
-                'redirect' => url('login') // Redirect ke halaman login
+                'status' => false,
+                'message' => 'Validasi Gagal',
+                'msgField' => $validator->errors(),
             ]);
         }
-        // Jika bukan AJAX, arahkan ke halaman login
-        return redirect('login')->with('success', 'Registrasi berhasil!');
+
+        // Proses penyimpanan user baru
+        $data = $request->all();
+        $data['password'] = Hash::make($request->password); // Hash password
+        UserModel::create($data);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Registrasi Berhasil',
+            'redirect' => url('login'),
+        ]);
     }
+
+    // Proses logout
     public function logout(Request $request)
     {
         Auth::logout();

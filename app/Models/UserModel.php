@@ -33,7 +33,6 @@ class UserModel extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
     ];
 
     // Konstanta untuk role
@@ -73,6 +72,10 @@ class UserModel extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
+    }
+    public function getAuthIdentifierName()
+    {
+        return 'username'; // Menggunakan username untuk autentikasi
     }
 
     // Relasi ke tabel level
