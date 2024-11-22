@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 //
 // Halaman utama
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 // Authentication routes
