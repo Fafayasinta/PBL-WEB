@@ -14,16 +14,18 @@ class UserModel extends Authenticatable
     protected $table = 'm_user';
     protected $primaryKey = 'user_id';
     
+    // Ini adalah bagian yang perlu ditambahkan
     protected $fillable = [
         'username',
-        'password',
+        'password', 
         'nama',
         'nip',
         'role',
         'foto_profil',
         'email',
         'remember_token',
-        'email_verified_at'
+        'email_verified_at',
+        'level_id'
     ];
 
     protected $hidden = [
@@ -33,6 +35,7 @@ class UserModel extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
 
     // Konstanta untuk role
@@ -73,15 +76,4 @@ class UserModel extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($value);
     }
-    public function getAuthIdentifierName()
-    {
-        return 'username'; // Menggunakan username untuk autentikasi
-    }
-
-    // Relasi ke tabel level
-    public function level()
-    {
-        return $this->belongsTo(LevelModel::class, 'level_id', 'level_id');
-    }
-    
 }

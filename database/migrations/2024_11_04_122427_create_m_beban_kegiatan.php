@@ -9,15 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-        //Ini nanti isinya JTI Terprogram, JTI Non Program, Non JTI
-    //Kategori Kegiatan : JTI-P , JTI-NonP , NonJTI
-    //Nama Kategori : JTI Terprogram, JTI Non Program, Non JTI
-
+    //Ini nanti isinya
+    //Nama beban : berat, sedang, ringan
+    //Deskripsi : Kegiatan ini dinilai berat dikarenakan agenda yang banyak, cakupan yang luas, timeline panjang dll
+    //Bobot ini nanti nempelnya ke setiap kegiatannya
     public function up(): void
     {
-        Schema::create('m_kategori_kegiatan', function (Blueprint $table) {
-            $table->id('kategori_kegiatan_id');
-            $table->string('nama_kategori', 100)->unique();
+        Schema::create('m_beban_kegiatan', function (Blueprint $table) {
+            $table->id('beban_kegiatan_id');
+            $table->string('nama_beban', 100)->unique();
             $table->text('deskripsi');
             $table->timestamp('created_at')->useCurrent();
         });
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('m_kategori_kegiatan');
+        Schema::table('m_beban_kegiatan');
     }
 };
