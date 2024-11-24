@@ -11,7 +11,7 @@ class KegiatanAgendaSeeder extends Seeder
     {
         // Data agenda untuk masing-masing kegiatan
         $agendas = [
-            // Agenda untuk JTI Play IT (kegiatan_id = 1)
+           
             [
                 'kegiatan_id' => 1,
                 'waktu' => '2024-10-05 09:00:00', 
@@ -31,7 +31,7 @@ class KegiatanAgendaSeeder extends Seeder
                 'updated_at' => now()
             ],
             
-            // Agenda untuk Dialog Dosen Mahasiswa (kegiatan_id = 2) 
+            
             [
                 'kegiatan_id' => 2,
                 'waktu' => '2024-04-10 10:00:00',

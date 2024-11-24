@@ -10,30 +10,28 @@ class AnggotaKegiatanSeeder extends Seeder
     public function run()
     {
         $anggota = [
-            // Anggota untuk JTI Play IT (kegiatan_id = 1)
             [
                 'kegiatan_id' => 1,
-                'user_id' => 42, // ID Dika Rizky
+                'user_id' => 42, 
                 'jabatan' => 'PIC',
                 'beban_kerja' => 5.0
             ],
             [
                 'kegiatan_id' => 1, 
-                'user_id' => 48, // ID Vivi
+                'user_id' => 48, 
                 'jabatan' => 'Sekretaris',
                 'beban_kerja' => 4.0
             ],
             
-            // Anggota untuk Dialog Dosen Mahasiswa (kegiatan_id = 2)
             [
                 'kegiatan_id' => 2,
-                'user_id' => 53, // ID Faiz
+                'user_id' => 53, 
                 'jabatan' => 'PIC',
                 'beban_kerja' => 3.0
             ],
             [
                 'kegiatan_id' => 2,
-                'user_id' => 10, // ID Meyti 
+                'user_id' => 10, 
                 'jabatan' => 'Anggota',
                 'beban_kerja' => 2.0
             ]

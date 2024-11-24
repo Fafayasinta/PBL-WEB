@@ -13,30 +13,30 @@ class KegiatanDosenSeeder extends Seeder
             // Keterlibatan dosen di JTI Play IT
             [
                 'kegiatan_id' => 1,
-                'user_id' => 42, // ID Dika
+                'user_id' => 42, 
                 'jabatan' => 'PIC',
                 'skor' => 5.0,
-                'deadline' => '2024-12-31 23:59:59', // Tambahkan deadline
+                'deadline' => '2024-12-31 23:59:59', 
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'kegiatan_id' => 1,
-                'user_id' => 48, // ID Vivi
+                'user_id' => 48,
                 'jabatan' => 'Sekretaris', 
                 'skor' => 4.0,
-                'deadline' => '2024-12-31 23:59:59', // Tambahkan deadline
+                'deadline' => '2024-12-31 23:59:59', 
                 'created_at' => now(),
                 'updated_at' => now()
             ],
 
-            // Keterlibatan dosen di Dialog Dosen Mahasiswa
+            
             [
                 'kegiatan_id' => 2,
-                'user_id' => 53, // ID Faiz
+                'user_id' => 53, 
                 'jabatan' => 'PIC',
                 'skor' => 3.0,
-                'deadline' => '2024-12-31 23:59:59', // Tambahkan deadline
+                'deadline' => '2024-12-31 23:59:59', 
                 'created_at' => now(),
                 'updated_at' => now()
             ]

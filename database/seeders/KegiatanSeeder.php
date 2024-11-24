@@ -12,8 +12,8 @@ class KegiatanSeeder extends Seeder
         DB::table('t_kegiatan')->insert([
             [
                 'nama_kegiatan' => 'JTI Play IT!',
-                'kategori_kegiatan_id' => 1, // Sesuaikan ID kategori
-                'user_id' => 42, // Sesuaikan ID user
+                'kategori_kegiatan_id' => 1, 
+                'user_id' => 42, 
                 'beban_kegiatan_id' => 1,
                 'pic' => 'Dika Rizky Yunianto, S.Kom, M.Kom',
                 'cakupan_wilayah' => 'Luar Institusi',
@@ -54,8 +54,8 @@ class KegiatanSeeder extends Seeder
             ],
             [
                 'nama_kegiatan' => 'Magang Prodi D4 Teknik Informatika',
-                'kategori_kegiatan_id' => 2, // Sesuaikan ID kategori
-                'user_id' => 42, // Sesuaikan ID user
+                'kategori_kegiatan_id' => 2, 
+                'user_id' => 42, 
                 'beban_kegiatan_id' => 1,
                 'pic' => 'Dika Rizky Yunianto, S.Kom, M.Kom',
                 'cakupan_wilayah' => 'Program Studi',
@@ -68,8 +68,8 @@ class KegiatanSeeder extends Seeder
             ],
             [
                 'nama_kegiatan' => 'Magang Prodi D4 Sistem Informasi Bisnis',
-                'kategori_kegiatan_id' => 2, // Sesuaikan ID kategori
-                'user_id' => 53, // Sesuaikan ID user
+                'kategori_kegiatan_id' => 2, 
+                'user_id' => 53, 
                 'beban_kegiatan_id' => 1,
                 'pic' => 'Vivin Ayu Lestari, S.Pd, M.Kom',
                 'cakupan_wilayah' => 'Program Studi',
@@ -96,8 +96,8 @@ class KegiatanSeeder extends Seeder
             ],
             [
                 'nama_kegiatan' => 'Programmer di Puskom Polinema',
-                'kategori_kegiatan_id' => 3, // Sesuaikan ID kategori
-                'user_id' => 63, // Sesuaikan ID user
+                'kategori_kegiatan_id' => 3, 
+                'user_id' => 63, 
                 'beban_kegiatan_id' => 1,
                 'pic' => 'Moch Zawaruddin Abdullah, S.ST., M.Kom.',
                 'cakupan_wilayah' => 'Institusi',
