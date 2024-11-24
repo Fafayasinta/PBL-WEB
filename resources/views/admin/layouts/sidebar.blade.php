@@ -15,27 +15,27 @@
   <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
-            <a href="{{ url('/') }}" class="nav-link {{ ($activeMenu == 'dashboard')? 'active' : '' }}">
+            <a href="{{ url('/admin') }}" class="nav-link {{ ($activeMenu == 'dashboard')? 'active' : '' }}">
                   <i class="nav-icon fas fa-th"></i>
                   <p>Dashboard</p>
               </a>
           </li>
           <li class="nav-item">
-            <a href="{{ url('/profile') }}" class="nav-link {{ ($activeMenu == 'dashboard')? 'active' : '' }}">
+            <a href="{{ url('/profile') }}" class="nav-link {{ ($activeMenu == 'profile')? 'active' : '' }}">
                   <i class="nav-icon fas fa-address-card"></i>
                   <p>Profile</p>
               </a>
           </li>
           <!-- DROPDOWN -->
           <li class="nav-header">KEGIATAN</li>
-          <li class="nav-item">
-              <a href="#" class="nav-link">
+          <li class="nav-item {{ in_array($activeMenu, ['jeniskegiatan', 'jabatankegiatan', 'kegiatanjti', 'kegiatannonjti']) ? 'menu-open' : '' }}">
+              <a href="#" class="nav-link {{ in_array($activeMenu, ['jeniskegiatan', 'jabatankegiatan', 'kegiatanjti', 'kegiatannonjti']) ? 'active' : '' }}">
                   <i class="nav-icon fas fa-clipboard-list"></i>
                   <p>Kegiatan Dosen<i class="right fas fa-angle-left"></i></p>
               </a>
               <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="{{ url('/jeniskegiatan') }}" class="nav-link {{ ($activeMenu == 'jeniskegiatan')? 'active' : '' }}">
+                    <a href="{{ url('/jeniskegiatan') }}" class="nav-link {{ $activeMenu == 'jeniskegiatan' ? 'active' : '' }}">
                           <i class="far fa-circle nav-icon"></i>
                           <p>Kelola Jenis Kegiatan</p>
                       </a>
@@ -61,20 +61,20 @@
               </ul>
           </li>
           <li class="nav-header">PENGGUNA</li>
-          <li class="nav-item">
-              <a href="#" class="nav-link">
+          <li class="nav-item {{ in_array($activeMenu, ['jenispengguna', 'pengguna']) ? 'menu-open' : '' }}">
+              <a href="#" class="nav-link {{ in_array($activeMenu, ['jenispengguna', 'pengguna']) ? 'active' : '' }}">
                   <i class="nav-icon fas fa-user"></i>
                   <p>Pengguna<i class="right fas fa-angle-left"></i></p>
               </a>
               <ul class="nav nav-treeview">
                   <li class="nav-item">
-                      <a href="#" class="nav-link">
+                      <a href="{{ url('/jenispengguna') }}" class="nav-link {{ $activeMenu == 'jenispengguna' ? 'active' : '' }}">
                           <i class="far fa-circle nav-icon"></i>
                           <p>Kelola Jenis Pengguna</p>
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a href="#" class="nav-link">
+                      <a href="{{ url('/pengguna')  }}" class="nav-link {{ $activeMenu == 'pengguna' ? 'active' : '' }}">
                           <i class="far fa-circle nav-icon"></i>
                           <p>Kelola Pengguna</p>
                       </a>
@@ -82,7 +82,7 @@
               </ul>
           </li>
           <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="{{ url('/statistik') }}" class="nav-link {{ $activeMenu == 'statistik' ? 'active' : '' }}">
                   <i class="nav-icon fas fa-chart-pie"></i>
                   <p>Statistik Beban Kerja</p>
               </a>
@@ -92,8 +92,8 @@
   
   <!-- Tombol Logout -->
   <div class="logout-button-container mt-auto">
-      <a href="#" class="logout-button btn btn-danger btn-block">
-          <i class="nav-icon fas fa-sign-out-alt"></i> Logout
+      <a href="{{ url('/logout') }}" class="logout-button btn btn-danger btn-block" style="color: white">
+          <i class="nav-icon fas fa-sign-out-alt" style="margin-right: 5px"></i> Logout
       </a>
   </div>
 </div>
