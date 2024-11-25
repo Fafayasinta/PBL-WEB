@@ -33,4 +33,8 @@ class BebanKegiatanSeeder extends Seeder
             ],
         ]);
     }
+
 }
+
+}
+

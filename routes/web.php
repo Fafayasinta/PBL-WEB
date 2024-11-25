@@ -1,11 +1,8 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\DosenAnggotaController;
-use App\Http\Controllers\DosenPICController;
-use App\Http\Controllers\PimpinanController;
-use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,34 +14,28 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-//
-// Halaman utama
 Route::get('/', function () {
-    return view('auth.login');
+    return redirect('login');
 });
+Route::pattern('id', '[0-9]+');
 
-// Authentication routes
+//Route Login
 Route::get('login', [AuthController::class, 'login'])->name('login');
-Route::post('login', [AuthController::class, 'postlogin'])->name('postLogin');
-Route::get('register', [AuthController::class, 'register'])->name('register');
-Route::post('register', [AuthController::class, 'postRegister'])->name('postRegister');
-Route::get('logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+Route::post('login', [AuthController::class, 'postlogin']);
+Route::get('logout', [AuthController::class, 'logout']);
+// Route Reset Password
+Route::get('forgot-password', [AuthController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 
-// Group routes untuk user yang sudah login
 Route::middleware(['auth'])->group(function () {
-    // Routes untuk admin
-    Route::middleware(['role:admin'])->group(function () {
-        Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-    });
-
-    // Routes untuk pimpinan
-    Route::middleware(['role:pimpinan'])->group(function () {
-        Route::get('/pimpinan', [PimpinanController::class, 'index'])->name('pimpinan.dashboard');
-    });
-
-    // Routes untuk dosen
-    Route::middleware(['role:dosen'])->group(function () {
-        Route::get('/dosen', [DosenPICController::class, 'index'])->name('dosen.dashboard');
-    });
+    Route::get('/home', function () {
+        return view('dashboard');
+    })->name('home');
+    
+    Route::get('/profile', [UserController::class, 'editProfile'])->name('profile.edit');
+    Route::put('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
+    
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::put('/user/{id}', [UserController::class, 'updateUser'])->name('users.update');
+    Route::delete('/user/{id}', [UserController::class, 'deleteUser'])->name('users.delete');
 });
-

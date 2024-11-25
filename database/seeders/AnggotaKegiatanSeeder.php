@@ -9,6 +9,7 @@ class AnggotaKegiatanSeeder extends Seeder
 {
     public function run()
     {
+
         // Data kegiatan dan jabatan, disesuaikan dengan cakupan wilayah dan jabatan
         $data = [
             // Anggota untuk kegiatan 'JTI Play IT!' (Kegiatan ID = 1, Cakupan: Luar Institusi)

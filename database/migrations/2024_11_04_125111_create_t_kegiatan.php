@@ -4,6 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+    //Ini nanti list nama kegiatan dan detailnya
+    //nama_kegiatan : JTI Play IT!
+    //kategori_kegiatan : JTI Terprogram -> Ambil dari tabel m_kategori
+    //PIC : Dika Rizky Yunianto
+    //cakupan_wilayah : Luar Institusi
+    //Waktu mulai : 1 Oktober 2024
+    //Waktu akhir : 3 November 2024
+    //Deadline : 10 November 2024
+    //Status :enum('status', ['Belum Proses','Proses','Selesai'])
+    //Progress : 80% (0,8)
+    //Deskripsi : Kurang LPJ
 return new class extends Migration
 {
     //Ini nanti list nama kegiatan dan detailnya

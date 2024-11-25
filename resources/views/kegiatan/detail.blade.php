@@ -1,185 +1,246 @@
+@extends('layouts.app')
 
-<!DOCTYPE html>
-
-    <!-- Main content -->
+@section('content')
+<div class="content-wrapper">
     <section class="content">
-
-      <!-- Default box -->
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Projects Detail</h3>
-
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-              <i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
-              <div class="row">
-                <div class="col-12 col-sm-4">
-                  <div class="info-box bg-light">
-                    <div class="info-box-content">
-                      <span class="info-box-text text-center text-muted">Estimated budget</span>
-                      <span class="info-box-number text-center text-muted mb-0">2300</span>
-                    </div>
-                  </div>
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Detail Kegiatan</h3>
+                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#tambahModal">
+                        Tambah Kegiatan
+                    </button>
                 </div>
-                <div class="col-12 col-sm-4">
-                  <div class="info-box bg-light">
-                    <div class="info-box-content">
-                      <span class="info-box-text text-center text-muted">Total amount spent</span>
-                      <span class="info-box-number text-center text-muted mb-0">2000</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-4">
-                  <div class="info-box bg-light">
-                    <div class="info-box-content">
-                      <span class="info-box-text text-center text-muted">Estimated project duration</span>
-                      <span class="info-box-number text-center text-muted mb-0">20</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <h4>Recent Activity</h4>
-                    <div class="post">
-                      <div class="user-block">
-                        <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
-                        <span class="username">
-                          <a href="#">Jonathan Burke Jr.</a>
-                        </span>
-                        <span class="description">Shared publicly - 7:45 PM today</span>
-                      </div>
-                      <!-- /.user-block -->
-                      <p>
-                        Lorem ipsum represents a long-held tradition for designers,
-                        typographers and the like. Some people hate it and argue for
-                        its demise, but others ignore.
-                      </p>
 
-                      <p>
-                        <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 1 v2</a>
-                      </p>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table">
+                                <tr>
+                                    <th width="200">Nama Kegiatan</th>
+                                    <td>: {{ $kegiatan->nama_kegiatan }}</td>
+                                </tr>
+                                <tr>
+                                    <th>PIC</th>
+                                    <td>: {{ $kegiatan->pic }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Jenis Kegiatan</th>
+                                    <td>: {{ $kegiatan->kategori->nama_kategori }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <td>: 
+                                        @if($kegiatan->status == 'Proses')
+                                            <span class="badge badge-warning">Proses</span>
+                                        @elseif($kegiatan->status == 'Selesai')
+                                            <span class="badge badge-success">Selesai</span>
+                                        @else
+                                            <span class="badge badge-danger">Belum Proses</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Beban Kerja</th>
+                                    <td>: {{ $kegiatan->beban_kegiatan_id == 1 ? 'Berat' : ($kegiatan->beban_kegiatan_id == 2 ? 'Sedang' : 'Ringan') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Waktu Mulai</th>
+                                    <td>: {{ \Carbon\Carbon::parse($kegiatan->waktu_mulai)->format('d M Y') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Waktu Selesai</th>
+                                    <td>: {{ \Carbon\Carbon::parse($kegiatan->waktu_selesai)->format('d M Y') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Deadline</th>
+                                    <td>: {{ \Carbon\Carbon::parse($kegiatan->deadline)->format('d M Y') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Deskripsi</th>
+                                    <td>: {{ $kegiatan->deskripsi }}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Anggota Kegiatan</h3>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Nama</th>
+                                                <th>Jabatan</th>
+                                                <th>Skor</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($kegiatan->anggota as $anggota)
+                                            <tr>
+                                                <td>{{ $anggota->user->nama }}</td>
+                                                <td>{{ $anggota->jabatan }}</td>
+                                                <td>{{ $anggota->skor }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="post clearfix">
-                      <div class="user-block">
-                        <img class="img-circle img-bordered-sm" src="../../dist/img/user7-128x128.jpg" alt="User Image">
-                        <span class="username">
-                          <a href="#">Sarah Ross</a>
-                        </span>
-                        <span class="description">Sent you a message - 3 days ago</span>
-                      </div>
-                      <!-- /.user-block -->
-                      <p>
-                        Lorem ipsum represents a long-held tradition for designers,
-                        typographers and the like. Some people hate it and argue for
-                        its demise, but others ignore.
-                      </p>
-                      <p>
-                        <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 2</a>
-                      </p>
-                    </div>
-
-                    <div class="post">
-                      <div class="user-block">
-                        <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
-                        <span class="username">
-                          <a href="#">Jonathan Burke Jr.</a>
-                        </span>
-                        <span class="description">Shared publicly - 5 days ago</span>
-                      </div>
-                      <!-- /.user-block -->
-                      <p>
-                        Lorem ipsum represents a long-held tradition for designers,
-                        typographers and the like. Some people hate it and argue for
-                        its demise, but others ignore.
-                      </p>
-
-                      <p>
-                        <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 1 v1</a>
-                      </p>
+                    <div class="mt-4">
+                        <a href="{{ route('kegiatan.index') }}" class="btn btn-secondary">Kembali</a>
+                        <a href="{{ route('kegiatan.edit', $kegiatan->kegiatan_id) }}" class="btn btn-warning">Edit</a>
                     </div>
                 </div>
-              </div>
             </div>
-            <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
-              <h3 class="text-primary"><i class="fas fa-paint-brush"></i> AdminLTE v3</h3>
-              <p class="text-muted">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terr.</p>
-              <br>
-              <div class="text-muted">
-                <p class="text-sm">Client Company
-                  <b class="d-block">Deveint Inc</b>
-                </p>
-                <p class="text-sm">Project Leader
-                  <b class="d-block">Tony Chicken</b>
-                </p>
-              </div>
-
-              <h5 class="mt-5 text-muted">Project files</h5>
-              <ul class="list-unstyled">
-                <li>
-                  <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Functional-requirements.docx</a>
-                </li>
-                <li>
-                  <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-pdf"></i> UAT.pdf</a>
-                </li>
-                <li>
-                  <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-envelope"></i> Email-from-flatbal.mln</a>
-                </li>
-                <li>
-                  <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-image "></i> Logo.png</a>
-                </li>
-                <li>
-                  <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Contract-10_12_2014.docx</a>
-                </li>
-              </ul>
-              <div class="text-center mt-5 mb-3">
-                <a href="#" class="btn btn-sm btn-primary">Add files</a>
-                <a href="#" class="btn btn-sm btn-warning">Report contact</a>
-              </div>
-            </div>
-          </div>
         </div>
-        <!-- /.card-body -->
-      </div>
-      <!-- /.card -->
-
     </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-
-  <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.2.0
-    </div>
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-  </footer>
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
 </div>
-<!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
-</body>
-</html>
+<!-- Modal Tambah -->
+<div class="modal fade" id="tambahModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tambah Kegiatan</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <form id="formTambah">
+                @csrf
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Nama Kegiatan</label>
+                                <input type="text" class="form-control" name="nama_kegiatan" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Kategori</label>
+                                <select class="form-control" name="kategori_kegiatan_id" required>
+                                    <option value="">Pilih Kategori</option>
+                                    @foreach($kategori as $k)
+                                        <option value="{{ $k->kategori_kegiatan_id }}">{{ $k->nama_kategori }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Dosen PIC</label>
+                                <select class="form-control" name="pic_id" required>
+                                    <option value="">Pilih Dosen PIC</option>
+                                    @foreach($dosens as $dosen)
+                                        <option value="{{ $dosen->user_id }}">{{ $dosen->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Dosen Anggota</label>
+                                <select class="form-control select2" name="anggota_ids[]" multiple="multiple" required>
+                                    @foreach($dosens as $dosen)
+                                        <option value="{{ $dosen->user_id }}">{{ $dosen->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Waktu Mulai</label>
+                                <input type="date" class="form-control" name="waktu_mulai" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Waktu Selesai</label>
+                                <input type="date" class="form-control" name="waktu_selesai" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Deadline</label>
+                                <input type="date" class="form-control" name="deadline" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Beban Kerja</label>
+                                <select class="form-control" name="beban_kegiatan_id" required>
+                                    <option value="">Pilih Beban Kerja</option>
+                                    @foreach($bebanKerja as $b)
+                                        <option value="{{ $b->beban_kegiatan_id }}">{{ $b->nama_beban }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Deskripsi</label>
+                                <textarea class="form-control" name="deskripsi" rows="4" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@push('styles')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endpush
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Inisialisasi Select2 untuk multiple select
+    $('.select2').select2({
+        placeholder: "Pilih Dosen Anggota",
+        allowClear: true,
+        width: '100%'
+    });
+
+    // Handler saat PIC dipilih
+    $('select[name="pic_id"]').on('change', function() {
+        var picId = $(this).val();
+        // Disable option yang sudah dipilih sebagai PIC di select anggota
+        $('select[name="anggota_ids[]"] option').prop('disabled', false);
+        if(picId) {
+            $('select[name="anggota_ids[]"] option[value="' + picId + '"]').prop('disabled', true);
+        }
+        $('.select2').select2('destroy').select2();
+    });
+
+    // Handler form submit
+    $('#formTambah').on('submit', function(e) {
+        e.preventDefault();
+        
+        $.ajax({
+            url: '{{ route("kegiatan.store") }}',
+            type: 'POST',
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if(response.success) {
+                    $('#tambahModal').modal('hide');
+                    alert('Data berhasil ditambahkan');
+                    location.reload();
+                }
+            },
+            error: function(xhr) {
+                alert('Terjadi kesalahan: ' + xhr.responseJSON.message);
+            }
+        });
+    });
+});
+</script>
+@endpush
+@endsection
