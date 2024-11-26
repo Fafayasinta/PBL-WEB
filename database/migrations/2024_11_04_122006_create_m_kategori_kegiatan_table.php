@@ -9,6 +9,10 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+        //Ini nanti isinya JTI Terprogram, JTI Non Program, Non JTI
+    //Kategori Kegiatan : JTI-P , JTI-NonP , NonJTI
+    //Nama Kategori : JTI Terprogram, JTI Non Program, Non JTI
+
     public function up(): void
     {
         Schema::create('m_kategori_kegiatan', function (Blueprint $table) {

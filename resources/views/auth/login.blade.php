@@ -6,6 +6,8 @@
   <title>Login DOSIMAL</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
   <style>
     body {
       margin: 0;
@@ -127,7 +129,7 @@
       </div>
       <h1 class="title">DOSIMAL</h1>
       <p class="subtitle">JURUSAN TEKNOLOGI INFORMASI</p>
-      <form action="{{url('login')}}" method="POST" id="form-login">
+      <form action="{{route('postLogin')}}" method="POST" id="form-login">
         @csrf
         <p class="login-message">Login to your account</p>
         <div class="input-group">
