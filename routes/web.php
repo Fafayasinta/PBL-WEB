@@ -38,6 +38,7 @@ use App\Http\Controllers\WelcomeController;
 // Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+Route::post('/admin/list', [AdminController::class, 'list']);
 
 Route::group(['prefix' => 'profile'], function () {
     Route::get('/', [ProfileController::class, 'index']);

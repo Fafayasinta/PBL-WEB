@@ -11,7 +11,7 @@ class StatistikController extends Controller
     {
         $activeMenu = 'statistik';
         $breadcrumb = (object) [
-            'title' => 'Data Statistik',
+            'title' => 'Statistik Beban Kerja Dosen',
             'list' => ['Home', 'statistik']
         ];
 
