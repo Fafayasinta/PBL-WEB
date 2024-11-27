@@ -20,11 +20,11 @@
                     <div class="form-group row">
                         <label class="col-1 control-label col-form-label">Filter</label>
                         <div class="col-3">
-                            <select type="text" class="form-control" id="" name="" required>
+                            <select type="text" class="form-control" id="jabatan" name="jabatan" required>
                                 <option value="">Semua</option>
-                                {{-- @foreach ($level as $item)
-                                    <option value="{{ $item->level_kode }}">{{ $item->level_kode }}</option>
-                                @endforeach --}}
+                                @foreach ($jabatankegiatan as $item)
+                                    <option value="{{ $item->jabatan }}">{{ $item->jabatan }}</option>
+                                @endforeach
                             </select>
                             <small class="form-text text-muted">Kelola Jabatan Kegiatan</small>
                         </div>
@@ -55,16 +55,16 @@
                 $('#myModal').modal('show');
             })
         }
-        var dataLevel;
+        var dataJabatanKegiatan;
         $(document).ready(function() {
             dataJabatanKegiatan = $('#table_jabatankegiatan').DataTable({
                 serverSide: true, // Menggunakan server-side processing
                 ajax: {
-                    "url": "#", // Endpoint untuk mengambil data kategori
+                    "url": "{{ url('jabatankegiatan/list') }}", // Endpoint untuk mengambil data kategori
                     "dataType": "json",
                     "type": "POST",
                     "data": function(d) {
-                        d.level_kode = $('#').val(); // Mengirim data filter kategori_kode
+                        d.jabatan = $('#jabatan').val(); // Mengirim data filter kategori_kode
                     }
                 },
                 columns: [{
@@ -74,12 +74,17 @@
                         searchable: false
                     },
                     {
-                        data: "level_kode",
+                        data: "cakupan_wilayah",
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: "level_nama",
+                        data: "jabatan",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "skor",
                         orderable: true,
                         searchable: true
                     },
@@ -92,8 +97,8 @@
             });
 
             // Reload tabel saat filter kategori diubah
-            $('#').on('change', function() {
-                dataLevel.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
+            $('jabatan').on('change', function() {
+                dataJabatanKegiatan.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
             });
         });
     </script>

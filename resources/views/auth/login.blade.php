@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login DOSIMAL</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+
+
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -13,7 +15,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Poppins', sans-serif;
-      background: url('adminlte/dist/img/bg_login.png') no-repeat center center fixed;
+      background: url('{{ asset('adminlte/dist/img/bg_login.png') }}') no-repeat center center fixed;
       background-size: cover;
       display: flex;
       justify-content: center;

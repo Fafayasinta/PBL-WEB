@@ -9,7 +9,6 @@ class KegiatanAgendaSeeder extends Seeder
 {
     public function run()
     {
-
         // Data agenda untuk kegiatan yang ada
         $data = [
             // Kegiatan 'JTI Play IT!' (Kegiatan ID = 1)

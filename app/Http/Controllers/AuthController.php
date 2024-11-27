@@ -20,66 +20,35 @@ class AuthController extends Controller
     public function login()
     {
         if (Auth::check()) {
-            return redirect('/home');
+            return redirect('/');
         }
         return view('login.login');
     }
 
     public function postlogin(Request $request)
     {
-        try {
-            // Validasi input
-            $validator = Validator::make($request->all(), [
-                'username' => 'required|string',
-                'password' => 'required|string',
-            ]);
+        if ($request->ajax() || $request->wantsJson()) {
+            $credentials = $request->only('username', 'password');
 
-            if ($validator->fails()) {
+            if (Auth::attempt($credentials)) {
+                session([
+                    'profile_img_path' => Auth::user()->foto,
+                    'user_id' => Auth::user()->user_id
+                ]);
                 return response()->json([
-                    'status' => false,
-                    'message' => 'Validasi gagal',
-                    'errors' => $validator->errors()
-                ], 422);
+                    'status' => true,
+                    'message' => 'Login Berhasil',
+                    'redirect' => url('/')
+                ]);
             }
 
-            // Cek kredensial
-            $user = UserModel::where('username', $request->username)->first();
-            
-            if (!$user || !Hash::check($request->password, $user->password)) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Username atau password salah'
-                ], 401);
-            }
-
-            // Login user
-            Auth::login($user);
-
-            // Set session
-            if ($user->foto_profil) {
-                session(['profile_img_path' => $user->foto_profil]);
-            }
-            session(['user_id' => $user->user_id]);
-            session(['level_id' => $user->level_id]);
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Login Berhasil',
-                'redirect' => url('/home'),
-                'user' => $user->load('level') // Load relasi level
-            ], 200);
-
-        } catch (\Exception $e) {
-            Log::error('Login Error:', [
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-            
             return response()->json([
                 'status' => false,
-                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
-            ], 500);
+                'message' => 'Login Gagal'
+            ]);
         }
+
+        return redirect('login');
     }
 
     public function logout(Request $request)

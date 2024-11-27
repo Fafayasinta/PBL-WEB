@@ -20,13 +20,13 @@
                     <div class="form-group row">
                         <label class="col-1 control-label col-form-label">Filter</label>
                         <div class="col-3">
-                            <select type="text" class="form-control" id="" name="" required>
+                            <select type="text" class="form-control" id="level_nama" name="level_nama" required>
                                 <option value="">Semua</option>
-                                {{-- @foreach ($level as $item)
-                                    <option value="{{ $item->level_kode }}">{{ $item->level_kode }}</option>
-                                @endforeach --}}
+                                @foreach ($level as $item)
+                                    <option value="{{ $item->level_nama }}">{{ $item->level_nama }}</option>
+                                @endforeach
                             </select>
-                            <small class="form-text text-muted">Kelola Pengguna</small>
+                            <small class="form-text text-muted">Jenis Pengguna</small>
                         </div>
                     </div>
                 </div>
@@ -61,11 +61,11 @@
             dataPengguna = $('#table_pengguna').DataTable({
                 serverSide: true, // Menggunakan server-side processing
                 ajax: {
-                    "url": "#", // Endpoint untuk mengambil data kategori
+                    "url": "{{ url('pengguna/list') }}", // Endpoint untuk mengambil data kategori
                     "dataType": "json",
                     "type": "POST",
                     "data": function(d) {
-                        d.level_kode = $('#').val(); // Mengirim data filter kategori_kode
+                        d.level_nama = $('#level_nama').val(); // Mengirim data filter kategori_kode
                     }
                 },
                 columns: [{
@@ -75,7 +75,17 @@
                         searchable: false
                     },
                     {
-                        data: "level_kode",
+                        data: "nama",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "username",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "password",
                         orderable: true,
                         searchable: true
                     },
@@ -93,8 +103,8 @@
             });
 
             // Reload tabel saat filter kategori diubah
-            $('#').on('change', function() {
-                dataLevel.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
+            $('#level_nama').on('change', function() {
+                dataPengguna.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
             });
         });
     </script>
