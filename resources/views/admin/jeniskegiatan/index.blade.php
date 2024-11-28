@@ -20,11 +20,11 @@
                     <div class="form-group row">
                         <label class="col-1 control-label col-form-label">Filter</label>
                         <div class="col-3">
-                            <select type="text" class="form-control" id="" name="" required>
+                            <select type="text" class="form-control" id="nama_kegiatan" name="nama_kegiatan" required>
                                 <option value="">Semua</option>
-                                {{-- @foreach ($level as $item)
-                                    <option value="{{ $item->level_kode }}">{{ $item->level_kode }}</option>
-                                @endforeach --}}
+                                @foreach ($jeniskegiatan as $item)
+                                    <option value="{{ $item->nama_kegiatan }}">{{ $item->nama_kegiatan }}</option>
+                                @endforeach
                             </select>
                             <small class="form-text text-muted">Kelola Jenis Kegiatan</small>
                         </div>
@@ -53,16 +53,16 @@
                 $('#myModal').modal('show');
             })
         }
-        var dataLevel;
+        var dataJenisKegiatan;
         $(document).ready(function() {
             dataJenisKegiatan = $('#table_jeniskegiatan').DataTable({
                 serverSide: true, // Menggunakan server-side processing
                 ajax: {
-                    "url": "#", // Endpoint untuk mengambil data kategori
+                    "url": "{{ url('jeniskegiatan/list') }}", // Endpoint untuk mengambil data kategori
                     "dataType": "json",
                     "type": "POST",
                     "data": function(d) {
-                        d.level_kode = $('#').val(); // Mengirim data filter kategori_kode
+                        d.nama_kegiatan = $('#nama_kegiatan').val(); // Mengirim data filter kategori_kode
                     }
                 },
                 columns: [{
@@ -72,12 +72,7 @@
                         searchable: false
                     },
                     {
-                        data: "level_kode",
-                        orderable: true,
-                        searchable: true
-                    },
-                    {
-                        data: "level_nama",
+                        data: "nama_kegiatan",
                         orderable: true,
                         searchable: true
                     },
@@ -90,8 +85,8 @@
             });
 
             // Reload tabel saat filter kategori diubah
-            $('#').on('change', function() {
-                dataLevel.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
+            $('nama_kegiatan').on('change', function() {
+                dataJenisKegiatan.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
             });
         });
     </script>

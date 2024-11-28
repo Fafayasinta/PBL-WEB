@@ -26,8 +26,8 @@ class LevelModel extends Model
     }
 
     // Helper method untuk mendapatkan semua level
-    public static function getAllLevels()
-    {
-        return self::pluck('level_nama', 'level_id');
-    }
+    // public static function getAllLevels()
+    // {
+    //     return self::pluck('level_nama', 'level_id');
+    // }
 }

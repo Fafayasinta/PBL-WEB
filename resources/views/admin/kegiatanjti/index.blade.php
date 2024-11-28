@@ -20,22 +20,13 @@
                     <div class="form-group row">
                         <label class="col-1 control-label col-form-label">Filter</label>
                         <div class="col-3">
-                            <select type="text" class="form-control" id="" name="" required>
+                            <select type="text" class="form-control" id="status" name="status" required>
                                 <option value="">Semua</option>
-                                {{-- @foreach ($level as $item)
-                                    <option value="{{ $item->level_kode }}">{{ $item->level_kode }}</option>
-                                @endforeach --}}
+                                @foreach ($status as $item)
+                                    <option value="{{ $item->status }}">{{ $item->status }}</option>
+                                @endforeach
                             </select>
                             <small class="form-text text-muted">Jenis Kegiatan</small>
-                        </div>
-                        <div class="col-3">
-                            <select type="text" class="form-control" id="" name="" required>
-                                <option value="">Semua</option>
-                                {{-- @foreach ($level as $item)
-                                    <option value="{{ $item->level_kode }}">{{ $item->level_kode }}</option>
-                                @endforeach --}}
-                            </select>
-                            <small class="form-text text-muted">Status</small>
                         </div>
                     </div>
                 </div>
@@ -66,16 +57,16 @@
                 $('#myModal').modal('show');
             })
         }
-        var dataLevel;
+        var dataKegiatanJti;
         $(document).ready(function() {
             dataKegiatanJti = $('#table_kegiatanjti').DataTable({
                 serverSide: true, // Menggunakan server-side processing
                 ajax: {
-                    "url": "#", // Endpoint untuk mengambil data kategori
+                    "url": "{{ url('kegiatanjti/list') }}", // Endpoint untuk mengambil data kategori
                     "dataType": "json",
                     "type": "POST",
                     "data": function(d) {
-                        d.level_kode = $('#').val(); // Mengirim data filter kategori_kode
+                        d.status = $('#kegiatanjti').val(); // Mengirim data filter kategori_kode
                     }
                 },
                 columns: [{
@@ -85,12 +76,27 @@
                         searchable: false
                     },
                     {
-                        data: "level_kode",
+                        data: "nama_kegiatan",
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: "level_nama",
+                        data: "deskripsi",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "nama_kategori",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "status",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "nama_beban",
                         orderable: true,
                         searchable: true
                     },
@@ -103,8 +109,8 @@
             });
 
             // Reload tabel saat filter kategori diubah
-            $('#').on('change', function() {
-                dataLevel.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
+            $('#status').on('change', function() {
+                dataKegiatanJti.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
             });
         });
     </script>

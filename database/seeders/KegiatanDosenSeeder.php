@@ -3,101 +3,60 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\UserModel;
 use Illuminate\Support\Facades\DB;
-
-use Carbon\Carbon;
-=======
-
 
 class KegiatanDosenSeeder extends Seeder
 {
     public function run()
     {
+        // Ambil ID user berdasarkan nama
+        $dika = UserModel::where('nama', 'like', '%Dika Rizky%')->first()->user_id;
+        $vivi = UserModel::where('nama', 'like', '%Vivi Nur%')->first()->user_id;
+        $zawaruddin = UserModel::where('nama', 'like', '%Zawaruddin%')->first()->user_id;
+        $ely = UserModel::where('nama', 'like', '%Ely Setyo%')->first()->user_id;
+        $faiz = UserModel::where('nama', 'like', '%Faiz Ushbah%')->first()->user_id;
+        $meyti = UserModel::where('nama', 'like', '%Meyti Eka%')->first()->user_id;
+        $mungki = UserModel::where('nama', 'like', '%Mungki%')->first()->user_id;
+        $annisa = UserModel::where('nama', 'like', '%Annisa Puspa%')->first()->user_id;
+        $atiqah = UserModel::where('nama', 'like', '%Atiqah Nurul%')->first()->user_id;
+        $dimas = UserModel::where('nama', 'like', '%Dimas Wahyu%')->first()->user_id;
+        $rudy = UserModel::where('nama', 'like', '%Rudy Ariyanto%')->first()->user_id;
+        $mustika = UserModel::where('nama', 'like', '%Mustika Mentari%')->first()->user_id;
+        $banni = UserModel::where('nama', 'like', '%Banni Satria%')->first()->user_id;
+        $dhebys = UserModel::where('nama', 'like', '%Dhebys%')->first()->user_id;
+        $widaningsih = UserModel::where('nama', 'like', '%Widaningsih%')->first()->user_id;
+        $vivin = UserModel::where('nama', 'like', '%Vivin Ayu%')->first()->user_id;
+        $erfan = UserModel::where('nama', 'like', '%Erfan Rohadi%')->first()->user_id;
+        $usman = UserModel::where('nama', 'like', '%Usman Nurhasan%')->first()->user_id;
+        $kadek = UserModel::where('nama', 'like', '%Kadek%')->first()->user_id;
+        $afif = UserModel::where('nama', 'like', '%Afif Hendrawan%')->first()->user_id;
+        $luqman = UserModel::where('nama', 'like', '%Luqman%')->first()->user_id;
+        $arie = UserModel::where('nama', 'like', '%Arie Rachmad%')->first()->user_id;
+        $ulla = UserModel::where('nama', 'like', '%Ulla%')->first()->user_id;
 
-        // Data kegiatan dosen dengan jabatan, skor, dan deadline sesuai dengan data di tabel t_kegiatan
         $data = [
-            // Kegiatan untuk 'JTI Play IT!' (Kegiatan ID = 1, deadline diambil dari t_kegiatan)
-            ['user_id' => 42, 'kegiatan_id' => 1, 'deadline' => Carbon::parse('2024-12-05 12:00:00'), 'jabatan' => 'PIC', 'skor' => 5.00],
-            ['user_id' => 75, 'kegiatan_id' => 1, 'deadline' => Carbon::parse('2024-12-05 12:00:00'), 'jabatan' => 'Sekretaris', 'skor' => 4.00],
-            ['user_id' => 63, 'kegiatan_id' => 1, 'deadline' => Carbon::parse('2024-12-05 12:00:00'), 'jabatan' => 'Bendahara', 'skor' => 4.00],
-            ['user_id' => 21, 'kegiatan_id' => 1, 'deadline' => Carbon::parse('2024-12-05 12:00:00'), 'jabatan' => 'Anggota', 'skor' => 3.00],
+            // JTI Play IT!
+            ['user_id' => $dika, 'kegiatan_id' => 1, 'jabatan' => 'PIC', 'skor' => 5.00, 'deadline' => '2024-12-05 12:00:00'],
+            ['user_id' => $vivi, 'kegiatan_id' => 1, 'jabatan' => 'Sekretaris', 'skor' => 4.00, 'deadline' => '2024-12-05 12:00:00'],
+            ['user_id' => $zawaruddin, 'kegiatan_id' => 1, 'jabatan' => 'Bendahara', 'skor' => 4.00, 'deadline' => '2024-12-05 12:00:00'],
+            ['user_id' => $ely, 'kegiatan_id' => 1, 'jabatan' => 'Anggota', 'skor' => 3.00, 'deadline' => '2024-12-05 12:00:00'],
 
-            // Kegiatan untuk 'Dialog Dosen Mahasiswa 2024' (Kegiatan ID = 2, deadline diambil dari t_kegiatan)
-            ['user_id' => 57, 'kegiatan_id' => 2, 'deadline' => Carbon::parse('2024-11-20 15:00:00'), 'jabatan' => 'PIC', 'skor' => 3.00],
-            ['user_id' => 45, 'kegiatan_id' => 2, 'deadline' => Carbon::parse('2024-11-20 15:00:00'), 'jabatan' => 'Sekretaris', 'skor' => 2.50],
-            ['user_id' => 18, 'kegiatan_id' => 2, 'deadline' => Carbon::parse('2024-11-20 15:00:00'), 'jabatan' => 'Bendahara', 'skor' => 2.50],
-            ['user_id' => 34, 'kegiatan_id' => 2, 'deadline' => Carbon::parse('2024-11-20 15:00:00'), 'jabatan' => 'Anggota', 'skor' => 2.00],
+            // Dialog Dosen Mahasiswa 2024
+            ['user_id' => $faiz, 'kegiatan_id' => 2, 'jabatan' => 'PIC', 'skor' => 3.00, 'deadline' => '2024-11-20 15:00:00'],
+            ['user_id' => $meyti, 'kegiatan_id' => 2, 'jabatan' => 'Sekretaris', 'skor' => 2.50, 'deadline' => '2024-11-20 15:00:00'],
+            ['user_id' => $mungki, 'kegiatan_id' => 2, 'jabatan' => 'Bendahara', 'skor' => 2.50, 'deadline' => '2024-11-20 15:00:00'],
+            ['user_id' => $annisa, 'kegiatan_id' => 2, 'jabatan' => 'Anggota', 'skor' => 2.00, 'deadline' => '2024-11-20 15:00:00'],
 
-            // Kegiatan untuk 'Coaching Clinic 2024' (Kegiatan ID = 3, deadline diambil dari t_kegiatan)
-            ['user_id' => 7, 'kegiatan_id' => 3, 'deadline' => Carbon::parse('2024-12-10 16:00:00'), 'jabatan' => 'PIC', 'skor' => 3.00],
-            ['user_id' => 14, 'kegiatan_id' => 3, 'deadline' => Carbon::parse('2024-12-10 16:00:00'), 'jabatan' => 'Sekretaris', 'skor' => 2.50],
-            ['user_id' => 25, 'kegiatan_id' => 3, 'deadline' => Carbon::parse('2024-12-10 16:00:00'), 'jabatan' => 'Bendahara', 'skor' => 2.50],
-            ['user_id' => 50, 'kegiatan_id' => 3, 'deadline' => Carbon::parse('2024-12-10 16:00:00'), 'jabatan' => 'Anggota', 'skor' => 2.00],
+            // Dan seterusnya untuk kegiatan lain...
 
-            // Kegiatan untuk 'Magang Prodi D4 Teknik Informatika' (Kegiatan ID = 4, deadline diambil dari t_kegiatan)
-            ['user_id' => 42, 'kegiatan_id' => 4, 'deadline' => Carbon::parse('2024-12-15 14:00:00'), 'jabatan' => 'PIC', 'skor' => 3.00],
-            ['user_id' => 8, 'kegiatan_id' => 4, 'deadline' => Carbon::parse('2024-12-15 14:00:00'), 'jabatan' => 'Sekretaris', 'skor' => 2.50],
-            ['user_id' => 12, 'kegiatan_id' => 4, 'deadline' => Carbon::parse('2024-12-15 14:00:00'), 'jabatan' => 'Bendahara', 'skor' => 2.50],
-            ['user_id' => 30, 'kegiatan_id' => 4, 'deadline' => Carbon::parse('2024-12-15 14:00:00'), 'jabatan' => 'Anggota', 'skor' => 2.00],
+            // Programmer Puskom
+            ['user_id' => $zawaruddin, 'kegiatan_id' => 7, 'jabatan' => 'PIC', 'skor' => 4.00, 'deadline' => '2024-12-30 13:00:00'],
 
-            // Kegiatan untuk 'Magang Prodi D4 Sistem Informasi Bisnis' (Kegiatan ID = 5, deadline diambil dari t_kegiatan)
-            ['user_id' => 53, 'kegiatan_id' => 5, 'deadline' => Carbon::parse('2024-12-20 11:00:00'), 'jabatan' => 'PIC', 'skor' => 3.00],
-            ['user_id' => 15, 'kegiatan_id' => 5, 'deadline' => Carbon::parse('2024-12-20 11:00:00'), 'jabatan' => 'Sekretaris', 'skor' => 2.50],
-            ['user_id' => 29, 'kegiatan_id' => 5, 'deadline' => Carbon::parse('2024-12-20 11:00:00'), 'jabatan' => 'Bendahara', 'skor' => 2.50],
-            ['user_id' => 40, 'kegiatan_id' => 5, 'deadline' => Carbon::parse('2024-12-20 11:00:00'), 'jabatan' => 'Anggota', 'skor' => 2.00],
-
-            // Kegiatan untuk 'Intercomp 2024' (Kegiatan ID = 6, deadline diambil dari t_kegiatan)
-            ['user_id' => 46, 'kegiatan_id' => 6, 'deadline' => Carbon::parse('2024-12-25 17:00:00'), 'jabatan' => 'PIC', 'skor' => 3.00],
-            ['user_id' => 19, 'kegiatan_id' => 6, 'deadline' => Carbon::parse('2024-12-25 17:00:00'), 'jabatan' => 'Sekretaris', 'skor' => 2.50],
-            ['user_id' => 36, 'kegiatan_id' => 6, 'deadline' => Carbon::parse('2024-12-25 17:00:00'), 'jabatan' => 'Bendahara', 'skor' => 2.50],
-            ['user_id' => 27, 'kegiatan_id' => 6, 'deadline' => Carbon::parse('2024-12-25 17:00:00'), 'jabatan' => 'Anggota', 'skor' => 2.00],
-
-            // Kegiatan untuk 'Programmer di Puskom Polinema' (Kegiatan ID = 7, deadline diambil dari t_kegiatan)
-            ['user_id' => 63, 'kegiatan_id' => 7, 'deadline' => Carbon::parse('2024-12-30 13:00:00'), 'jabatan' => 'PIC', 'skor' => 4.00],
-
-            // Kegiatan untuk 'Upskilling Training dengan tema Communication Skill' (Kegiatan ID = 8, deadline diambil dari t_kegiatan)
-            ['user_id' => 8, 'kegiatan_id' => 8, 'deadline' => Carbon::parse('2024-11-30 10:00:00'), 'jabatan' => 'PIC', 'skor' => 5.00],
+            // Upskilling Training
+            ['user_id' => $banni, 'kegiatan_id' => 8, 'jabatan' => 'PIC', 'skor' => 5.00, 'deadline' => '2024-11-30 10:00:00']
         ];
 
-        // Insert data ke database
         DB::table('t_kegiatan_dosen')->insert($data);
     }
 }
-=======
-        $kegiatanDosen = [
-            // Keterlibatan dosen di JTI Play IT
-            [
-                'kegiatan_id' => 1,
-                'user_id' => 42, 
-                'jabatan' => 'PIC',
-                'skor' => 5.0,
-                'deadline' => '2024-12-31 23:59:59', 
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'kegiatan_id' => 1,
-                'user_id' => 48,
-                'jabatan' => 'Sekretaris', 
-                'skor' => 4.0,
-                'deadline' => '2024-12-31 23:59:59', 
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-
-            
-            [
-                'kegiatan_id' => 2,
-                'user_id' => 53, 
-                'jabatan' => 'PIC',
-                'skor' => 3.0,
-                'deadline' => '2024-12-31 23:59:59', 
-                'created_at' => now(),
-                'updated_at' => now()
-            ]
-        ];
-        
-        DB::table('t_kegiatan_dosen')->insert($kegiatanDosen);
-    }
-}
-
