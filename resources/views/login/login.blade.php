@@ -131,7 +131,7 @@
       </div>
       <h1 class="title">DOSIMAL</h1>
       <p class="subtitle">JURUSAN TEKNOLOGI INFORMASI</p>
-      <form action="{{url('home')}}" method="get">
+      <form action="{{url('login')}}" method="get">
         @csrf
         <p class="login-message">Login to your account</p>
         <div class="input-group">

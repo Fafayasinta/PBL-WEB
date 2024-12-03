@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 
+use App\Http\Controllers\PimpinanController;
+
+use App\Http\Controllers\KegiatanController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,3 +43,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/user/{id}', [UserController::class, 'updateUser'])->name('users.update');
     Route::delete('/user/{id}', [UserController::class, 'deleteUser'])->name('users.delete');
 });
+
+Route::get('pimpinan', [PimpinanController::class, 'index'])->name('index');
+Route::get('pimpinan/kegiatanjti', [PimpinanController::class, 'kegiatanjti'])->name('kegiatanjti');
+Route::get('/Kegiatan/{id}', [KegiatanController::class, 'show'])->name('Kegiatan.show');
