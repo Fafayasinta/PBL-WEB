@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -30,10 +31,10 @@ class UserModel extends Authenticatable
     ];
 
     // Kolom yang disembunyikan dari output JSON
-    // protected $hidden = [
-    //     'password',
-    //     'remember_token',
-    // ];
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
     // Casting tipe data
     protected $casts = [
@@ -42,7 +43,7 @@ class UserModel extends Authenticatable
     ];
 
     // Relasi ke tabel level
-    public function level()
+    public function level() :BelongsTo
     {
         return $this->belongsTo(LevelModel::class, 'level_id', 'level_id');
     }
@@ -60,8 +61,8 @@ class UserModel extends Authenticatable
     }
 
     // Scope query untuk role
-    public function scopeRole($query, $role)
+    public function getRole()
     {
-        return $query->where('role', $role);
-    }
+        return $this->level->level_kode;
+    } 
 }

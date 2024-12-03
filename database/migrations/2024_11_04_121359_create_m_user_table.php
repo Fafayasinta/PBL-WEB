@@ -13,18 +13,18 @@ class CreateMUserTable extends Migration
     {
         Schema::create('m_user', function (Blueprint $table) {
             $table->id('user_id');
+            $table->foreignId('level_id')->constrained('m_level', 'level_id')->index(); // Menghubungkan ke m_level
             $table->string('username', 50)->unique();
             $table->string('password');
             $table->string('nama', 100);
             $table->string('nip', 50)->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->foreignId('level_id')->constrained('m_level', 'level_id');
             $table->string('foto_profil')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
-        });
+        });        
     }
 
     /**

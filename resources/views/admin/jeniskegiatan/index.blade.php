@@ -62,7 +62,7 @@
                     "dataType": "json",
                     "type": "POST",
                     "data": function(d) {
-                        d.nama_kegiatan = $('#nama_kegiatan').val(); // Mengirim data filter kategori_kode
+                        d.nama_kategori = $('#nama_kategori').val(); // Mengirim data filter kategori_kode
                     }
                 },
                 columns: [{
@@ -72,7 +72,7 @@
                         searchable: false
                     },
                     {
-                        data: "nama_kegiatan",
+                        data: "nama_kategori",
                         orderable: true,
                         searchable: true
                     },

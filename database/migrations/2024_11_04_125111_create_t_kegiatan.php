@@ -21,18 +21,19 @@ return new class extends Migration
     {
         Schema::create('t_kegiatan', function (Blueprint $table) {
             $table->id('kegiatan_id');
-            $table->unsignedBigInteger('kategori_kegiatan_id')->index();
             $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedBigInteger('kategori_kegiatan_id')->index();
             $table->unsignedBigInteger('beban_kegiatan_id')->index();
             $table->string('nama_kegiatan', 200);
             $table->string('pic', 100);
             $table->enum('cakupan_wilayah', ['Luar Institusi','Institusi','Jurusan','Program Studi']);
+            $table->text('deskripsi');
             $table->dateTime('waktu_mulai');
             $table->dateTime('waktu_selesai');
             $table->dateTime('deadline');  
             $table->enum('status', ['Belum Proses','Proses','Selesai']);
             $table->decimal('progres', 8, 2);  
-            $table->text('deskripsi');
+            $table->text('keterangan');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 

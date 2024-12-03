@@ -14,7 +14,8 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $users = [
-            [
+    [
+        'level_id' => '1',
         'username' => 'admin',
         'password' => Hash::make('admin123'),
         'nama' => 'Administrator',
@@ -24,6 +25,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '2',
         'username' => 'pimpinan',
         'password' => Hash::make('pimpinan123'),
         'nama' => 'Rosa Andrie Asmara, ST., MT., Dr. Eng.',
@@ -33,6 +35,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'dosen',
         'password' => Hash::make('dosen123'),
         'nama' => 'Dosen',
@@ -42,6 +45,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'ahmadi',
         'password' => Hash::make('ahmadi123'),
         'nama' => 'Ahmadi Yuli Ananta, ST., M.M.',
@@ -51,6 +55,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'ariadi',
         'password' => Hash::make('ariadi123'),
         'nama' => 'Ariadi Retno Ririd, S.Kom., M.Kom.',
@@ -60,6 +65,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'arief',
         'password' => Hash::make('arief123'),
         'nama' => 'Arief Prasetyo, S.Kom., M.Kom.',
@@ -69,6 +75,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'atiqah',
         'password' => Hash::make('atiqah013'),
         'nama' => 'Atiqah Nurul Asri, S.Pd., M.Pd.',
@@ -78,6 +85,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'banni',
         'password' => Hash::make('banni123'),
         'nama' => 'Banni Satria Andoko, S. Kom., M.MSI',
@@ -87,6 +95,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'budi',
         'password' => Hash::make('budi033'),
         'nama' => 'Budi Harijanto, ST., M.MKom.',
@@ -96,6 +105,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'cahya',
         'password' => Hash::make('cahya013'),
         'nama' => 'Cahya Rahmad, ST., M.Kom., Dr. Eng.',
@@ -105,6 +115,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'deddy',
         'password' => Hash::make('deddy113'),
         'nama' => 'Deddy Kusbianto PA, Ir., M.Mkom.',
@@ -114,6 +125,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'dhebys',
         'password' => Hash::make('dhebys043'),
         'nama' => 'Dhebys Suryani, S.Kom., MT',
@@ -123,6 +135,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'dimas',
         'password' => Hash::make('dimas043'),
         'nama' => 'Dimas Wahyu Wibowo, ST., MT.',
@@ -132,6 +145,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'dwi',
         'password' => Hash::make('dwi013'),
         'nama' => 'Dwi Puspitasari, S.Kom., M.Kom.',
@@ -141,6 +155,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'eka',
         'password' => Hash::make('eka043'),
         'nama' => 'Eka Larasati Amalia, S.ST., MT.',
@@ -150,6 +165,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'ekojono',
         'password' => Hash::make('ekojono033'),
         'nama' => 'Ekojono, ST., M.Kom.',
@@ -159,6 +175,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'ely',
         'password' => Hash::make('ely123'),
         'nama' => 'Ely Setyo Astuti, ST., MT.',
@@ -168,6 +185,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'erfan',
         'password' => Hash::make('erfan013'),
         'nama' => 'Erfan Rohadi, ST., M.Eng., Ph.D.',
@@ -177,6 +195,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'gunawan',
         'password' => Hash::make('gunawan123'),
         'nama' => 'Gunawan Budi Prasetyo, ST., MMT., Ph.D.',
@@ -186,6 +205,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'hendra',
         'password' => Hash::make('hendra043'),
         'nama' => 'Hendra Pradibta, SE., M.Sc.',
@@ -195,6 +215,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'imam',
         'password' => Hash::make('imam123'),
         'nama' => 'Imam Fahrur Rozi, ST., MT.',
@@ -204,6 +225,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'indra',
         'password' => Hash::make('indra013'),
         'nama' => 'Indra Dharma Wijaya, ST., M.MT.',
@@ -213,6 +235,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'luqman',
         'password' => Hash::make('luqman043'),
         'nama' => 'Luqman Affandi, S.Kom., MMSI',
@@ -222,6 +245,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'mungki',
         'password' => Hash::make('mungki013'),
         'nama' => 'Mungki Astiningrum, ST., M.Kom.',
@@ -231,6 +255,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'pramana',
         'password' => Hash::make('pramana043'),
         'nama' => 'Pramana Yoga Saputra, S.Kom., MMT.',
@@ -240,6 +265,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'putra',
         'password' => Hash::make('putra043'),
         'nama' => 'Putra Prima A., ST., M.Kom.',
@@ -249,6 +275,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'rawansyah',
         'password' => Hash::make('rawansyah033'),
         'nama' => 'Rawansyah., Drs., M.Pd.',
@@ -258,6 +285,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'ridwan',
         'password' => Hash::make('ridwan123'),
         'nama' => 'Ridwan Rismanto, SST., M.Kom.',
@@ -267,6 +295,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'rudy',
         'password' => Hash::make('rudy033'),
         'nama' => 'Rudy Ariyanto, ST., M.Cs.',
@@ -276,6 +305,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'dr',
         'password' => Hash::make('dr043'),
         'nama' => 'Dr. Shohib Muslim, S.H., M.Hum',
@@ -285,6 +315,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'ulla',
         'password' => Hash::make('ulla123'),
         'nama' => 'Ulla Delfana Rosiani, ST., MT.',
@@ -294,6 +325,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'usman',
         'password' => Hash::make('usman043'),
         'nama' => 'Usman Nurhasan, S.Kom., MT.',
@@ -303,6 +335,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'widaningsih',
         'password' => Hash::make('widaningsih123'),
         'nama' => 'Widaningsih Condrowardhani, SH, MH.',
@@ -312,6 +345,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'yan',
         'password' => Hash::make('yan013'),
         'nama' => 'Yan Watequlis Syaifuddin, ST., M.MT.',
@@ -321,6 +355,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'yuri',
         'password' => Hash::make('yuri123'),
         'nama' => 'Yuri Ariyanto, S.Kom., M.Kom.',
@@ -330,6 +365,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'agung',
         'password' => Hash::make('agung033'),
         'nama' => 'Agung Nugroho Pramudhita, S.T., M.T.',
@@ -339,6 +375,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'annisa',
         'password' => Hash::make('annisa033'),
         'nama' => 'Annisa Puspa Kirana, S.Kom., M.Kom',
@@ -348,6 +385,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'annisa',
         'password' => Hash::make('annisa033'),
         'nama' => 'Annisa Taufika Firdausi, ST., MT.',
@@ -357,6 +395,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'anugrah',
         'password' => Hash::make('anugrah033'),
         'nama' => 'Anugrah Nur Rahmanto, S.Sn., M.Ds.',
@@ -366,6 +405,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'arie',
         'password' => Hash::make('arie033'),
         'nama' => 'Arie Rachmad Syulistyo, S.Kom., M.Kom',
@@ -375,6 +415,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'dian',
         'password' => Hash::make('dian033'),
         'nama' => 'Dian Hanifudin Subhi, S.Kom., M.Kom.',
@@ -384,6 +425,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'dika',
         'password' => Hash::make('dika033'),
         'nama' => 'Dika Rizky Yunianto, S.Kom, M.Kom',
@@ -393,6 +435,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'elok',
         'password' => Hash::make('elok033'),
         'nama' => 'Elok Nur Hamdana, S.T., M.T',
@@ -402,6 +445,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'kadek',
         'password' => Hash::make('kadek033'),
         'nama' => 'Kadek Suarjuna Batubulan, S.Kom, MT',
@@ -411,6 +455,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'meyti',
         'password' => Hash::make('meyti033'),
         'nama' => 'Meyti Eka Apriyani ST., MT.',
@@ -420,6 +465,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'afif',
         'password' => Hash::make('afif123'),
         'nama' => 'Muhammad Afif Hendrawan.,S.Kom., MT',
@@ -429,6 +475,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'khairy',
         'password' => Hash::make('khairy123'),
         'nama' => 'Muhammad Shulhan Khairy, S.Kom, M.Kom',
@@ -438,6 +485,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'mustika',
         'password' => Hash::make('mustika033'),
         'nama' => 'Mustika Mentari, S.Kom., M.Kom',
@@ -447,6 +495,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'retno',
         'password' => Hash::make('retno033'),
         'nama' => 'Retno Damayanti, S.Pd., M.T.',
@@ -456,6 +505,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'sofyan',
         'password' => Hash::make('sofyan033'),
         'nama' => 'Sofyan Noor Arief, S.ST., M.Kom.',
@@ -465,6 +515,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'vipkas',
         'password' => Hash::make('vipkas033'),
         'nama' => 'Vipkas Al Hadid Firdaus, ST,. MT',
@@ -474,6 +525,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'vivi',
         'password' => Hash::make('vivi033'),
         'nama' => 'Vivi Nur Wijayaningrum, S.Kom, M.Kom',
@@ -483,6 +535,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'vivin',
         'password' => Hash::make('vivin033'),
         'nama' => 'Vivin Ayu Lestari, S.Pd., M.Kom.',
@@ -492,6 +545,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'yoppy',
         'password' => Hash::make('yoppy033'),
         'nama' => 'Yoppy Yunhasnawa, S.ST., M.Sc.',
@@ -501,6 +555,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'bagas',
         'password' => Hash::make('bagas033'),
         'nama' => 'Bagas Satya Dian Nugraha, ST., MT.',
@@ -510,6 +565,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'candra',
         'password' => Hash::make('candra033'),
         'nama' => 'Candra Bella Vista, S.Kom., MT.',
@@ -519,6 +575,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'faiz',
         'password' => Hash::make('faiz033'),
         'nama' => 'Faiz Ushbah Mubarok, S.Pd., M.Pd.',
@@ -528,6 +585,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'habibie',
         'password' => Hash::make('habibie033'),
         'nama' => 'Habibie Ed Dien, S.Kom., M.T.',
@@ -537,6 +595,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'ika',
         'password' => Hash::make('ika033'),
         'nama' => 'Ika Kusumaning Putri, S.Kom., MT.',
@@ -546,6 +605,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'irsyad',
         'password' => Hash::make('irsyad033'),
         'nama' => 'Irsyad Arif Mashudi, S.Kom., M.Kom',
@@ -555,6 +615,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'mamluatul',
         'password' => Hash::make('mamluatul033'),
         'nama' => 'Mamluatul Haniah, S.Kom., M.Kom',
@@ -564,6 +625,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'milyun',
         'password' => Hash::make('milyun033'),
         'nama' => 'Milyun Nima Shoumi, S.Kom., M.Kom',
@@ -573,6 +635,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'moch',
         'password' => Hash::make('moch033'),
         'nama' => 'Moch. Zawaruddin Abdullah, S.ST., M.Kom',
@@ -582,6 +645,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'noprianto',
         'password' => Hash::make('noprianto033'),
         'nama' => 'Noprianto, S.Kom., M.Eng',
@@ -591,6 +655,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'rokhimatul',
         'password' => Hash::make('rokhimatul033'),
         'nama' => 'Rokhimatul Wakhidah, S.Pd., M.T.',
@@ -600,6 +665,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'septian',
         'password' => Hash::make('septian033'),
         'nama' => 'Septian Enggar Sukmana, S.Pd., M.T',
@@ -609,6 +675,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'wilda',
         'password' => Hash::make('wilda033'),
         'nama' => 'Wilda Imama Sabilla, S.Kom., M.Kom',
@@ -618,6 +685,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'ade',
         'password' => Hash::make('ade033'),
         'nama' => 'Ade Ismail, S.Kom., M.TI',
@@ -627,6 +695,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'rakhmat',
         'password' => Hash::make('rakhmat033'),
         'nama' => 'Rakhmat Arianto, S.ST., M.Kom',
@@ -636,6 +705,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'm',
         'password' => Hash::make('m033'),
         'nama' => 'M. Hasyim Ratsanjani, S.Kom., M.Kom',
@@ -645,6 +715,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'farid',
         'password' => Hash::make('farid123'),
         'nama' => 'Farid Angga Pribadi, S.Kom.,M.Kom',
@@ -654,6 +725,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'vit',
         'password' => Hash::make('vit123'),
         'nama' => 'Vit Zuraida,S.Kom., M.Kom.',
@@ -663,6 +735,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'astrifidha',
         'password' => Hash::make('astrifidha033'),
         'nama' => 'Astrifidha Rahma Amalia,S.Pd., M.Pd.',
@@ -672,6 +745,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'endah',
         'password' => Hash::make('endah033'),
         'nama' => 'Endah Septa Sintiya,S.Pd., M.Kom',
@@ -681,6 +755,7 @@ class UserSeeder extends Seeder
         'email_verified_at' => now(),
     ],
 [
+        'level_id' => '3',
         'username' => 'toga',
         'password' => Hash::make('toga033'),
         'nama' => 'Toga Aldila Cinderatama,S.ST., M.Sc.',

@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class KegiatanModel extends Model
 {
@@ -39,17 +42,17 @@ class KegiatanModel extends Model
     }
 
     // Relasi ke model KategoriKegiatan
-    public function kategori_kegiatan()
-{
-    return $this->belongsTo(KategoriKegiatanModel::class, 'kategori_kegiatan_id', 'id');
-}
+    public function kategori() :BelongsTo
+    {
+        return $this->belongsTo(KategoriKegiatanModel::class, 'kategori_kegiatan_id', 'kategori_kegiatan_id');
+    }
 
-public function beban_kegiatan()
-{
-    return $this->hasOne(BebanKegiatanModel::class, 'kegiatan_id', 'kegiatan_id');
-}
+    public function beban() :BelongsTo
+    {
+        return $this->belongsTo(BebanKegiatanModel::class, 'beban_kegiatan_id', 'beban_kegiatan_id');
+    }
 
-    public function kegiatanDosen()
+    public function kegiatanDosen() :HasMany
     {
         return $this->hasMany(KegiatanDosenModel::class, 'kegiatan_dosen_id', 'kegiatan_dosen_id');
     }

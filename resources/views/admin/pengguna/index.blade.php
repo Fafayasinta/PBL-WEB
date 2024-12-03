@@ -37,7 +37,6 @@
                         <th>NO</th>
                         <th>NAMA</th>
                         <th>USERNAME</th>
-                        <th>PASSWORD</th>
                         <th>JENIS PENGGUNA</th>
                         <th>AKSI</th>
                     </tr>
@@ -85,12 +84,7 @@
                         searchable: true
                     },
                     {
-                        data: "password",
-                        orderable: true,
-                        searchable: true
-                    },
-                    {
-                        data: "level_nama",
+                        data: "level.level_nama",
                         orderable: true,
                         searchable: true
                     },
