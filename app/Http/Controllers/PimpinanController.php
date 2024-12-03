@@ -15,6 +15,6 @@ class PimpinanController extends Controller
 
         $activeMenu = 'dashboard';
         
-        return view('pimpinan.welcome', ['breadcrumb' => $breadcrumb, 'activeMenu' => $activeMenu]);
+        return view('pimpinan.dashboard', ['breadcrumb' => $breadcrumb, 'activeMenu' => $activeMenu]);
     }
 }
