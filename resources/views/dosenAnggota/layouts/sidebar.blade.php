@@ -15,32 +15,32 @@
   <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
-              <a href="#" class="nav-link">
+            <a href="{{ url('/dosen') }}" class="nav-link {{ ($activeMenu == 'dashboard')? 'active' : '' }}">
                   <i class="nav-icon fas fa-th"></i>
                   <p>Dashboard</p>
               </a>
           </li>
           <li class="nav-item">
-              <a href="#" class="nav-link">
+            <a href="{{ url('/profile') }}" class="nav-link {{ ($activeMenu == 'profile')? 'active' : '' }}">
                   <i class="nav-icon fas fa-address-card"></i>
                   <p>Profile</p>
               </a>
           </li>
           <li class="nav-header">KEGIATAN</li>
-          <li class="nav-item">
-              <a href="#" class="nav-link">
+          <li class="nav-item {{ in_array($activeMenu, ['kegiatanjti', 'kegiatannonjti']) ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ in_array($activeMenu, ['kegiatanjti', 'kegiatannonjti']) ? 'active' : '' }}">
                   <i class="nav-icon fas fa-clipboard-list"></i>
                   <p>Kegiatan Dosen<i class="right fas fa-angle-left"></i></p>
               </a>
               <ul class="nav nav-treeview">
                   <li class="nav-item">
-                      <a href="#" class="nav-link">
+                      <a href="{{ url('/kegiatandosenjti') }}" class="nav-link {{ ($activeMenu == 'kegiatanjti')? 'active' : '' }}">
                           <i class="far fa-circle nav-icon"></i>
                           <p>Kegiatan JTI</p>
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a href="#" class="nav-link">
+                      <a href="{{ url('/kegiatandosennonjti') }}" class="nav-link {{ ($activeMenu == 'kegiatannonjti')? 'active' : '' }}">
                           <i class="far fa-circle nav-icon"></i>
                           <p>Kegiatan Non JTI</p>
                       </a>
@@ -52,8 +52,8 @@
   
   <!-- Tombol Logout -->
   <div class="logout-button-container mt-auto">
-      <a href="#" class="logout-button btn btn-danger btn-block">
-          <i class="nav-icon fas fa-sign-out-alt"></i> Logout
-      </a>
-  </div>
+    <a href="{{ url('/logout') }}" class="logout-button btn btn-danger btn-block" style="color: white">
+        <i class="nav-icon fas fa-sign-out-alt" style="margin-right: 5px"></i> Logout
+    </a>
+</div>
 </div>

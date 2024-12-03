@@ -13,16 +13,14 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 
-
-
 class AuthController extends Controller
 {
     public function login()
     {
         if (Auth::check()) {
-            return redirect('/home');
+            return redirect('/');
         }
-        return view('login.login');
+        return view('auth.login');
     }
 
     public function postlogin(Request $request)

@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Blank Page</title>
+  <title>Halaman Dosen</title>
+
+  <meta name="csrf-token" content="{{ csrf_token() }}"> <!--Untuk mengirimkan token Laravel CSRF  pada setiap request ajax-->
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -16,6 +18,7 @@
 <style>
   .main-header .navbar-nav .nav-link {
       color: #808080 !important; /* Atau warna spesifik yang Anda inginkan */
+      transition: color 0.3s ease-in-out; /* Animasi transisi */
   }
 
   .form-control-sidebar {
@@ -25,7 +28,7 @@
 
   .btn-sidebar {
       background-color: white !important; /* Mengatur latar belakang tombol pencarian */
-      color: #007bff !important; /* Mengatur warna teks tombol menjadi putih */
+      color: #001185 !important; /* Mengatur warna teks tombol menjadi putih */
   }
 
   .btn-sidebar:hover {
@@ -54,6 +57,15 @@
   .logout-button-container {
       margin-top: auto; /* Memastikan tombol logout berada di bagian bawah */
       margin-bottom: 30px;
+  }
+
+  .nav-link.active {
+      background-color: white !important; /* Latar belakang putih */
+      color: #001185 !important; /* Teks biru gelap */
+  }
+
+  .nav-link.active i {
+      color: #001185 !important; /* Warna ikon biru gelap */
   }
 </style>
 
@@ -106,5 +118,12 @@
 <script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
+
+<script>
+  // Untuk mengirimkan token laravel CSRF pada setiap request ajax
+  $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+</script>
+@stack('js') 
+
 </body>
 </html>

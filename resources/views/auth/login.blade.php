@@ -129,7 +129,7 @@
       </div>
       <h1 class="title">DOSIMAL</h1>
       <p class="subtitle">JURUSAN TEKNOLOGI INFORMASI</p>
-      <form action="{{route('postLogin')}}" method="POST" id="form-login">
+      <form action="{{url('login')}}" method="POST" id="form-login">
         @csrf
         <p class="login-message">Login to your account</p>
         <div class="input-group">
@@ -146,8 +146,10 @@
         </div> 
         <button type="submit" class="login-button">LOGIN</button>
       </form>
-    </div>
-  </div>
+    {{-- </div>
+    <div class="forgot-password-container">
+      <a href="{{ route('resetpassword') }}" class="text-danger">Lupa Password?</a>
+  </div> --}}
   <script>
     $.ajaxSetup({
         headers: {
