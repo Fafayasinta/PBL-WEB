@@ -122,7 +122,7 @@
       <form action="{{ url('login') }}" method="POST" id="form-login">
         @csrf
         <div class="input-group">
-          <input type="text" name="username" class="form-control" placeholder="Username" required>
+          <input type="text" id="username" name="username" class="form-control" placeholder="Username" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -131,7 +131,7 @@
         </div>
 
         <div class="input-group">
-          <input type="password" name="password" class="form-control" placeholder="Password" required>
+          <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -154,6 +154,9 @@
 
         <div class="forgot-password-container">
           <a href="{{ route('password.request') }}" class="text-danger">Lupa Password?</a>
+        </div>
+        <div class="forgot-password-container">
+          <a href="{{ url('register') }}" class="text-center">Belum punya akun ?</a>
         </div>
       </form>
     </div>

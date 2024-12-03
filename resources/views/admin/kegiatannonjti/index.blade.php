@@ -35,11 +35,10 @@
                 <thead>
                     <tr>
                         <th>NO</th>
-                        <th>NAMA KEGIATAN</th>
-                        <th>NAMA DOSEN</th>
+                        <th style="width: 20%">NAMA KEGIATAN</th>
+                        <th style="width: 15%">NAMA DOSEN</th>
                         <th>JENIS</th>
                         <th>WILAYAH KERJA</th>
-                        <th>JABATAN</th>
                         <th>WAKTU</th>
                         <th>BEBAN</th>
                         <th>AKSI</th>
@@ -64,11 +63,11 @@
             dataKegiatanNonJti = $('#table_kegiatannonjti').DataTable({
                 serverSide: true, // Menggunakan server-side processing
                 ajax: {
-                    "url": "#", // Endpoint untuk mengambil data kategori
+                    "url": "{{ url('kegiatannonjti/list')}}", // Endpoint untuk mengambil data kategori
                     "dataType": "json",
                     "type": "POST",
                     "data": function(d) {
-                        d.level_kode = $('#').val(); // Mengirim data filter kategori_kode
+                        d.cakupan_wilayah = $('#cakupan_wilayah').val(); // Mengirim data filter kategori_kode
                     }
                 },
                 columns: [{
@@ -78,12 +77,32 @@
                         searchable: false
                     },
                     {
-                        data: "level_kode",
+                        data: "nama_kegiatan",
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: "level_nama",
+                        data: "pic",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "kategori.nama_kategori",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "cakupan_wilayah",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "cakupan_wilayah",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "beban.nama_beban",
                         orderable: true,
                         searchable: true
                     },

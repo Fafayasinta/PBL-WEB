@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('t_dokumen', function (Blueprint $table) {
             $table->id('dokumen_id');
             $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedBigInteger('kegiatan_id')->index();
             $table->string('nama_dokumen',255);
             $table->string('jenis_dokumen',255);
             $table->timestamp('uploaded_at')->useCurrent();
             $table->boolean('is_verified')->default(false);
 
             $table->foreign('user_id')->references('user_id')->on('m_user');
+            $table->foreign('kegiatan_id')->references('kegiatan_id')->on('t_kegiatan');
         });
     }
 

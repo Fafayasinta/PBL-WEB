@@ -40,7 +40,7 @@ button[type="submit"]:hover {
                 <div class="row mb-4">
                     <!-- Foto Profil -->
                     <div class="col-md-3 text-center">
-                        {{-- <img src="{{ asset('path/to/default/profile.jpg') }}" alt="Profile Picture" class="rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;"> --}}
+                        <img src="{{ asset('path/to/default/profile.jpg') }}" alt="Profile Picture" class="rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;">
                         <button type="button" class="btn btn-outline-secondary btn-sm">
                             Edit
                         </button>
@@ -51,33 +51,33 @@ button[type="submit"]:hover {
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="name" class="form-label">Your Name</label>
-                                {{-- <input type="text" class="form-control" id="name" name="name" value="{{ old('name', Auth::user()->name) }}"> --}}
+                                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', Auth::user()->nama) }}">
                             </div>
                             <div class="col-md-6">
                                 <label for="username" class="form-label">User Name</label>
-                                {{-- <input type="text" class="form-control" id="username" name="username" value="{{ old('username', Auth::user()->username) }}"> --}}
+                                <input type="text" class="form-control" id="username" name="username" value="{{ old('username', Auth::user()->username) }}">
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="email" class="form-label">Email</label>
-                                {{-- <input type="email" class="form-control" id="email" name="email" value="{{ old('email', Auth::user()->email) }}"> --}}
+                                <input type="email" class="form-control" id="email" name="email" value="{{ old('email', Auth::user()->email) }}">
                             </div>
                             <div class="col-md-6">
                                 <label for="password" class="form-label">Password</label>
-                                {{-- <input type="password" class="form-control" id="password" name="password" placeholder="********" disabled> --}}
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan Password Baru">
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="nip" class="form-label">NIP</label>
-                                {{-- <input type="text" class="form-control" id="nip" name="nip" value="{{ old('nip', Auth::user()->nip) }}"> --}}
+                                <input type="text" class="form-control" id="nip" name="nip" value="{{ old('nip', Auth::user()->nip) }}">
                             </div>
                             <div class="col-md-6">
                                 <label for="role" class="form-label">Role</label>
-                                {{-- <input type="text" class="form-control" id="role" name="role" value="{{ old('role', Auth::user()->role) }}" disabled> --}}
+                                <input type="text" class="form-control" id="role" name="role"  value="{{ old('role', Auth::user()->level->level_kode ?? '') }}">
                             </div>
                         </div>
                     </div>
