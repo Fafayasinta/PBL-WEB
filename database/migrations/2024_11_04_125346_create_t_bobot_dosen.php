@@ -9,15 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-
-     //Inputan skor apakah mungkin bisa dropdown yah nanti ? sesuai table m_bobot_jabatan
+      //Inputan skor apakah mungkin bisa dropdown yah nanti ? sesuai table m_bobot_jabatan
      //user_id -> id dari m_user
      //beban_kegiatan -> Sangat Berat/Berat/Cukup/Ringan/Sangat Ringan
      //kegiatan_id -> nama kegiatan yang diikuti apa diambil dari tabel t_kegiatan
      //skor -> diambil dari t_anggota_kegiatan untuk setiap kegiatan
      //waktu mulai -> dari t_kegiatan
      //waktu selesai -> dari t_kegiatan
-
     public function up(): void
     {
         Schema::create('t_bobot_dosen', function (Blueprint $table) {

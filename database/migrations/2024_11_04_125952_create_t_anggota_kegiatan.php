@@ -9,11 +9,10 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    //User_id -> nama anggota diambil dari tabel m_user
+     //User_id -> nama anggota diambil dari tabel m_user
     //kegiatan_id -> detail kegiatan diambil dari tabel t_kegiatan
     //jabatan -> PIC, Sekretaris, Bendahara, Anggota
     //skor -> seharusnya sesuai tabel m_bobot_jabatan
-
     public function up(): void
     {
         Schema::create('t_anggota_kegiatan', function (Blueprint $table) {

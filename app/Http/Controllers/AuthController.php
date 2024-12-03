@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LevelModel;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,92 +21,81 @@ class AuthController extends Controller
     public function login()
     {
         if (Auth::check()) {
-            return redirect('/home');
+            return redirect('/');
         }
         return view('login.login');
     }
 
     public function postlogin(Request $request)
     {
-        try {
-            // Validasi input
-            $validator = Validator::make($request->all(), [
-                'username' => 'required|string',
-                'password' => 'required|string',
-            ]);
+        if ($request->ajax() || $request->wantsJson()) {
+            $credentials = $request->only('username', 'password');
 
-            if ($validator->fails()) {
+            if (Auth::attempt($credentials)) {
+                session([
+                    'user_id' => Auth::user()->user_id
+                ]);
                 return response()->json([
-                    'status' => false,
-                    'message' => 'Validasi gagal',
-                    'errors' => $validator->errors()
-                ], 422);
+                    'status' => true,
+                    'message' => 'Login Berhasil',
+                    'redirect' => url('/home')
+                ]);
             }
 
-            // Cek kredensial
-            $user = UserModel::where('username', $request->username)->first();
-            
-            if (!$user || !Hash::check($request->password, $user->password)) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Username atau password salah'
-                ], 401);
-            }
-
-            // Login user
-            Auth::login($user);
-
-            // Set session
-            if ($user->foto_profil) {
-                session(['profile_img_path' => $user->foto_profil]);
-            }
-            session(['user_id' => $user->user_id]);
-            session(['level_id' => $user->level_id]);
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Login Berhasil',
-                'redirect' => url('/home'),
-                'user' => $user->load('level') // Load relasi level
-            ], 200);
-
-        } catch (\Exception $e) {
-            Log::error('Login Error:', [
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-            
             return response()->json([
                 'status' => false,
-                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
-            ], 500);
+                'message' => 'Login Gagal'
+            ]);
         }
+
+        return redirect('login');
+    }
+
+    public function register()
+    {
+        $level = LevelModel::select('level_id', 'level_nama')->get();
+        return view('login.register')
+            ->with('level', $level);
+    }
+    
+    public function store(Request $request)
+    {
+        // cek apakah request berupa ajax
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'level_id'  => 'required|integer',
+                'username'  => 'required|string|min:3|unique:m_user,username',
+                'nama'      => 'required|string|max:100',
+                'password'  => 'required|min:5',
+                'nip'       => 'required|string|max:50|unique:m_user,nip',
+                'email'     => 'required|string|unique:m_user,email'
+            ];
+            // use Illuminate\Support\Facades\Validator;
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status'    => false, // response status, false: error/gagal, true: berhasil
+                    'message'   => 'Validasi Gagal',
+                    'msgField'  => $validator->errors(), // pesan error validasi
+                ]);
+            }
+            UserModel::create($request->all());
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Data user berhasil disimpan',
+                'redirect' => url('login')
+            ]);
+        }
+        return redirect('login');
     }
 
     public function logout(Request $request)
     {
-        try {
-            Auth::logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-            
-            return response()->json([
-                'status' => true,
-                'message' => 'Logout berhasil',
-                'redirect' => url('/login')
-            ]);
-            
-        } catch (\Exception $e) {
-            Log::error('Logout Error:', [
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-            
-            return response()->json([
-                'status' => false,
-                'message' => 'Terjadi kesalahan saat logout: ' . $e->getMessage()
-            ], 500);
-        }
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('login');
     }
 
     public function showLinkRequestForm()

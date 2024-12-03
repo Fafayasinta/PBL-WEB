@@ -1,222 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login DOSIMAL</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Theme style -->
-    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
 
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
-      background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('adminlte/dist/img/bg_login.png') no-repeat center center fixed;
-      background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DOSIMAL - Login</title>
+
+  <!-- Google Font: Source Sans Pro --> 
+  <link rel="stylesheet" 
+  href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> 
+    <!-- Font Awesome --> 
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}"> 
+    <!-- icheck bootstrap --> 
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}"> 
+    <!-- SweetAlert2 --> 
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}"> 
+    <!-- Theme style --> 
+    <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}"> 
+  <body class="hold-transition login-page">
+  
+  <style>  
+    .login-page {
+        background-image: url("{{ asset('adminlte/dist/img/bg_login.png') }}") !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+        background-position: center !important;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    .container {
+
+    /* Style yang sudah ada tetap sama, tambahkan style berikut */
+    .login-box {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 10px;
+      padding: 40px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      max-width: 90%;
+    }
+
+
+    /* Style untuk form container */
+    .form-container {
       width: 100%;
       height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      /* display: flex; */
+      justify-content: center; /* Pusatkan secara horizontal */
+      align-items: center; /* Pusatkan secara vertikal */
     }
 
-    .login-box {
-      background: #FFFFFF;
-      width: 350px; /* Lebih kecil */
-      padding: 30px; /* Sesuaikan padding */
-      box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
-      border-radius: 15px;
-      text-align: center;
-    }
-
-    .logo img {
-      width: 80px; /* Ukuran logo lebih kecil */
-      height: 80px;
-      margin: 0 auto 15px auto; /* Tambahkan margin bawah */
-    }
-
-    .title {
-      font-size: 22px; /* Ukuran font judul lebih kecil */
-      font-weight: 600;
-      color: #003399;
-      margin: 15px 0 10px;
-    }
-
-    .subtitle {
-      font-size: 14px; /* Ukuran subtitle lebih kecil */
-      font-weight: 600;
-      color: #CF4111;
-      margin-bottom: 20px;
-    }
-
-    .login-form .login-message {
-      font-size: 13px; /* Ukuran teks login lebih kecil */
-      font-weight: 300;
-      color: #000000;
-      margin-bottom: 15px;
-    }
-
+    /* Style untuk input group */
     .input-group {
-      display: flex;
-      align-items: center;
-      background: #FFFFFF;
-      border: 1px solid #000000;
-      border-radius: 10px;
-      padding: 10px;
-      margin-bottom: 10px; /* Kurangi jarak antar input */
+      margin-bottom: 1.5rem;
     }
 
-    .input-group i {
-      margin-right: 10px;
-      color: #000000;
+    .input-group .form-control {
+      height: 40px;
+      width: 80%; /* Memenuhi lebar penuh */
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      padding: 10px 15px;
     }
 
-    .input-group input {
-      border: none;
-      outline: none;
-      flex: 1;
-      font-size: 14px; /* Ukuran font input lebih kecil */
-      color: rgba(0, 0, 0, 0.5);
+    .input-group-text {
+      width: 45px; /* Lebar ikon */
+      justify-content: center;
     }
 
-    .remember-me {
-      display: flex;
-      align-items: center;
-      margin: 10px 0; /* Kurangi margin atas dan bawah */
+    /* Style untuk remember me checkbox */
+    .remember-container {
+      padding: 0 10px;
+      margin-bottom: 1.5rem;
     }
 
-    .remember-me input {
-      margin-right: 5px;
+    /* Style untuk button container */
+    .button-container {
+      width: 100%;
+      padding: 0 10px;
+      margin-bottom: 1.5rem;
     }
 
-    .remember-me label {
-      font-size: 12px; /* Ukuran font label lebih kecil */
-      color: rgba(0, 0, 0, 0.5);
-    }
-
-    .login-button {
+    .btn-login {
       background: #CF4111;
       color: #FFFFFF;
       border: none;
       padding: 10px 20px;
       border-radius: 10px;
-      font-size: 14px; /* Ukuran font tombol lebih kecil */
+      font-size: 14px;
       font-weight: 800;
       cursor: pointer;
-      width: 100%;
+      width: 100%; /* Memenuhi lebar penuh */
       margin-top: 15px;
     }
 
-    .login-button:hover {
+    .btn-login:hover {
       background: #b8350e;
     }
+
+    /* Style untuk forgot password link */
+    .forgot-password-container {
+      text-align: center;
+      margin-top: 1rem;
+    }
   </style>
-</head>
-<body>
-  <div class="container">
-    <div class="login-box">
-      <div class="logo">
-        <img src="adminlte/dist/img/polinema.png" alt="Logo Polinema">
+
+  <!-- Di dalam body, ubah bagian form menjadi seperti ini -->
+  <div class="login-box">
+    <div class="text-center mb-5">
+      <img src="{{ asset('adminlte/dist/img/polinema.png') }}" alt="Logo Polinema" class="mb-3" width="80">
+      <div class="logo-text">
+        <h2>DOSIMAL</h2>
+        <p>JURUSAN TEKNOLOGI INFORMASI</p>
       </div>
-      <h1 class="title">DOSIMAL</h1>
-      <p class="subtitle">JURUSAN TEKNOLOGI INFORMASI</p>
-      <form action="{{url('login')}}" method="get">
+      <p class="text-muted">Login To Your Account</p>
+    </div>
+
+    <div class="form-container">
+      <form action="{{ url('login') }}" method="POST" id="form-login">
         @csrf
-        <p class="login-message">Login to your account</p>
         <div class="input-group">
-          <i class="fas fa-user"></i>
-          <input type="text" id="username" name="username" class="form-control" placeholder="Username">
-        </div>
-        <div class="input-group">
-          <i class="fas fa-lock"></i>
-          <input type="password" id="password" name="password" class="form-control" placeholder="Password">
-        </div>
-        <div class="remember-me">
-          <input type="checkbox" id="remember">
-          <label for="remember">Remember me</label>
-        </div> 
-        <button type="submit" class="login-button">LOGIN</button>
-        <div class="row mt-3">
-          <div class="col-12 text-center">
-            <a href="{{ route('password.request') }}" class="text-danger">Lupa Password?</a>
+          <input type="text" id="username" name="username" class="form-control" placeholder="Username" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
           </div>
+        </div>
+
+        <div class="input-group">
+          <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="remember-container">
+          <div class="icheck-primary">
+            <input type="checkbox" id="remember" name="remember">
+            <label for="remember" class="remember-text">
+              Remember me
+            </label>
+          </div>
+        </div>
+
+        <div class="button-container">
+          <button type="submit" class="btn btn-login btn-block">LOGIN</button>
+        </div>
+
+        <div class="forgot-password-container">
+          <a href="{{ route('password.request') }}" class="text-danger">Lupa Password?</a>
+        </div>
+        <div class="forgot-password-container">
+          <a href="{{ url('register') }}" class="text-center">Belum punya akun ?</a>
         </div>
       </form>
     </div>
   </div>
-  <script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
 
-    $(document).ready(function() {
-        $("#form-login").validate({
-            rules: {
-                username: {required: true, minlength: 4, maxlength: 20},
-                password: {required: true, minlength: 5, maxlength: 20}
-            },
-            submitHandler: function(form) {
-                $.ajax({
-                    url: form.action,
-                    type: form.method,
-                    data: $(form).serialize(),
-                    success: function(response) {
-                        if(response.status){
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: response.message,
-                            }).then(function() {
-                                window.location = response.redirect;
-                            });
-                        } else {
-                            $('.error-text').text('');
-                            $.each(response.msgField, function(prefix, val) {
-                                $('#error-'+prefix).text(val[0]);
-                            });
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Terjadi Kesalahan',
-                                text: response.message
-                            });
-                        }
-                    }
-                });
-                return false;
-            },
-            errorElement: 'span',
-            errorPlacement: function (error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.input-group').append(error);
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
-            }
-        });
-    });
-</script>
+<!-- jQuery --> 
+<script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script> 
+<!-- Bootstrap 4 --> 
+<script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script> 
+<!-- jquery-validation --> 
+<script src="{{ asset('adminlte/plugins/jquery-validation/jquery.validate.min.js') }}"></script> 
+<script src="{{ asset('adminlte/plugins/jquery-validation/additional-methods.min.js') }}"></script> 
+<!-- SweetAlert2 --> 
+<script src="{{ asset('adminlte/plugins/sweetalert2/sweetalert2.min.js') }}"></script> 
+<!-- AdminLTE App --> 
+<script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script> 
 
-<!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
+<script> 
+  $.ajaxSetup({ 
+    headers: { 
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') 
+    } 
+  }); 
+ 
+  $(document).ready(function() { 
+    $("#form-login").validate({ 
+      rules: { 
+        username: {required: true, minlength: 4, maxlength: 20}, 
+        password: {required: true, minlength: 6, maxlength: 20} 
+      }, 
+      submitHandler: function(form) { // ketika valid, maka bagian yg akan dijalankan 
+        $.ajax({ 
+          url: form.action, 
+          type: form.method, 
+          data: $(form).serialize(), 
+          success: function(response) { 
+            if(response.status){ // jika sukses 
+              Swal.fire({ 
+                  icon: 'success', 
+                  title: 'Berhasil', 
+                  text: response.message, 
+              }).then(function() { 
+                  window.location = response.redirect; 
+              }); 
+            }else{ // jika error 
+              $('.error-text').text(''); 
+              $.each(response.msgField, function(prefix, val) { 
+                  $('#error-'+prefix).text(val[0]); 
+              }); 
+              Swal.fire({ 
+                  icon: 'error', 
+                  title: 'Terjadi Kesalahan', 
+                  text: response.message 
+              }); 
+            } 
+          } 
+        }); 
+        return false; 
+      }, 
+      errorElement: 'span', 
+      errorPlacement: function (error, element) { 
+        error.addClass('invalid-feedback'); 
+        element.closest('.input-group').append(error); 
+      }, 
+      highlight: function (element, errorClass, validClass) { 
+        $(element).addClass('is-invalid'); 
+      }, 
+      unhighlight: function (element, errorClass, validClass) { 
+        $(element).removeClass('is-invalid'); 
+      } 
+    }); 
+  }); 
+</script>  
 </body>
 </html>

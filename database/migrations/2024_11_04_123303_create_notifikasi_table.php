@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    //Ini nanti isinya
+     //Ini nanti isinya
     //Judul : Reminder H-3 Rapat Koordinasi bersama Pimpinan
     //Deskripsi : Rapat dilaksanakan di Ruang Ketua Jurusan JTI pada pukul 18.00
     public function up(): void

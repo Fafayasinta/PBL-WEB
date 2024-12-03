@@ -42,19 +42,8 @@ class KegiatanController extends Controller
     public function index()
     {
         $Kegiatans = KegiatanModel::latest()->get();
-        return view('Kegiatan.index', compact('Kegiatans'));
+        return view('Kegiatan.index', compact('Kegiatan'));
     }
-    
-    public function show($id)
-{
-    $kegiatan = KegiatanModel::with(['kategori', 'anggota.user'])->find($id);
-
-    if (!$kegiatan) {
-        return redirect()->route('Kegiatan.index')->with('error', 'Kegiatan tidak ditemukan.');
-    }
-
-    return view('Kegiatan.show', compact('kegiatan'));
-}
 
     public function create()
     {

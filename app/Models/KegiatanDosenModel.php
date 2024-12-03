@@ -33,6 +33,7 @@ class KegiatanDosenModel extends Model
     // Relasi dengan model Kegiatan
     public function kegiatan()
     {
+        // Relasi ke model Kegiatan tanpa menyebutkan 'cakupan_wilayah' di sini
         return $this->belongsTo(KegiatanModel::class, 'kegiatan_id', 'kegiatan_id');
     }
 }

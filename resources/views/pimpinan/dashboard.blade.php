@@ -19,7 +19,7 @@
                         <div style="background-color: #bbb9ff; padding: 10px; display: inline-block; border-radius: 10px;">
                             <i class="nav-icon fas fa-users"></i>    
                         </div>
-                        <h2 style="margin-left: 20px">{{ 0 }}</h2>
+                        <h2 style="margin-left: 20px">{{ $totalKegiatanSelesai }}</h2>
                     </div>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                         <div style="background-color: #ffd572; padding: 10px; display: inline-block; border-radius: 10px;">
                             <i class="nav-icon fas fa-box"></i>    
                         </div>
-                        <h2 style="margin-left: 20px">{{ 0 }}</h2>
+                        <h2 style="margin-left: 20px">{{ $totalKegiatanSelesai }}</h2>
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                         <div style="background-color: #6af3ae; padding: 10px; display: inline-block; border-radius: 10px;">
                             <i class="nav-icon fas fa-chart-bar"></i>    
                         </div>
-                        <h2 style="margin-left: 20px">{{ 0 }}</h2>
+                        <h2 style="margin-left: 20px">{{ $totalKegiatanSelesai }}</h2>
                     </div>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                         <div style="background-color: #ffb398; padding: 10px; display: inline-block; border-radius: 10px;">
                             <i class="nav-icon fas fa-clock"></i>    
                         </div>
-                        <h2 style="margin-left: 20px">{{ 0 }}</h2>
+                        <h2 style="margin-left: 20px">{{ $totalKegiatanSelesai }}</h2>
                     </div>
                 </div>
             </div>

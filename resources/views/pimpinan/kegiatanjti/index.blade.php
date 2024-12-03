@@ -35,8 +35,8 @@
                 <thead>
                     <tr>
                         <th>NO</th>
-                        <th>NAMA</th>
-                        <th>DESKRIPSI</th>
+                        <th style="width: 15%">NAMA</th>
+                        <th style="width: 20%">DESKRIPSI</th>
                         <th>JENIS</th>
                         <th>STATUS</th>
                         <th>BEBAN KERJA</th>
@@ -86,7 +86,7 @@
                         searchable: true
                     },
                     {
-                        data: "nama_kategori",
+                        data: "kategori.nama_kategori",
                         orderable: true,
                         searchable: true
                     },
@@ -96,7 +96,7 @@
                         searchable: true
                     },
                     {
-                        data: "nama_beban",
+                        data: "beban.nama_beban",
                         orderable: true,
                         searchable: true
                     },
