@@ -176,7 +176,7 @@
                 }
             },
                     {
-                        data: "deskripsi",
+                        data: "keterangan",
                         orderable: true,
                         searchable: true
                     }
