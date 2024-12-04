@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\KegiatanModel;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule as ValidationRule;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
 class KegiatanNonJtiController extends Controller
@@ -62,5 +64,84 @@ class KegiatanNonJtiController extends Controller
         })
         ->rawColumns(['action'])
         ->make(true); // Pastikan metode make(true) dipanggil
+    }
+
+    public function edit_ajax(string $id)
+    {
+        $kegiatannonjti = KegiatanModel::find($id);
+
+        return view('admin.kegiatannonjti.edit_ajax', ['kegiatannonjti' => $kegiatannonjti]);
+    }
+
+    public function update_ajax(Request $request, $id)
+    {
+        // cek apakah request dari ajax
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'nama_kegiatan' => 'required|string|max:200',
+                'pic' => 'required|string|max:100',
+                'nama_kategori' => 'required|string|max:100|unique:m_kategori_kegiatan,kategori_kegiatan_id,' . $id . ',kategori_kegiatan_id',
+                'cakupan_wilayah' => [
+                    'required',
+                    ValidationRule::in(['Luar Institusi','Institusi','Jurusan','Program Studi']),
+                ],
+                'waktu_mulai' => 'required|date',
+                'nama_beban' => 'required|string|max:100|unique:m_beban_kegiatan,beban_kegiatan_id,' . $id . ',beban_kegiatan_id',
+            ];
+
+            // use Illuminate\Support\Facades\Validator;
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status'   => false,    // respon json, true: berhasil, false: gagal
+                    'message'  => 'Validasi gagal.',
+                    'msgField' => $validator->errors()  // menunjukkan field mana yang error
+                ]);
+            }
+
+            $check = KegiatanModel::find($id);
+            if ($check) {
+                $check->update($request->all());
+                return response()->json([
+                    'status'  => true,
+                    'message' => 'Data berhasil diupdate'
+                ]);
+            } else {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'Data tidak ditemukan'
+                ]);
+            }
+        }
+        return redirect('/kegiatannonjti');
+    }
+
+    public function confirm_ajax(string $id)
+    {
+        $kegiatannonjti = KegiatanModel::find($id);
+
+        return view('admin.kegiatannonjti.confirm_ajax', ['kegiatannonjti' => $kegiatannonjti]);
+    }
+
+    public function delete_ajax(Request $request, string $id)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $kegiatannonjti = KegiatanModel::find($id);
+
+            if ($kegiatannonjti) {
+                $kegiatannonjti->delete();
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data berhasil dihapus'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data tidak ditemukan'
+                ]);
+            }
+            return redirect('/kegiatannonjti');
+        }
     }
 }
