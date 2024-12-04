@@ -30,13 +30,13 @@ class PimpinanController extends Controller
 
     public function list(Request $request)
     {
-        $admin = KegiatanModel::select('kegiatan_id', 'nama_kegiatan', 'waktu_mulai', 'waktu_selesai', 'pic', 'progres', 'deskripsi');
+        $pimpinan = KegiatanModel::select('kegiatan_id', 'nama_kegiatan', 'waktu_mulai', 'waktu_selesai', 'pic', 'progres', 'deskripsi');
 
         if ($request->nama_kegiatan) {
-            $admin->where('nama_kegiatan', $request->nama_kegiatan);
+            $pimpinan->where('nama_kegiatan', $request->nama_kegiatan);
         }
 
-        return DataTables::of($admin)
+        return DataTables::of($pimpinan)
             ->addIndexColumn()
             ->make(true);
     }

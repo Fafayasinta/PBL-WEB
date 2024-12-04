@@ -22,7 +22,19 @@ class KegiatanNonJtiController extends Controller
             'breadcrumb' => $breadcrumb,
         ]);
     }
+    public function indexP()
+    {
+        $activeMenu = 'kegiatannonjti';
+        $breadcrumb = (object) [
+            'title' => 'Data Kegiatan Non JTI',
+            'list' => ['Home', 'kegiatannonjti']
+        ];
 
+        return view('pimpinan.kegiatannonjti.index', [
+            'activeMenu' => $activeMenu,
+            'breadcrumb' => $breadcrumb,
+        ]);
+    }
     public function list(Request $request)
     {
         $kegiatannonjti = KegiatanModel::select('kegiatan_id', 'nama_kegiatan', 'pic', 'kategori_kegiatan_id', 'cakupan_wilayah', 'waktu_mulai', 'beban_kegiatan_id')

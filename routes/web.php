@@ -102,34 +102,14 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [ProfileController::class, 'index']);
         });
         
-        Route::group(['prefix' => 'jeniskegiatan'], function () {
-            Route::get('/', [JenisKegiatanController::class, 'index']);
-            Route::post('/list', [JenisKegiatanController::class, 'list']);
-        });
-        
-        Route::group(['prefix' => 'jabatankegiatan'], function () {
-            Route::get('/', [JabatanKegiatanController::class, 'index']);
-            Route::post('/list', [JabatanKegiatanController::class, 'list']);
-        });
-        
         Route::group(['prefix' => 'kegiatanjti'], function () {
             Route::get('/', [KegiatanJtiController::class, 'indexP']);
             Route::post('/list', [KegiatanJtiController::class, 'list']);
         });
         
         Route::group(['prefix' => 'kegiatannonjti'], function () {
-            Route::get('/', [KegiatanNonJtiController::class, 'index']);
+            Route::get('/', [KegiatanNonJtiController::class, 'indexP']);
             Route::post('/list', [KegiatanNonJtiController::class, 'list']);
-        });
-        
-        Route::group(['prefix' => 'jenispengguna'], function () {
-            Route::get('/', [JenisPenggunaController::class, 'index']);
-            Route::post('/list', [JenisPenggunaController::class, 'list']);
-        });
-        
-        Route::group(['prefix' => 'pengguna'], function () {
-            Route::get('/', [PenggunaController::class, 'index']);
-            Route::post('/list', [PenggunaController::class, 'list']);
         });
         
         Route::group(['prefix' => 'statistik'], function () {

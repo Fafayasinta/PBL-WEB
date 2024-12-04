@@ -7,7 +7,7 @@ use App\Models\KategoriKegiatanModel;
 use App\Models\KegiatanModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
-
+use Illuminate\Support\Facades\Auth;
 class KegiatanJtiController extends Controller
 {
     public function index()
@@ -35,12 +35,12 @@ class KegiatanJtiController extends Controller
         ];
 
         $status = KegiatanModel::all();
-        
         return view('pimpinan.kegiatanjti.index', [
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
             'status' => $status
         ]);
+        
     }
 
     public function list(Request $request)
