@@ -112,7 +112,7 @@ class JenisKegiatanController extends Controller
 
     public function create_ajax()
     {
-        $jeniskegiatan = KategoriKegiatanModel::select('kegiatan_kategori_id', 'nama_kategori', 'deskripsi')->get();
+        $jeniskegiatan = KategoriKegiatanModel::select('kategori_kegiatan_id', 'nama_kategori', 'deskripsi')->get();
 
         return view('admin.jeniskegiatan.create_ajax')->with('jeniskegiatan', $jeniskegiatan);
     }
