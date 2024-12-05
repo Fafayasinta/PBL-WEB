@@ -2,40 +2,29 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\DosenController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 Route::get('/', function () {
-    return redirect('login');
+   return redirect()->route('login');
 });
-Route::pattern('id', '[0-9]+');
 
-//Route Login
+// Auth Routes
 Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('login', [AuthController::class, 'postlogin']);
-Route::get('logout', [AuthController::class, 'logout']);
+Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
+// Route Register
+Route::get('register', [AuthController::class, 'register']);
+Route::post('register', [AuthController::class, 'store']);
 // Route Reset Password
 Route::get('forgot-password', [AuthController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 
+// Protected Dosen Routes
 Route::middleware(['auth'])->group(function () {
-    Route::get('/home', function () {
-        return view('dashboard');
-    })->name('home');
-    
-    Route::get('/profile', [UserController::class, 'editProfile'])->name('profile.edit');
-    Route::put('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
-    
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::put('/user/{id}', [UserController::class, 'updateUser'])->name('users.update');
-    Route::delete('/user/{id}', [UserController::class, 'deleteUser'])->name('users.delete');
+   Route::get('/home', [DosenController::class, 'index']);
+   
+   Route::get('/dosen', [DosenController::class, 'index'])->name('dosen.dashboard');
+   Route::get('/dosen/kegiatan-jti', [DosenController::class, 'kegiatanJTI'])->name('dosen.kegiatan.jti');
+   Route::get('/dosen/kegiatan/{id}', [DosenController::class, 'detailKegiatan'])->name('dosen.kegiatan.detail');
+   Route::post('/dosen/kegiatan/{id}/anggota', [DosenController::class, 'tambahAnggota'])->name('dosen.kegiatan.tambah');
 });

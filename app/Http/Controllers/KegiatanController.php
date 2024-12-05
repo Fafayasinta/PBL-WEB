@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class KegiatanController extends Controller
 {
+    
     public function store(Request $request)
     {
         $validated = $request->validate([
