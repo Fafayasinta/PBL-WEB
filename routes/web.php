@@ -72,6 +72,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [JabatanKegiatanController::class, 'index']);
             Route::post('/list', [JabatanKegiatanController::class, 'list']);
             Route::get('/{id}/show_ajax', [JabatanKegiatanController::class, 'show_ajax']);
+            Route::get('/create_ajax', [JabatanKegiatanController::class, 'create_ajax']);
+            Route::post('/ajax', [JabatanKegiatanController::class, 'store_ajax']);
             Route::get('/{id}/edit_ajax', [JabatanKegiatanController::class, 'edit_ajax']);
             Route::put('/{id}/update_ajax', [JabatanKegiatanController::class, 'update_ajax']);
             Route::get('/{id}/delete_ajax', [JabatanKegiatanController::class, 'confirm_ajax']);
@@ -82,6 +84,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [KegiatanJtiController::class, 'index']);
             Route::post('/list', [KegiatanJtiController::class, 'list']);
             Route::get('/{id}/show_ajax', [KegiatanJtiController::class, 'show_ajax']);
+            Route::get('/create_ajax', [KegiatanJtiController::class, 'create_ajax']);
+            Route::post('/ajax', [KegiatanJtiController::class, 'store_ajax']);
             Route::get('/{id}/edit_ajax', [KegiatanJtiController::class, 'edit_ajax']);
             Route::put('/{id}/update_ajax', [KegiatanJtiController::class, 'update_ajax']);
             Route::get('/{id}/delete_ajax', [KegiatanJtiController::class, 'confirm_ajax']);

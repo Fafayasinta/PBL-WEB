@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\BebanKegiatanModel;
 use App\Models\KategoriKegiatanModel;
 use App\Models\KegiatanModel;
+use App\Models\UserModel;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Validation\Rule as ValidationRule;
 use Illuminate\Support\Facades\Validator;
@@ -69,6 +71,69 @@ class KegiatanJtiController extends Controller
         })
         ->rawColumns(['action'])
         ->make(true); // Pastikan metode make(true) dipanggil
+    }
+
+    public function create_ajax()
+    {
+        $kategori = KategoriKegiatanModel::select('kategori_kegiatan_id', 'nama_kategori')
+        ->whereIn('kategori_kegiatan_id', [1, 2])
+        ->get();
+
+        $beban = BebanKegiatanModel::select('beban_kegiatan_id', 'nama_beban')->get();
+        $user = UserModel::select('user_id', 'nama')->get();
+
+        return view('admin.kegiatanjti.create_ajax')->with([
+            'kategori' => $kategori,
+            'beban' => $beban,
+            'user' => $user
+        ]);
+    }
+
+    public function store_ajax(Request $request)
+    {
+
+        if($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'user_id' => 'required|integer|exists:m_user,user_id',
+                'kategori_kegiatan_id' => 'required|integer|exists:m_kategori_kegiatan,kategori_kegiatan_id',
+                'beban_kegiatan_id' => 'required|integer|exists:m_beban_kegiatan,beban_kegiatan_id',
+                'nama_kegiatan' => 'required|string|max:200',
+                'pic' => 'required|string|max:100',
+                'cakupan_wilayah' => [
+                    'required',
+                    ValidationRule::in(['Luar Institusi','Institusi','Jurusan','Program Studi']),
+                ],
+                'deskripsi' => 'required|string|max:255',
+                'waktu_mulai' => 'required|string|max:255',
+                'waktu_selesai' => 'required|string|max:255',
+                'deadline' => 'required|string|max:255',
+                'status' => [
+                    'required',
+                    ValidationRule::in(['Belum Proses','Proses','Selesai']),
+                ],
+                'progres' => 'required|string|max:255',
+                'keterangan' => 'required|string|max:255',
+
+            ];
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validasi Gagal',
+                    'msgField' => $validator->errors(),
+                ]);
+            }
+
+            KegiatanModel::create($request->all());
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data Kegiatan JTI berhasil disimpan'
+            ]);
+        }
+        return redirect('/kegiatanjti');
     }
 
     public function edit_ajax(string $id)

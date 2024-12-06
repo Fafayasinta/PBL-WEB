@@ -52,8 +52,8 @@ class KegiatanModel extends Model
         return $this->belongsTo(BebanKegiatanModel::class, 'beban_kegiatan_id', 'beban_kegiatan_id');
     }
 
-    public function kegiatanDosen() :HasMany
+    public function tahun() :BelongsTo
     {
-        return $this->hasMany(KegiatanDosenModel::class, 'kegiatan_dosen_id', 'kegiatan_dosen_id');
+        return $this->belongsTo(TahunModel::class, 'tahun_id', 'tahun_id');
     }
 }

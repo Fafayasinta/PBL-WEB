@@ -24,8 +24,8 @@ return new class extends Migration
             $table->unsignedBigInteger('beban_kegiatan_id')->index();
             $table->unsignedBigInteger('kegiatan_id')->index();
             $table->decimal('skor', 4, 2);
-            $table->dateTime('waktu_mulai');
-            $table->dateTime('waktu_selesai');
+            $table->date('waktu_mulai');
+            $table->date('waktu_selesai');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\BobotDosenModel;
 use App\Models\BobotJabatanModel;
 use Illuminate\Support\Facades\Validator;
 use App\Models\KegiatanDosenModel;
@@ -63,6 +64,49 @@ class JabatanKegiatanController extends Controller
         ->make(true);
     }
 
+    public function create_ajax()
+    {
+        $jabatankegiatan = BobotJabatanModel::select('bobot_jabatan_id', 'cakupan_wilayah', 'jabatan', 'skor')->get();
+
+        return view('admin.jabatankegiatan.create_ajax')->with('jabatankegiatan', $jabatankegiatan);
+    }
+
+    public function store_ajax(Request $request)
+    {
+
+        if($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'cakupan_wilayah' => [
+                    'required',
+                    ValidationRule::in(['Luar Institusi', 'Institusi', 'Jurusan', 'Program Studi']), // Validasi nilai enum
+                ],
+                'jabatan' => [
+                    'required',
+                    ValidationRule::in(['PIC', 'Sekretaris', 'Bendahara', 'Anggota']), // Validasi nilai enum
+                ],
+                'skor' => 'required|numeric|between:0,9999.99', // Validasi skor sebagai angka desimal
+            ];
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validasi Gagal',
+                    'msgField' => $validator->errors(),
+                ]);
+            }
+
+            BobotJabatanModel::create($request->all());
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data Jenis Kegiatan berhasil disimpan'
+            ]);
+        }
+        return redirect('/jabatankegiatan');
+    }
+
     public function show_ajax(string $id){
         $jabatankegiatan = BobotJabatanModel::find($id);
         return view('admin.jabatankegiatan.show_ajax', ['jabatankegiatan' => $jabatankegiatan]);
@@ -88,7 +132,7 @@ class JabatanKegiatanController extends Controller
                     'required',
                     ValidationRule::in(['PIC', 'Sekretaris', 'Bendahara', 'Anggota']), // Validasi nilai enum
                 ],
-                'skor' => 'required|numeric|between:0,9999.99', // Validasi skor sebagai angka desimal
+                'skor' => 'required|numeric', // Validasi skor sebagai angka desimal
             ];
             
 
