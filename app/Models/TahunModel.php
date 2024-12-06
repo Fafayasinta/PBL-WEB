@@ -17,6 +17,6 @@ class TahunModel extends Model
 
     public function kegiatan(): HasMany
     {
-        return $this->hasMany(KegiatanModel::class, 'kegiatan_id', 'kegiatan_id');
+        return $this->hasMany(KegiatanModel::class, 'tahun_id', 'tahun_id');
     }
 }

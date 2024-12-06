@@ -9,6 +9,7 @@ use App\Http\Controllers\JenisPenggunaController;
 use App\Http\Controllers\KegiatanJtiController;
 use App\Http\Controllers\KegiatanNonJtiController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StatistikController;
 use App\Http\Controllers\UserController;
@@ -101,6 +102,18 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{id}/delete_ajax', [KegiatanNonJtiController::class, 'confirm_ajax']);
             Route::delete('/{id}/delete_ajax', [KegiatanNonJtiController::class, 'delete_ajax']);
         });
+
+        Route::group(['prefix' => 'periode'], function () {
+            Route::get('/', [PeriodeController::class, 'index']);
+            Route::post('/list', [PeriodeController::class, 'list']);
+            Route::get('/{id}/show_ajax', [PeriodeController::class, 'show_ajax']);
+            Route::get('/create_ajax', [PeriodeController::class, 'create_ajax']);
+            Route::post('/ajax', [PeriodeController::class, 'store_ajax']);
+            Route::get('/{id}/edit_ajax', [PeriodeController::class, 'edit_ajax']);
+            Route::put('/{id}/update_ajax', [PeriodeController::class, 'update_ajax']);
+            Route::get('/{id}/delete_ajax', [PeriodeController::class, 'confirm_ajax']);
+            Route::delete('/{id}/delete_ajax', [PeriodeController::class, 'delete_ajax']);
+        });
         
         Route::group(['prefix' => 'jenispengguna'], function () {
             Route::get('/', [JenisPenggunaController::class, 'index']);
@@ -116,6 +129,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [PenggunaController::class, 'index']);
             Route::post('/list', [PenggunaController::class, 'list']);
             Route::get('/{id}/show_ajax', [PenggunaController::class, 'show_ajax']);
+            Route::get('/create_ajax', [PenggunaController::class, 'create_ajax']);
+            Route::post('/ajax', [PenggunaController::class, 'store_ajax']);
             Route::get('/{id}/edit_ajax', [PenggunaController::class, 'edit_ajax']);
             Route::put('/{id}/update_ajax', [PenggunaController::class, 'update_ajax']);
             Route::get('/{id}/delete_ajax', [PenggunaController::class, 'confirm_ajax']);

@@ -6,7 +6,7 @@
             <br>
             {{-- <h3 class="card-title">{{ $page->title }}</h3> --}}
             <div class="card-tools">
-                <button onclick="modalAction('{{ url('/pengguna/create_ajax') }}')"class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
+                <button onclick="modalAction('{{ url('/periode/create_ajax') }}')"class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
             </div>
         </div>
         <div class="card-body">
@@ -18,28 +18,26 @@
             @endif
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <label class="col-1 control-label col-form-label">Filter</label>
                         <div class="col-3">
-                            <select type="text" class="form-control" id="level_nama" name="level_nama" required>
+                            <select type="text" class="form-control" id="tahun" name="tahun" required>
                                 <option value="">Semua</option>
-                                @foreach ($level as $item)
-                                    <option value="{{ $item->level_nama }}">{{ $item->level_nama }}</option>
+                                @foreach ($periode as $item)
+                                    <option value="{{ $item->tahun }}">{{ $item->tahun }}</option>
                                 @endforeach
                             </select>
-                            <small class="form-text text-muted">Jenis Pengguna</small>
+                            <small class="form-text text-muted">Tahun</small>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
-            <table class="table-bordered table-striped table-hover table-sm table" id="table_pengguna" style="width: 100%">
+            <table class="table-bordered table-striped table-hover table-sm table" id="table_periode" style="width: 100%">
                 <thead>
                     <tr>
-                        <th>NO</th>
-                        <th>NAMA</th>
-                        <th>USERNAME</th>
-                        <th>JENIS PENGGUNA</th>
-                        <th>AKSI</th>
+                        <th class="text-center">NO</th>
+                        <th class="text-center" style="width: 50%">TAHUN</th>
+                        <th class="text-center">AKSI</th>
                     </tr>
                 </thead>
             </table>
@@ -56,16 +54,16 @@
                 $('#myModal').modal('show');
             })
         }
-        var dataPengguna;
+        var dataPeriode;
         $(document).ready(function() {
-            dataPengguna = $('#table_pengguna').DataTable({
+            dataPeriode = $('#table_periode').DataTable({
                 serverSide: true, // Menggunakan server-side processing
                 ajax: {
-                    "url": "{{ url('pengguna/list') }}", // Endpoint untuk mengambil data kategori
+                    "url": "{{ url('periode/list') }}", // Endpoint untuk mengambil data kategori
                     "dataType": "json",
                     "type": "POST",
                     "data": function(d) {
-                        d.level_nama = $('#level_nama').val(); // Mengirim data filter kategori_kode
+                        d.tahun = $('#tahun').val(); // Mengirim data filter kategori_kode
                     }
                 },
                 columns: [{
@@ -75,22 +73,14 @@
                         searchable: false
                     },
                     {
-                        data: "nama",
-                        orderable: true,
-                        searchable: true
-                    },
-                    {
-                        data: "username",
-                        orderable: true,
-                        searchable: true
-                    },
-                    {
-                        data: "level.level_nama",
+                        data: "tahun",
+                        // className: "text-center",
                         orderable: true,
                         searchable: true
                     },
                     {
                         data: "action", // Kolom aksi (Edit, Hapus)
+                        // className: "text-center",
                         orderable: false,
                         searchable: false
                     }
@@ -98,9 +88,9 @@
             });
 
             // Reload tabel saat filter kategori diubah
-            $('#level_nama').on('change', function() {
-                dataPengguna.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
-            });
+            // $('#tahun').on('change', function() {
+            //     dataPengguna.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
+            // });
         });
     </script>
 @endpush

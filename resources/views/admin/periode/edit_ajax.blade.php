@@ -1,4 +1,4 @@
-@empty($pengguna)
+@empty($periode)
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-info text-white">
@@ -11,12 +11,12 @@
                 <div class="alert alert-danger">
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
                     Data yang anda cari tidak ditemukan</div>
-                <a href="{{ url('/pengguna') }}" class="btn btn-warning">Kembali</a>
+                <a href="{{ url('/periode') }}" class="btn btn-warning">Kembali</a>
             </div>
         </div>
     </div>
 @else
-    <form action="{{ url('/pengguna/' . $pengguna->user_id.'/update_ajax') }}" method="POST" id="form-edit">
+    <form action="{{ url('/periode/' . $periode->tahun_id.'/update_ajax') }}" method="POST" id="form-edit">
     @csrf
     @method('PUT')
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
@@ -29,24 +29,9 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>NAMA</label>
-                    <input value="{{ $pengguna->nama }}" type="text" name="nama" id="nama" class="form-control" required>
-                    <small id="error-nama" class="error-text form-text text-danger"></small>
-                </div>
-                <div class="form-group">
-                    <label>USERNAME</label>
-                    <input value="{{ $pengguna->username }}" type="text" name="username" id="username" class="form-control" required>
-                    <small id="error-username" class="error-text form-text text-danger"></small>
-                </div>
-                <div class="form-group">
-                    <label>STATUS</label>
-                    <select name="level_id" id="level_id" class="form-control" required>
-                        <option value="">Pilih Status</option>
-                        <option value="1" {{ $pengguna->level_id == 1 ? 'selected' : '' }}>Administrator</option>
-                        <option value="2" {{ $pengguna->level_id == 2 ? 'selected' : '' }}>Pimpinan</option>
-                        <option value="3" {{ $pengguna->level_id == 3 ? 'selected' : '' }}>Dosen</option>
-                    </select>
-                    <small id="error-level_id" class="error-text form-text text-danger"></small>
+                    <label>TAHUN</label>
+                    <input value="{{ $periode->tahun }}" type="text" name="tahun" id="tahun" class="form-control" required>
+                    <small id="error-tahun" class="error-text form-text text-danger"></small>
                 </div>
             </div>
             <div class="modal-footer">
@@ -60,9 +45,7 @@
         $(document).ready(function() {
             $("#form-edit").validate({
                 rules: {
-                    nama: {required: true, minlength: 3, maxlength: 100},
-                    username: {required: true, minlength: 3, maxlength: 50},
-                    level_id: {required: true}
+                    tahun: {required: true},
                 },
                 submitHandler: function(form) {
                     $.ajax({
@@ -77,7 +60,7 @@
                                     title: 'Berhasil',
                                     text: response.message
                                 });
-                                dataPengguna.ajax.reload();
+                                dataPeriode.ajax.reload();
                             }else{
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {
