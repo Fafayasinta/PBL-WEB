@@ -8,6 +8,7 @@ use App\Models\UserModel;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Monolog\Level;
 use Yajra\DataTables\DataTables;
 
 class PenggunaController extends Controller
@@ -54,7 +55,7 @@ class PenggunaController extends Controller
                     </button> ';
             return $btn;
         })
-        ->rawColumns(['action', 'password']) // Pastikan kolom 'password' mendukung HTML
+        ->rawColumns(['action'])
         ->make(true);
     }
 
@@ -64,6 +65,77 @@ class PenggunaController extends Controller
 
         return view('admin.pengguna.show_ajax', ['pengguna' => $pengguna]);
     }
+
+    public function create_ajax()
+    {
+        $pengguna = UserModel::select('user_id', 'level_id', 'username', 'password', 'nama', 'nip', 'email')->get();
+
+        return view('admin.pengguna.create_ajax')->with('pengguna', $pengguna);
+    }
+
+    public function store_ajax(Request $request)
+{
+    // Mengecek apakah request AJAX atau JSON
+    if ($request->ajax() || $request->wantsJson()) {
+        // Validasi input
+        $rules = [
+            'level_id'  => 'required|integer',
+            'username'  => 'required|string|min:3|unique:m_user,username',
+            'nama'      => 'required|string|max:100',
+            'password'  => 'required|min:5',
+            'nip'       => 'required|string|max:50|unique:m_user,nip',
+            'email'     => 'required|string|unique:m_user,email',
+            'foto_profil' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Validasi foto_profil
+            'email_verified_at' => 'nullable|date',
+            'remember_token'    => 'nullable|string|max:100',
+            'deleted_at'        => 'nullable|date'
+        ];
+
+        // Melakukan validasi
+        $validator = Validator::make($request->all(), $rules);
+
+        // Jika validasi gagal
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validasi Gagal',
+                'msgField' => $validator->errors(),
+            ]);
+        }
+
+        // Menyimpan foto profil jika ada file yang diupload
+        $fotoProfilPath = null;
+        if ($request->hasFile('foto_profil') && $request->file('foto_profil')->isValid()) {
+            $fotoProfil = $request->file('foto_profil');
+            // Menyimpan file ke storage/public/foto_profil dan mendapatkan pathnya
+            $fotoProfilPath = $fotoProfil->store('public/foto_profil');
+        }
+
+        // Menyimpan data pengguna ke dalam database
+        UserModel::create([
+            'level_id' => $request->level_id,
+            'username' => $request->username,
+            'password' => bcrypt($request->password),  // Enkripsi password
+            'nama' => $request->nama,
+            'nip' => $request->nip,
+            'email' => $request->email,
+            'foto_profil' => $fotoProfilPath, // Menyimpan path foto profil
+            'email_verified_at' => $request->email_verified_at,
+            'remember_token' => $request->remember_token,
+            'deleted_at' => $request->deleted_at
+        ]);
+
+        // Mengembalikan response sukses
+        return response()->json([
+            'status' => true,
+            'message' => 'Data Pengguna berhasil disimpan'
+        ]);
+    }
+
+    // Jika bukan request AJAX, redirect ke halaman pengguna
+    return redirect('/pengguna');
+}
+
 
     public function edit_ajax(string $id)
     {
@@ -79,7 +151,7 @@ class PenggunaController extends Controller
             $rules = [
                 'nama' => 'required|string|max:100',
                 'username' => 'required|string|max:50|unique:m_user,user_id,' . $id . ',user_id',
-                'level_nama' => 'required|string|max:100',
+                'level_id' => 'required|integer',
             ];
 
             // use Illuminate\Support\Facades\Validator;
@@ -134,7 +206,7 @@ class PenggunaController extends Controller
                     'message' => 'Data tidak ditemukan'
                 ]);
             }
-            return redirect('/jenispengguna');
+            return redirect('/pengguna');
         }
     }
 }   
