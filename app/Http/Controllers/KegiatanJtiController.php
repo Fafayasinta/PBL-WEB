@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\KategoriKegiatanModel;
 use App\Models\KegiatanModel;
+use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Validation\Rule as ValidationRule;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
-use Illuminate\Support\Facades\Auth;
+
 class KegiatanJtiController extends Controller
 {
     public function index()
@@ -25,22 +28,6 @@ class KegiatanJtiController extends Controller
             'breadcrumb' => $breadcrumb,
             'status' => $status
         ]);
-    }
-    public function indexP()
-    {
-        $activeMenu = 'kegiatanjti';
-        $breadcrumb = (object) [
-            'title' => 'Data Kegiatan JTI',
-            'list' => ['Home', 'kegiatanjti']
-        ];
-
-        $status = KegiatanModel::all();
-        return view('pimpinan.kegiatanjti.index', [
-            'activeMenu' => $activeMenu,
-            'breadcrumb' => $breadcrumb,
-            'status' => $status
-        ]);
-        
     }
 
     public function list(Request $request)
@@ -82,5 +69,83 @@ class KegiatanJtiController extends Controller
         })
         ->rawColumns(['action'])
         ->make(true); // Pastikan metode make(true) dipanggil
+    }
+
+    public function edit_ajax(string $id)
+    {
+        $kegiatanjti = KegiatanModel::find($id);
+
+        return view('admin.kegiatanjti.edit_ajax', ['kegiatanjti' => $kegiatanjti]);
+    }
+
+    public function update_ajax(Request $request, $id)
+    {
+        // cek apakah request dari ajax
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'nama_kegiatan' => 'required|string|max:200',
+                'deskripsi' => 'required|string|max:255',
+                'nama_kategori' => 'required|string|max:100|unique:m_kategori_kegiatan,kategori_kegiatan_id,' . $id . ',kategori_kegiatan_id',
+                'status' => [
+                    'required',
+                    ValidationRule::in(['Belum Proses','Proses','Selesai']),
+                ],
+                'nama_beban' => 'required|string|max:100|unique:m_beban_kegiatan,beban_kegiatan_id,' . $id . ',beban_kegiatan_id',
+            ];
+
+            // use Illuminate\Support\Facades\Validator;
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status'   => false,    // respon json, true: berhasil, false: gagal
+                    'message'  => 'Validasi gagal.',
+                    'msgField' => $validator->errors()  // menunjukkan field mana yang error
+                ]);
+            }
+
+            $check = KegiatanModel::find($id);
+            if ($check) {
+                $check->update($request->all());
+                return response()->json([
+                    'status'  => true,
+                    'message' => 'Data berhasil diupdate'
+                ]);
+            } else {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'Data tidak ditemukan'
+                ]);
+            }
+        }
+        return redirect('/kegiatanjti');
+    }
+
+    public function confirm_ajax(string $id)
+    {
+        $kegiatanjti = KegiatanModel::find($id);
+
+        return view('admin.kegiatanjti.confirm_ajax', ['kegiatanjti' => $kegiatanjti]);
+    }
+
+    public function delete_ajax(Request $request, string $id)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $kegiatanjti = KegiatanModel::find($id);
+
+            if ($kegiatanjti) {
+                $kegiatanjti->delete();
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data berhasil dihapus'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data tidak ditemukan'
+                ]);
+            }
+            return redirect('/kegiatanjti');
+        }
     }
 }

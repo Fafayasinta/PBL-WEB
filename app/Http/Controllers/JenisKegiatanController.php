@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\KategoriKegiatanModel;
 use App\Models\KegiatanModel;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -31,9 +32,9 @@ class JenisKegiatanController extends Controller
     {
         $jeniskegiatan = KategoriKegiatanModel::select('kategori_kegiatan_id', 'nama_kategori');
 
-        if ($request->nama_kategori) {
-            $jeniskegiatan->where('nama_kategori', $request->nama_kategori);
-        }
+        // if ($request->nama_kategori) {
+        //     $jeniskegiatan->where('nama_kategori', $request->nama_kategori);
+        // }
 
         return DataTables::of($jeniskegiatan)
         ->addIndexColumn()
@@ -57,5 +58,119 @@ class JenisKegiatanController extends Controller
         })             
         ->rawColumns(['action'])
         ->make(true);
+    }
+
+    public function show_ajax(string $id){
+
+        $jeniskegiatan = KategoriKegiatanModel::find($id);
+
+        return view('admin.jeniskegiatan.show_ajax', ['jeniskegiatan' => $jeniskegiatan]);
+    }
+
+    public function edit_ajax(string $id)
+    {
+        $jeniskegiatan = KategoriKegiatanModel::find($id);
+
+        return view('admin.jeniskegiatan.edit_ajax', ['jeniskegiatan' => $jeniskegiatan]);
+    }
+
+    public function update_ajax(Request $request, $id)
+    {
+        // cek apakah request dari ajax
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'nama_kategori' => 'required|string|max:100|unique:m_kategori_kegiatan,kategori_kegiatan_id,' . $id . ',kategori_kegiatan_id',
+            ];
+
+            // use Illuminate\Support\Facades\Validator;
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status'   => false,    // respon json, true: berhasil, false: gagal
+                    'message'  => 'Validasi gagal.',
+                    'msgField' => $validator->errors()  // menunjukkan field mana yang error
+                ]);
+            }
+
+            $check = KategoriKegiatanModel::find($id);
+            if ($check) {
+                $check->update($request->all());
+                return response()->json([
+                    'status'  => true,
+                    'message' => 'Data berhasil diupdate'
+                ]);
+            } else {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'Data tidak ditemukan'
+                ]);
+            }
+        }
+        return redirect('/jeniskegiatan ');
+    }
+
+    public function create_ajax()
+    {
+        $jeniskegiatan = KategoriKegiatanModel::select('kegiatan_kategori_id', 'nama_kategori', 'deskripsi')->get();
+
+        return view('admin.jeniskegiatan.create_ajax')->with('jeniskegiatan', $jeniskegiatan);
+    }
+
+    public function store_ajax(Request $request)
+    {
+
+        if($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'nama_kategori' => 'required|string|max:100|unique:m_kategori_kegiatan,kategori_kegiatan_id',
+                'deskripsi' => 'required|string|max:255',
+            ];
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validasi Gagal',
+                    'msgField' => $validator->errors(),
+                ]);
+            }
+
+            KategoriKegiatanModel::create($request->all());
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data Jenis Kegiatan berhasil disimpan'
+            ]);
+        }
+        return redirect('/jeniskegiatan');
+    }
+
+    public function confirm_ajax(string $id)
+    {
+        $jeniskegiatan = KategoriKegiatanModel::find($id);
+
+        return view('admin.jeniskegiatan.confirm_ajax', ['jeniskegiatan' => $jeniskegiatan]);
+    }
+
+    public function delete_ajax(Request $request, string $id)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $jeniskegiatan = KategoriKegiatanModel::find($id);
+
+            if ($jeniskegiatan) {
+                $jeniskegiatan->delete();
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data berhasil dihapus'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data tidak ditemukan'
+                ]);
+            }
+            return redirect('/jeniskegiatan');
+        }
     }
 }

@@ -97,9 +97,9 @@
             });
 
             // Reload tabel saat filter kategori diubah
-            $('jabatan').on('change', function() {
-                dataJabatanKegiatan.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
-            });
+            // $('jabatan').on('change', function() {
+            //     dataJabatanKegiatan.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
+            // });
         });
     </script>
 @endpush
