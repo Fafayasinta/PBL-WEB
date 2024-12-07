@@ -97,9 +97,20 @@
                         searchable: true
                     },
                     {
-                        data: "cakupan_wilayah",
+                        data: "waktu_mulai",
                         orderable: true,
-                        searchable: true
+                        searchable: true,
+                        render: function(data, type, row) {
+                            if (data) {
+                                let date = new Date(data);
+                                return date.toLocaleDateString("id-ID", {
+                                    day: "2-digit",
+                                    month: "long",
+                                    year: "numeric"
+                                });
+                            }
+                            return "-";
+                        }
                     },
                     {
                         data: "beban.nama_beban",
