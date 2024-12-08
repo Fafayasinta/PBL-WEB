@@ -10,6 +10,7 @@ use App\Http\Controllers\JenisPenggunaController;
 use App\Http\Controllers\KegiatanJtiController;
 use App\Http\Controllers\KegiatanNonJtiController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StatistikController;
 use App\Http\Controllers\UserController;
@@ -73,6 +74,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [JabatanKegiatanController::class, 'index']);
             Route::post('/list', [JabatanKegiatanController::class, 'list']);
             Route::get('/{id}/show_ajax', [JabatanKegiatanController::class, 'show_ajax']);
+            Route::get('/create_ajax', [JabatanKegiatanController::class, 'create_ajax']);
+            Route::post('/ajax', [JabatanKegiatanController::class, 'store_ajax']);
             Route::get('/{id}/edit_ajax', [JabatanKegiatanController::class, 'edit_ajax']);
             Route::put('/{id}/update_ajax', [JabatanKegiatanController::class, 'update_ajax']);
             Route::get('/{id}/delete_ajax', [JabatanKegiatanController::class, 'confirm_ajax']);
@@ -83,6 +86,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [KegiatanJtiController::class, 'index']);
             Route::post('/list', [KegiatanJtiController::class, 'list']);
             Route::get('/{id}/show_ajax', [KegiatanJtiController::class, 'show_ajax']);
+            Route::get('/create_ajax', [KegiatanJtiController::class, 'create_ajax']);
+            Route::post('/ajax', [KegiatanJtiController::class, 'store_ajax']);
             Route::get('/{id}/edit_ajax', [KegiatanJtiController::class, 'edit_ajax']);
             Route::put('/{id}/update_ajax', [KegiatanJtiController::class, 'update_ajax']);
             Route::get('/{id}/delete_ajax', [KegiatanJtiController::class, 'confirm_ajax']);
@@ -97,6 +102,18 @@ Route::middleware(['auth'])->group(function () {
             Route::put('/{id}/update_ajax', [KegiatanNonJtiController::class, 'update_ajax']);
             Route::get('/{id}/delete_ajax', [KegiatanNonJtiController::class, 'confirm_ajax']);
             Route::delete('/{id}/delete_ajax', [KegiatanNonJtiController::class, 'delete_ajax']);
+        });
+
+        Route::group(['prefix' => 'periode'], function () {
+            Route::get('/', [PeriodeController::class, 'index']);
+            Route::post('/list', [PeriodeController::class, 'list']);
+            Route::get('/{id}/show_ajax', [PeriodeController::class, 'show_ajax']);
+            Route::get('/create_ajax', [PeriodeController::class, 'create_ajax']);
+            Route::post('/ajax', [PeriodeController::class, 'store_ajax']);
+            Route::get('/{id}/edit_ajax', [PeriodeController::class, 'edit_ajax']);
+            Route::put('/{id}/update_ajax', [PeriodeController::class, 'update_ajax']);
+            Route::get('/{id}/delete_ajax', [PeriodeController::class, 'confirm_ajax']);
+            Route::delete('/{id}/delete_ajax', [PeriodeController::class, 'delete_ajax']);
         });
         
         Route::group(['prefix' => 'jenispengguna'], function () {
@@ -113,6 +130,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [PenggunaController::class, 'index']);
             Route::post('/list', [PenggunaController::class, 'list']);
             Route::get('/{id}/show_ajax', [PenggunaController::class, 'show_ajax']);
+            Route::get('/create_ajax', [PenggunaController::class, 'create_ajax']);
+            Route::post('/ajax', [PenggunaController::class, 'store_ajax']);
             Route::get('/{id}/edit_ajax', [PenggunaController::class, 'edit_ajax']);
             Route::put('/{id}/update_ajax', [PenggunaController::class, 'update_ajax']);
             Route::get('/{id}/delete_ajax', [PenggunaController::class, 'confirm_ajax']);

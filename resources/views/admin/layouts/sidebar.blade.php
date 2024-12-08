@@ -47,8 +47,8 @@
           </li>
           <!-- DROPDOWN -->
           <li class="nav-header">KEGIATAN</li>
-          <li class="nav-item {{ in_array($activeMenu, ['jeniskegiatan', 'jabatankegiatan', 'kegiatanjti', 'kegiatannonjti']) ? 'menu-open' : '' }}">
-              <a href="#" class="nav-link {{ in_array($activeMenu, ['jeniskegiatan', 'jabatankegiatan', 'kegiatanjti', 'kegiatannonjti']) ? 'active' : '' }}">
+          <li class="nav-item {{ in_array($activeMenu, ['jeniskegiatan', 'jabatankegiatan', 'kegiatanjti', 'kegiatannonjti', 'periode']) ? 'menu-open' : '' }}">
+              <a href="#" class="nav-link {{ in_array($activeMenu, ['jeniskegiatan', 'jabatankegiatan', 'kegiatanjti', 'kegiatannonjti', 'periode']) ? 'active' : '' }}">
                   <i class="nav-icon fas fa-clipboard-list"></i>
                   <p>Kegiatan Dosen<i class="right fas fa-angle-left"></i></p>
               </a>
@@ -79,6 +79,12 @@
                     <a href="{{ url('/kegiatannonjti') }}" class="nav-link {{ ($activeMenu == 'kegiatannonjti')? 'active' : '' }}">
                           <i class="far fa-circle nav-icon"></i>
                           <p>Kelola Kegiatan Non JTI</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ url('/periode') }}" class="nav-link {{ ($activeMenu == 'periode')? 'active' : '' }}">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Periode Kegiatan</p>
                       </a>
                   </li>
               </ul>

@@ -24,13 +24,14 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->index();
             $table->unsignedBigInteger('kategori_kegiatan_id')->index();
             $table->unsignedBigInteger('beban_kegiatan_id')->index();
+            $table->unsignedBigInteger('tahun_id')->index();
             $table->string('nama_kegiatan', 200);
             $table->string('pic', 100);
             $table->enum('cakupan_wilayah', ['Luar Institusi','Institusi','Jurusan','Program Studi']);
             $table->text('deskripsi');
-            $table->dateTime('waktu_mulai');
-            $table->dateTime('waktu_selesai');
-            $table->dateTime('deadline');  
+            $table->date('waktu_mulai');
+            $table->date('waktu_selesai');
+            $table->date('deadline');  
             $table->enum('status', ['Belum Proses','Proses','Selesai']);
             $table->decimal('progres', 8, 2);  
             $table->text('keterangan');
@@ -40,6 +41,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('user_id')->on('m_user');
             $table->foreign('beban_kegiatan_id')->references('beban_kegiatan_id')->on('m_beban_kegiatan');
             $table->foreign('kategori_kegiatan_id')->references('kategori_kegiatan_id')->on('m_kategori_kegiatan');
+            $table->foreign('tahun_id')->references('tahun_id')->on('m_tahun');
         });
     }
 

@@ -17,8 +17,13 @@ class DatabaseSeeder extends Seeder
         UserSeeder::class,
         KategoriKegiatanSeeder::class,
         BebanKegiatanSeeder::class,
+        BobotJabatanSeeder::class,
+        TahunSeeder::class,
         KegiatanSeeder::class,
+        AnggotaKegiatanSeeder::class,
         KegiatanDosenSeeder::class,
+        BobotDosenSeeder::class,
+        KegiatanAgendaSeeder::class,
     ]);
 }
 }

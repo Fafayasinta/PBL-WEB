@@ -31,12 +31,12 @@
                     Apakah Anda ingin menghapus data seperti di bawah ini?
                 </div>
                 <table class="table table-sm table-bordered table-striped">
-                    <tr><th class="text-right col-3">Level :</th><td class="col-9">{{$pengguna->level->level_nama }}</td></tr>
-                    <tr><th class="text-right col-3">Username :</th><td class="col-9">{{$pengguna->username }}</td></tr>
-                    <tr><th class="text-right col-3">Password :</th><td class="col-9">{{$pengguna->password }}</td></tr>
-                    <tr><th class="text-right col-3">Nama :</th><td class="col-9">{{$pengguna->nama }}</td></tr>
-                    <tr><th class="text-right col-3">NIP :</th><td class="col-9">{{$pengguna->nip }}</td></tr>
-                    <tr><th class="text-right col-3">Email :</th><td class="col-9">{{$pengguna->email }}</td></tr>
+                    <tr><th class="text-left col-3">Jenis Pengguna</th><td class="col-9">{{$pengguna->level->level_nama }}</td></tr>
+                    <tr><th class="text-left col-3">Username</th><td class="col-9">{{$pengguna->username }}</td></tr>
+                    <tr><th class="text-left col-3">Password</th><td class="col-9">{{$pengguna->password }}</td></tr>
+                    <tr><th class="text-left col-3">Nama</th><td class="col-9">{{$pengguna->nama }}</td></tr>
+                    <tr><th class="text-left col-3">NIP</th><td class="col-9">{{$pengguna->nip }}</td></tr>
+                    <tr><th class="text-left col-3">Email</th><td class="col-9">{{$pengguna->email }}</td></tr>
                 </table>
             </div>
             <div class="modal-footer">
@@ -63,7 +63,7 @@
                                     title: 'Berhasil',
                                     text: response.message
                                 });
-                                dataPengguna.ajax.reload();
+                                datapengguna.ajax.reload();
                             }else{
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {

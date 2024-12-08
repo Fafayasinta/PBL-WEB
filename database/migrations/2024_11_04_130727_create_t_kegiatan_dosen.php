@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('kegiatan_dosen_id');
             $table->unsignedBigInteger('user_id')->index();
             $table->unsignedBigInteger('kegiatan_id')->index();
-            $table->dateTime('deadline');  
+            $table->date('deadline');  
             $table->enum('jabatan', ['PIC', 'Sekretaris', 'Bendahara', 'Anggota']); // Enum untuk jabatan
             $table->decimal('skor', 4, 2);
             $table->timestamp('created_at')->useCurrent();
