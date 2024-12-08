@@ -29,7 +29,7 @@
                             </tr>
                             <tr>
                                 <th>Nama Ketua Pelaksana</th>
-                                <td>{{ $kegiatan->ketua_pelaksana }}</td>
+                                <td>{{ $kegiatan->pic }}</td>
                             </tr>
                         </table>
                     </div>

@@ -216,23 +216,7 @@ class KegiatanJtiController extends Controller
     }
     public function show_ajax($id)
 {
-    // Ambil data dari tabel t_kegiatan
-    $kegiatan = DB::table('t_kegiatan')->where('id', $id)->first();
-
-    // Ambil data anggota dari t_anggota_kegiatan
-    $anggotaKegiatan = DB::table('t_anggota_kegiatan')
-        ->where('kegiatan_id', $id)
-        ->join('users', 't_anggota_kegiatan.user_id', '=', 'users.id') // Join dengan tabel users jika perlu nama anggota
-        ->select('users.name as nama_anggota', 't_anggota_kegiatan.posisi', 't_anggota_kegiatan.bobot')
-        ->get();
-
-    // Ambil data agenda dari t_kegiatan_agenda
-    $agendaKegiatan = DB::table('t_kegiatan_agenda')
-        ->where('kegiatan_id', $id)
-        ->select('id', 'nama_agenda', 'waktu', 'tempat', 'keterangan', 'penanggung_jawab', 'progress')
-        ->get();
-
-    return view('pimpinan.detail_kegiatan', compact('kegiatan', 'anggotaKegiatan', 'agendaKegiatan'));
+    
 }
 
 }
