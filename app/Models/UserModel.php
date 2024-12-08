@@ -39,7 +39,6 @@ class UserModel extends Authenticatable
     // Casting tipe data
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
     ];
 
     // Relasi ke tabel level
@@ -55,10 +54,7 @@ class UserModel extends Authenticatable
     }
 
     // Mutator untuk password (hash otomatis)
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
+    
 
     // Scope query untuk role
     public function getRole()
