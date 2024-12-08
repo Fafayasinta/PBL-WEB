@@ -27,7 +27,7 @@ class SuratTugasController extends Controller
             'kegiatan_id' => 'required|exists:t_kegiatan,kegiatan_id',
             'nomor_surat' => 'required|string|unique:surat_tugas'
         ]);
-
+        
         SuratTugasModel::create($validated);
 
         return redirect()->route('surat-tugas.index')
