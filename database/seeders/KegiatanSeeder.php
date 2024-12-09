@@ -13,7 +13,7 @@ class KegiatanSeeder extends Seeder
             [
                 'nama_kegiatan' => 'JTI Play IT!',
                 'kategori_kegiatan_id' => 1, // Sesuaikan ID kategori
-                'user_id' => 42, // Sesuaikan ID user
+                'user_id' => 41, // Sesuaikan ID user
                 'beban_kegiatan_id' => 1,
                 'tahun_id' => 3,
                 'pic' => 'Dika Rizky Yunianto, S.Kom, M.Kom',
@@ -30,7 +30,7 @@ class KegiatanSeeder extends Seeder
             [
                 'nama_kegiatan' => 'Dialog Dosen Mahasiswa 2024',
                 'kategori_kegiatan_id' => 1,
-                'user_id' => 57,
+                'user_id' => 56,
                 'beban_kegiatan_id' => 2,
                 'tahun_id' => 3,
                 'pic' => 'Faiz Ushbah Mubarok, S.Pd., M.Pd.',
@@ -64,7 +64,7 @@ class KegiatanSeeder extends Seeder
             [
                 'nama_kegiatan' => 'Magang Prodi D4 Teknik Informatika',
                 'kategori_kegiatan_id' => 2, // Sesuaikan ID kategori
-                'user_id' => 42, // Sesuaikan ID user
+                'user_id' => 41, // Sesuaikan ID user
                 'beban_kegiatan_id' => 1,
                 'tahun_id' => 3,
                 'pic' => 'Dika Rizky Yunianto, S.Kom, M.Kom',
@@ -81,7 +81,7 @@ class KegiatanSeeder extends Seeder
             [
                 'nama_kegiatan' => 'Magang Prodi D4 Sistem Informasi Bisnis',
                 'kategori_kegiatan_id' => 2, // Sesuaikan ID kategori
-                'user_id' => 53, // Sesuaikan ID user
+                'user_id' => 52, // Sesuaikan ID user
                 'beban_kegiatan_id' => 1,
                 'tahun_id' => 3,
                 'pic' => 'Vivin Ayu Lestari, S.Pd, M.Kom',
@@ -98,7 +98,7 @@ class KegiatanSeeder extends Seeder
             [
                 'nama_kegiatan' => 'Intercomp 2024',
                 'kategori_kegiatan_id' => 1,
-                'user_id' => 46,
+                'user_id' => 45,
                 'beban_kegiatan_id' => 3,
                 'tahun_id' => 3,
                 'pic' => 'Muhammad Afif Hendrawan, S.Kom., M.T.',
@@ -115,7 +115,7 @@ class KegiatanSeeder extends Seeder
             [
                 'nama_kegiatan' => 'Programmer di Puskom Polinema',
                 'kategori_kegiatan_id' => 3, // Sesuaikan ID kategori
-                'user_id' => 63, // Sesuaikan ID user
+                'user_id' => 62, // Sesuaikan ID user
                 'beban_kegiatan_id' => 1,
                 'tahun_id' => 3,
                 'pic' => 'Moch Zawaruddin Abdullah, S.ST., M.Kom.',

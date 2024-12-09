@@ -24,7 +24,7 @@ class KegiatanController extends Controller
                 'anggota' => function ($query) {
                     $query->orderBy('skor', 'desc');
                 }
-            ])->with('user', 'kategori', 'beban', 'tahun')
+            ])->with('user', 'kategori', 'beban', 'tahun', 'agenda', 'agenda.user')
                 ->when($search, function ($query) use ($search) {
                     return $query->where('nama_kegiatan', 'like', '%' . $search . '%');
                 })

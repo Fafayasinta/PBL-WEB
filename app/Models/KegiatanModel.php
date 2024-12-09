@@ -17,48 +17,55 @@ class KegiatanModel extends Model
 
     protected $fillable = [
         'kategori_kegiatan_id',
+        'beban_kegiatan_id',
         'user_id',
+        'tahun_id',
         'nama_kegiatan',
-        'pic',
+        'cakupan_wilayah',
+        'deskripsi',
         'waktu_mulai',
         'waktu_selesai',
         'deadline',
         'status',
         'progres',
-        'deskripsi',
+        'keterangan',
     ];
 
     protected $casts = [
-        'waktu_mulai' => 'datetime',
-        'waktu_selesai' => 'datetime',
-        'deadline' => 'datetime',
+        'waktu_mulai' => 'date',
+        'waktu_selesai' => 'date',
+        'deadline' => 'date',
         'progres' => 'decimal:2',
     ];
 
     // Relasi ke model User
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(UserModel::class, 'user_id', 'user_id');
     }
 
     // Relasi ke model KategoriKegiatan
-    public function kategori() :BelongsTo
+    public function kategori(): BelongsTo
     {
         return $this->belongsTo(KategoriKegiatanModel::class, 'kategori_kegiatan_id', 'kategori_kegiatan_id');
     }
 
-    public function beban() :BelongsTo
+    public function beban(): BelongsTo
     {
         return $this->belongsTo(BebanKegiatanModel::class, 'beban_kegiatan_id', 'beban_kegiatan_id');
     }
 
-    public function tahun() :BelongsTo
+    public function tahun(): BelongsTo
     {
         return $this->belongsTo(TahunModel::class, 'tahun_id', 'tahun_id');
     }
 
-    public function anggota() :HasMany
+    public function anggota(): HasMany
     {
         return $this->hasMany(AnggotaKegiatanModel::class, 'kegiatan_id', 'kegiatan_id');
+    }
+    public function agenda(): HasMany
+    {
+        return $this->hasMany(KegiatanAgendaModel::class, 'kegiatan_id', 'kegiatan_id');
     }
 }
