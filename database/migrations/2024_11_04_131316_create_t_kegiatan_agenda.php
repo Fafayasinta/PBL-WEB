@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('t_kegiatan_agenda', function (Blueprint $table) {
             $table->id('agenda_id');
             $table->unsignedBigInteger('kegiatan_id')->index();
+            $table->string('icon');
             $table->string('nama_agenda');
-            $table->date('deadline');  
+            $table->date('deadline');
             $table->string('lokasi');
             $table->decimal('progres', 8, 2);
             $table->text('keterangan');

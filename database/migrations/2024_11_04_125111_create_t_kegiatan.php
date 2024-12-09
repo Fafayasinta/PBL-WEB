@@ -25,6 +25,7 @@ return new class extends Migration
             $table->unsignedBigInteger('kategori_kegiatan_id')->index();
             $table->unsignedBigInteger('beban_kegiatan_id')->index();
             $table->unsignedBigInteger('tahun_id')->index();
+            $table->string('icon');
             $table->string('nama_kegiatan', 200);
             $table->string('pic', 100);
             $table->enum('cakupan_wilayah', ['Luar Institusi','Institusi','Jurusan','Program Studi']);
@@ -32,7 +33,7 @@ return new class extends Migration
             $table->date('waktu_mulai');
             $table->date('waktu_selesai');
             $table->date('deadline');  
-            $table->enum('status', ['Belum Proses','Proses','Selesai']);
+            $table->enum('status', ['Belum Proses','Proses','Selesai', 'Ditunda']);
             $table->decimal('progres', 8, 2);  
             $table->text('keterangan');
             $table->timestamp('created_at')->useCurrent();
