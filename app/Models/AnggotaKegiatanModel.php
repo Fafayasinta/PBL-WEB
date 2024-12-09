@@ -6,14 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class AnggotaKegiatanModel extends Model
 {
-    protected $table = 't_anggota';
+    protected $table = 't_anggota_kegiatan';
     protected $primaryKey = 'anggota_id';
-    
+
     protected $fillable = [
         'user_id',
-        'kegiatan_id', 
+        'kegiatan_id',
         'jabatan',
-        'beban_kerja'
+        'beban_kerja',
+        'skor',
+    ];
+    
+    protected $casts = [
+        'skor' => 'decimal:2',
     ];
 
     // Relasi ke User

@@ -16,10 +16,10 @@ class KegiatanResource extends JsonResource
     {
         return [
             'id' => $this->kegiatan_id,
+            'user'  => new UserResource($this->user),
             'nama_kegiatan' => $this->nama_kegiatan,
-            'kategori_kegiatan_id' => $this->kategori_kegiatan_id,
-            'user_id' => $this->user_id,
-            'beban_kegiatan_id' => $this->beban_kegiatan_id,
+            'kategori' => new KategoriKegiatanResource($this->kategori),
+            'beban_kegiatan' => new BebanKegiatanResource($this->beban_kegiatan),
             'tahun_id' => $this->tahun_id,
             'pic' => $this->pic,
             'cakupan_wilayah' => $this->cakupan_wilayah,
@@ -28,7 +28,11 @@ class KegiatanResource extends JsonResource
             'waktu_selesai' => $this->waktu_selesai,
             'deadline' => $this->deadline,
             'status' => $this->status,
-            'progres' => $this->progres
+            'progres' => $this->progres,
+            'keterangan' => $this->keterangan,
+            'icon' => 'storage/' . $this->icon,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

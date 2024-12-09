@@ -1,12 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\KegiatanController;
+use App\Http\Controllers\Api\NotifikasiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\PeriodeAPIController;
-use App\Http\Controllers\Api\PimpinanAPIController;
-use App\Http\Controllers\Api\ProfileAPIController;
-use App\Http\Controllers\Api\StatistikAPIController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,24 +26,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'getUser']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/update-profile', [AuthController::class, 'updateProfile']);
+
+
+    // Kegiatan
+    Route::get('/kegiatan', [KegiatanController::class, 'index']);
+    Route::get('/kegiatan-user', [KegiatanController::class, 'userKegiatan']);
+    Route::get('/amount-kegiatan', [KegiatanController::class, 'countByStatus']);
+
+    // Notifikasi
+    Route::get('/notifikasi', [NotifikasiController::class, 'index']);
 });
-
-
-Route::get('/periode', [PeriodeAPIController::class, 'index']);
-Route::get('/periode/{id}', [PeriodeAPIController::class, 'show']);
-Route::post('/periode', [PeriodeAPIController::class, 'store']);
-Route::put('/periode/{id}', [PeriodeAPIController::class, 'update']);
-Route::delete('/periode/{id}', [PeriodeAPIController::class, 'destroy']);
-
-
-Route::get('/pimpinan/dashboard', [PimpinanAPIController::class, 'dashboard']);
-Route::get('/pimpinan/kegiatan', [PimpinanAPIController::class, 'list']);
-
-
-Route::get('/profile', [ProfileAPIController::class, 'index']);
-Route::put('/profile/update', [ProfileAPIController::class, 'update']);
-
-
-
-Route::get('/statistik', [StatistikAPIController::class, 'index']);
-Route::get('/statistik/{id}', [StatistikAPIController::class, 'show']);

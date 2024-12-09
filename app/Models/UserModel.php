@@ -47,6 +47,10 @@ class UserModel extends Authenticatable
         return $this->belongsTo(LevelModel::class, 'level_id', 'level_id');
     }
 
+    public function kegiatan(){
+        return $this->hasMany(KegiatanModel::class, 'user_id', 'user_id');
+    }
+
     // Accessor untuk foto profil (mengembalikan default jika null)
     public function getFotoProfilAttribute($value)
     {

@@ -62,6 +62,7 @@ class AuthController extends Controller
             'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg',
             'nip' => 'required',
             'password' => 'nullable|min:6',
+            'old_password' => 'required_with:password',
         ]);
         try {
             if ($request->hasFile('foto_profil')) {
@@ -76,6 +77,9 @@ class AuthController extends Controller
             }
 
             if ($request->password) {
+                if (!Hash::check($request->old_password, $request->user()->password)) {
+                    return $this->errorResponse('Old password is incorrect', 400);
+                }
                 $validateData['password'] = Hash::make($request->password);
             }
 
