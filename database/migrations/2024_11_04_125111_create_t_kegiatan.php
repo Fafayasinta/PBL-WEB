@@ -34,6 +34,7 @@ return new class extends Migration
             $table->enum('status', ['Belum Proses','Proses','Selesai']);
             $table->decimal('progres', 8, 2)->nullable();  
             $table->text('keterangan')->nullable();
+            $table->string('icon')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
