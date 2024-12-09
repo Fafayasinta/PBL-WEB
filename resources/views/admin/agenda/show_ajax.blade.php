@@ -1,4 +1,4 @@
-@empty($kegiatannonjti)
+@empty($agenda)
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-danger text-white">
@@ -13,7 +13,7 @@
                     Data yang Anda cari tidak ditemukan.
                 </div>
                 <div class="text-right">
-                    <a href="{{ url('/kegiatannonjti') }}" class="btn btn-warning">Kembali</a>
+                    <a href="{{ url('/agenda') }}" class="btn btn-warning">Kembali</a>
                 </div>
             </div>
         </div>
@@ -22,48 +22,48 @@
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-info text-white">
-                <h5 class="modal-title" id="exampleModalLabel">Detail Kegiatan Non JTI</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Detail Agenda Kegiatan</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-info">
-                    <strong>Data Kegiatan Non JTI</strong><br>
-                    Berikut adalah Detail dari data kegiatan non JTI.
+                    <strong>Data Agenda Kegiatan</strong><br>
+                    Berikut adalah Detail dari data agenda kegiatan.
                 </div>
                 <table class="table table-bordered">
                     <tr>
-                        <th class="text-left" style="width: 27%">NO</th>
-                        <td>{{ $kegiatannonjti->kegiatan_id }}</td>
+                        <th class="text-left" style="width: 27%">No</th>
+                        <td>{{ $agenda->agenda_id }}</td>
                     </tr>
                     <tr>
                         <th class="text-left">NAMA KEGIATAN</th>
-                        <td>{{ $kegiatannonjti->nama_kegiatan }}</td>
+                        <td>{{ $agenda->kegiatan->nama_kegiatan }}</td>
                     </tr>
                     <tr>
-                        <th class="text-left">DESKRIPSI KEGIATAN</th>
-                        <td>{{ $kegiatannonjti->deskripsi }}</td>
+                        <th class="text-left">NAMA AGENDA</th>
+                        <td>{{ $agenda->nama_agenda }}</td>
                     </tr>
                     <tr>
-                        <th class="text-left">NAMA DOSEN</th>
-                        <td>{{ $kegiatannonjti->user->nama }}</td>
+                        <th class="text-left">PENANGGUNG JAWAB</th>
+                        <td>{{ $agenda->user->nama }}</td>
                     </tr>
                     <tr>
-                        <th class="text-left">WILAYAH KERJA</th>
-                        <td>{{ $kegiatannonjti->cakupan_wilayah }}</td>
+                        <th class="text-left">DEADLINE</th>
+                        <td>{{ \Carbon\Carbon::parse($agenda->deadline)->format('d-m-Y') }}</td>
                     </tr>
                     <tr>
-                        <th class="text-left">JENIS</th>
-                        <td>{{ $kegiatannonjti->kategori->nama_kategori }}</td>
+                        <th class="text-left">LOKASI</th>
+                        <td>{{ $agenda->lokasi }}</td>
                     </tr>
                     <tr>
-                        <th class="text-left">WAKTU</th>
-                        <td>{{ \Carbon\Carbon::parse($kegiatannonjti->waktu_mulai)->translatedFormat('d F Y') }}</td>
-                    </tr>                    
+                        <th class="text-left">PROGRES</th>
+                        <td>{{ $agenda->progres }}</td>
+                    </tr>
                     <tr>
-                        <th class="text-left">BEBAN</th>
-                        <td>{{ $kegiatannonjti->beban->nama_beban }}</td>
+                        <th class="text-left">KETERANGAN</th>
+                        <td>{{ $agenda->keterangan }}</td>
                     </tr>
                 </table>
             </div>

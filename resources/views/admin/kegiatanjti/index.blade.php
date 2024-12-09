@@ -34,13 +34,13 @@
             <table class="table-bordered table-striped table-hover table-sm table" id="table_kegiatanjti" style="width: 100%">
                 <thead>
                     <tr>
-                        <th>NO</th>
-                        <th style="width: 15%">NAMA</th>
-                        <th style="width: 20%">DESKRIPSI</th>
-                        <th>JENIS</th>
-                        <th>STATUS</th>
-                        <th>BEBAN KERJA</th>
-                        <th>AKSI</th>
+                        <th class="text-center">NO</th>
+                        <th class="text-center" style="width: 15%">NAMA</th>
+                        <th class="text-center" style="width: 20%">DESKRIPSI</th>
+                        <th class="text-center">JENIS</th>
+                        <th class="text-center">STATUS</th>
+                        <th class="text-center">BEBAN KERJA</th>
+                        <th class="text-center">AKSI</th>
                     </tr>
                 </thead>
             </table>

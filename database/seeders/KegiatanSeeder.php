@@ -16,7 +16,6 @@ class KegiatanSeeder extends Seeder
                 'user_id' => 41, // Sesuaikan ID user
                 'beban_kegiatan_id' => 1,
                 'tahun_id' => 3,
-                'pic' => 'Dika Rizky Yunianto, S.Kom, M.Kom',
                 'cakupan_wilayah' => 'Luar Institusi',
                 'deskripsi' => 'JTI Play Kegiatan yang diadakan oleh jurusan teknologi informasi setiap tahunnya',
                 'waktu_mulai' => '2024-10-01',
@@ -33,7 +32,6 @@ class KegiatanSeeder extends Seeder
                 'user_id' => 56,
                 'beban_kegiatan_id' => 2,
                 'tahun_id' => 3,
-                'pic' => 'Faiz Ushbah Mubarok, S.Pd., M.Pd.',
                 'cakupan_wilayah' => 'Jurusan',
                 'deskripsi' => 'DDM Kegiatan yang diadakan oleh jurusan teknologi informasi setiap tahunnya',
                 'waktu_mulai' => '2024-04-01',
@@ -50,7 +48,6 @@ class KegiatanSeeder extends Seeder
                 'user_id' => 7,
                 'beban_kegiatan_id' => 3,
                 'tahun_id' => 3,
-                'pic' => 'Atiqah Nurul Asri, S.Pd., M.Pd.',
                 'deskripsi' => '',
                 'cakupan_wilayah' => 'Jurusan',
                 'waktu_mulai' => '2024-02-01',
@@ -67,7 +64,6 @@ class KegiatanSeeder extends Seeder
                 'user_id' => 41, // Sesuaikan ID user
                 'beban_kegiatan_id' => 1,
                 'tahun_id' => 3,
-                'pic' => 'Dika Rizky Yunianto, S.Kom, M.Kom',
                 'cakupan_wilayah' => 'Program Studi',
                 'deskripsi' => 'Magang TI Kegiatan yang diadakan oleh jurusan teknologi informasi setiap tahunnya',
                 'waktu_mulai' => '2024-11-10',
@@ -84,7 +80,6 @@ class KegiatanSeeder extends Seeder
                 'user_id' => 52, // Sesuaikan ID user
                 'beban_kegiatan_id' => 1,
                 'tahun_id' => 3,
-                'pic' => 'Vivin Ayu Lestari, S.Pd, M.Kom',
                 'cakupan_wilayah' => 'Program Studi',
                 'deskripsi' => 'Magang SIB Kegiatan yang diadakan oleh jurusan teknologi informasi setiap tahunnya',
                 'waktu_mulai' => '2024-11-10',
@@ -101,7 +96,6 @@ class KegiatanSeeder extends Seeder
                 'user_id' => 45,
                 'beban_kegiatan_id' => 3,
                 'tahun_id' => 3,
-                'pic' => 'Muhammad Afif Hendrawan, S.Kom., M.T.',
                 'cakupan_wilayah' => 'Jurusan',
                 'deskripsi' => '',
                 'waktu_mulai' => '2024-03-01',
@@ -118,7 +112,6 @@ class KegiatanSeeder extends Seeder
                 'user_id' => 62, // Sesuaikan ID user
                 'beban_kegiatan_id' => 1,
                 'tahun_id' => 3,
-                'pic' => 'Moch Zawaruddin Abdullah, S.ST., M.Kom.',
                 'cakupan_wilayah' => 'Institusi',
                 'deskripsi' => '',
                 'waktu_mulai' => '2024-01-01',
@@ -135,7 +128,6 @@ class KegiatanSeeder extends Seeder
                 'user_id' => 8,
                 'beban_kegiatan_id' => 2,
                 'tahun_id' => 3,
-                'pic' => 'Banni Satria Andoko, S. Kom., M.MSI',
                 'cakupan_wilayah' => 'Luar Institusi',
                 'deskripsi' => '',
                 'waktu_mulai' => '2024-10-18',

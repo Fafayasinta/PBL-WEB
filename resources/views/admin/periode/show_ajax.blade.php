@@ -54,7 +54,7 @@
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $item->nama_kegiatan }}</td>
                                 <td>{{ $item->kategori->nama_kategori }}</td>
-                                <td>{{ $item->pic }}</td>
+                                <td>{{ $item->user->nama }}</td>
                             </tr>
                         @empty
                             <tr>

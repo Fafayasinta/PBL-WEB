@@ -14,6 +14,19 @@
         <div class="col-md-3">
             <div class="card text-center" style="border-radius: 10px; border: 1px solid #ddd;">
                 <div class="card-body">
+                    <h6>Total Kegiatan</h6>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div style="background-color: #ffd572; padding: 10px; display: inline-block; border-radius: 10px;">
+                            <i class="nav-icon fas fa-box"></i>    
+                        </div>
+                        <h2 style="margin-left: 20px">{{ $totalKegiatan }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center" style="border-radius: 10px; border: 1px solid #ddd;">
+                <div class="card-body">
                     <h6>Total Kegiatan Selesai</h6>
                     <div class="d-flex justify-content-center align-items-center">
                         <div style="background-color: #bbb9ff; padding: 10px; display: inline-block; border-radius: 10px;">
@@ -29,23 +42,10 @@
                 <div class="card-body">
                     <h6>Total Kegiatan Dalam Proses</h6>
                     <div class="d-flex justify-content-center align-items-center">
-                        <div style="background-color: #ffd572; padding: 10px; display: inline-block; border-radius: 10px;">
-                            <i class="nav-icon fas fa-box"></i>    
-                        </div>
-                        <h2 style="margin-left: 20px">{{ $totalKegiatanSelesai }}</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-center" style="border-radius: 10px; border: 1px solid #ddd;">
-                <div class="card-body">
-                    <h6>Total Kegiatan Belum Mulai</h6>
-                    <div class="d-flex justify-content-center align-items-center">
                         <div style="background-color: #6af3ae; padding: 10px; display: inline-block; border-radius: 10px;">
                             <i class="nav-icon fas fa-chart-bar"></i>    
                         </div>
-                        <h2 style="margin-left: 20px">{{ $totalKegiatanSelesai }}</h2>
+                        <h2 style="margin-left: 20px">{{ $totalKegiatanProses }}</h2>
                     </div>
                 </div>
             </div>
@@ -53,12 +53,12 @@
         <div class="col-md-3">
             <div class="card text-center" style="border-radius: 10px; border: 1px solid #ddd;">
                 <div class="card-body">
-                    <h6>Total Kegiatan Ditunda</h6>
+                    <h6>Total Kegiatan Belum Dimulai</h6>
                     <div class="d-flex justify-content-center align-items-center">
                         <div style="background-color: #ffb398; padding: 10px; display: inline-block; border-radius: 10px;">
                             <i class="nav-icon fas fa-clock"></i>    
                         </div>
-                        <h2 style="margin-left: 20px">{{ $totalKegiatanSelesai }}</h2>
+                        <h2 style="margin-left: 20px">{{ $totalKegiatanBelum }}</h2>
                     </div>
                 </div>
             </div>
@@ -90,12 +90,12 @@
             <table class="table-bordered table-striped table-hover table-sm table" id="table_admin" style="width: 100%">
                 <thead>
                     <tr>
-                        <th>Nama Kegiatan</th>
-                        <th>Waktu Mulai</th>
-                        <th>Waktu Akhir</th>
-                        <th>PIC</th>
-                        <th>Progres</th>
-                        <th>Keterangan</th>
+                        <th class="text-center">Nama Kegiatan</th>
+                        <th class="text-center">Waktu Mulai</th>
+                        <th class="text-center">Waktu Akhir</th>
+                        <th class="text-center">PIC</th>
+                        <th class="text-center">Progres</th>
+                        <th class="text-center">Keterangan</th>
                     </tr>
                 </thead>
             </table>
@@ -108,85 +108,84 @@
 @endpush
 
 @push('js')
-    <script>
-        function modalAction(url = '') {
-            $('#myModal').load(url, function() {
-                $('#myModal').modal('show');
-            })
-        }
-        var dataAdmin;
-        $(document).ready(function() {
-            dataAdmin = $('#table_admin').DataTable({
-                serverSide: true, // Menggunakan server-side processing
-                ajax: {
-                    "url": "{{ url('admin/list') }}", // Endpoint untuk mengambil data kategori
-                    "dataType": "json",
-                    "type": "POST",
-                    "data": function(d) {
-                        d.nama_kegiatan = $('#nama_kegiatan').val(); // Mengirim data filter kategori_kode
-                    }
-                },
-                columns: [
-                    {
-                        data: "nama_kegiatan",
-                        orderable: true,
-                        searchable: true
-                    },
-                    {
-                        data: "waktu_mulai",
-                        orderable: true,
-                        searchable: true
-                    },
-                    {
-                        data: "waktu_selesai",
-                        orderable: true,
-                        searchable: true
-                    },
-                    {
-                        data: "pic",
-                        orderable: true,
-                        searchable: true
-                    },
-                    {
-                data: "progres",
-                orderable: true,
-                searchable: true,
-                render: function(data, type, row) {
-                    // Konversi nilai decimal ke persen
-                    const percentage = (data * 100).toFixed(2); // Mengubah ke persen dengan 2 angka desimal
-                    let color;
-
-                    // Tentukan warna berdasarkan nilai persen
-                    if (percentage <= 25) {
-                        color = '#f87171'; // Warna merah
-                    } else if (percentage <= 50) {
-                        color = '#facc15'; // Warna kuning
-                    } else if (percentage <= 75) {
-                        color = '#34d399'; // Warna hijau muda
-                    } else {
-                        color = '#10b981'; // Warna hijau tua
-                    }
-
-                    // Tampilkan progres dengan gaya kotak berwarna
-                    return `
-                        <div style="background-color: ${color}; color: white; padding: 5px; border-radius: 20px; text-align: center; width: 80px;">
-                            ${percentage}%
-                        </div>
-                    `;
+<script>
+    $(document).ready(function () {
+        var dataAdmin = $('#table_admin').DataTable({
+            serverSide: true, // Menggunakan server-side processing
+            ajax: {
+                "url": "{{ url('admin/list') }}", // Endpoint untuk mengambil data kegiatan
+                "type": "POST",
+                "data": function (d) {
+                    d.nama_kegiatan = $('#nama_kegiatan').val(); // Kirim filter jika ada
                 }
             },
-                    {
-                        data: "keterangan",
-                        orderable: true,
-                        searchable: true
+            columns: [
+                { data: "nama_kegiatan", orderable: true, searchable: true },
+                {
+                    data: "waktu_mulai",
+                    orderable: true,
+                    searchable: true,
+                    render: function(data, type, row) {
+                        if (data) {
+                            let date = new Date(data);
+                            return date.toLocaleDateString("id-ID", {
+                                day: "2-digit",
+                                month: "long",
+                                year: "numeric"
+                            });
+                        }
+                        return "-";
                     }
-                ]
-            });
+                },
+                {
+                    data: "waktu_selesai",
+                    orderable: true,
+                    searchable: true,
+                    render: function(data, type, row) {
+                        if (data) {
+                            let date = new Date(data);
+                            return date.toLocaleDateString("id-ID", {
+                                day: "2-digit",
+                                month: "long",
+                                year: "numeric"
+                            });
+                        }
+                        return "-";
+                    }
+                },
+                { data: "user.nama", orderable: true, searchable: true },
+                {
+                    data: "progres",
+                    orderable: true,
+                    searchable: false,
+                    render: function (data, type, row) {
+                        // Format progres dengan tampilan progress bar
+                        let color;
 
-            // Reload tabel saat filter kategori diubah
-            $('nama_kegiatan').on('change', function() {
-                dataJenisKegiatan.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
-            });
+                        if (data <= 25) {
+                            color = '#f87171'; // Merah
+                        } else if (data <= 50) {
+                            color = '#facc15'; // Kuning
+                        } else if (data <= 75) {
+                            color = '#34d399'; // Hijau muda
+                        } else {
+                            color = '#10b981'; // Hijau tua
+                        }
+
+                        return `
+                            <div style="background-color: ${color}; color: white; padding: 5px; border-radius: 20px; text-align: center; width: 80px;">
+                                ${data}% 
+                            </div>`;
+                    }
+                },
+                { data: "keterangan", orderable: true, searchable: true }
+            ]
         });
-    </script>
+
+        // Filter berdasarkan nama kegiatan
+        // $('#nama_kegiatan').on('change', function () {
+        //     dataAdmin.ajax.reload(); // Reload DataTables dengan filter baru
+        // });
+    });
+</script>
 @endpush

@@ -10,7 +10,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Jenis Pengguna</label>
+                    <label>JENIS PENGGUNA</label>
                     <select class="form-control" id="level_id" name="level_id" required>
                         <option value="">Pilih Jenis User</option>
                         <option value="1" {{ old('level_id') == 1 ? 'selected' : '' }}>Administrator</option>
@@ -19,17 +19,17 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Username</label>
+                    <label>USERNAME</label>
                     <input value="" type="text" name="username" id="username" class="form-control" required>
                     <small id="error-username" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Password</label>
+                    <label>PASSWORD</label>
                     <input value="" type="text" name="password" id="password" class="form-control" required>
                     <small id="error-password" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Nama</label>
+                    <label>NAMA</label>
                     <input value="" type="text" name="nama" id="nama" class="form-control" required>
                     <small id="error-nama" class="error-text form-text text-danger"></small>
                 </div>
@@ -39,19 +39,18 @@
                     <small id="error-nip" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Email</label>
+                    <label>EMAIL</label>
                     <input value="" type="text" name="email" id="email" class="form-control" required>
                     <small id="error-email" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Upload Foto Profil</label>
+                    <label>UPLOAD FOTO PROFILE</label>
                     <div class="custom-file">
                         <input type="file" name="foto_profil" id="foto_profil" class="custom-file-input" accept="image/*" required>
                         <label class="custom-file-label" for="foto_profil">Pilih Foto</label>
                     </div>
                     <small id="error-foto_profil" class="error-text form-text text-danger"></small>
                     <small class="form-text text-muted">Unggah foto profil dalam format JPG, JPEG, atau PNG. Maksimal 2MB.</small>
-                    <!-- Preview Image -->
                 </div>                
             </div>
             <div class="modal-footer">

@@ -29,13 +29,25 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>CAKUPAN WILAYAH</label>
-                    <input value="{{ $jabatankegiatan->cakupan_wilayah }}" type="text" name="cakupan_wilayah" id="cakupan_wilayah" class="form-control" required>
+                    <label>WILAYAH KERJA</label>
+                    <select name="cakupan_wilayah" id="cakupan_wilayah" class="form-control" required>
+                        <option value="">Pilih Wilayah Kerja</option>
+                        <option value="Luar Institusi" {{ $jabatankegiatan->cakupan_wilayah == 'Luar Institusi' ? 'selected' : '' }}>Luar Institusi</option>
+                        <option value="Institusi" {{ $jabatankegiatan->cakupan_wilayah == 'Institusi' ? 'selected' : '' }}>Institusi</option>
+                        <option value="Jurusan" {{ $jabatankegiatan->cakupan_wilayah == 'Jurusan' ? 'selected' : '' }}>Jurusan</option>
+                        <option value="Program Studi" {{ $jabatankegiatan->cakupan_wilayah == 'Program Studi' ? 'selected' : '' }}>Program Studi</option>
+                    </select>
                     <small id="error-cakupan_wilayah" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
                     <label>JABATAN</label>
-                    <input value="{{ $jabatankegiatan->jabatan }}" type="text" name="jabatan" id="jabatan" class="form-control" required>
+                    <select name="jabatan" id="jabatan" class="form-control" required>
+                        <option value="">Pilih Jabatan</option>
+                        <option value="PIC" {{ $jabatankegiatan->jabatan == 'PIC' ? 'selected' : '' }}>PIC</option>
+                        <option value="Sekretaris" {{ $jabatankegiatan->jabatan == 'Sekretaris' ? 'selected' : '' }}>Sekretaris</option>
+                        <option value="Bendahara" {{ $jabatankegiatan->jabatan == 'Bendahara' ? 'selected' : '' }}>Bendahara</option>
+                        <option value="Anggota" {{ $jabatankegiatan->jabatan == 'Anggota' ? 'selected' : '' }}>Anggota</option>
+                    </select>
                     <small id="error-jabatan" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
@@ -55,8 +67,8 @@
         $(document).ready(function() {
             $("#form-edit").validate({
                 rules: {
-                    cakupan_wilayah: {required: true, minlength: 3, maxlength: 100},
-                    jabatan: {required: true, minlength: 3, maxlength: 100},
+                    cakupan_wilayah: {required: true},
+                    jabatan: {required: true},
                     skor: {required: true, minlength: 3, maxlength: 100, number: true},
                 },
                 submitHandler: function(form) {

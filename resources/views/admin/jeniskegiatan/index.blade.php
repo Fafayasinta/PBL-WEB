@@ -35,9 +35,9 @@
             <table class="table-bordered table-striped table-hover table-sm table" id="table_jeniskegiatan">
                 <thead>
                     <tr>
-                        <th>NO</th>
-                        <th>NAMA</th>
-                        <th>AKSI</th>
+                        <th class="text-center">NO</th>
+                        <th class="text-center">NAMA</th>
+                        <th class="text-center">AKSI</th>
                     </tr>
                 </thead>
             </table>

@@ -1,4 +1,4 @@
-<form action="{{ url('/kegiatanjti/ajax') }}" method="POST" id="form-tambah">
+<form action="{{ url('/kegiatannonjti/ajax') }}" method="POST" id="form-tambah">
     @csrf
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -53,10 +53,10 @@
                     <label>WILAYAH KERJA</label>
                     <select name="cakupan_wilayah" id="cakupan_wilayah" class="form-control" required>
                         <option value="">Pilih Wilayah Kerja</option>
-                        <option value="Luar Institusi" {{ isset($kegiatanjti) && $kegiatanjti->cakupan_wilayah == 'Luar Institusi' ? 'selected' : '' }}>Luar Institusi</option>
-                        <option value="Institusi" {{ isset($kegiatanjti) && $kegiatanjti->cakupan_wilayah == 'Institusi' ? 'selected' : '' }}>Institusi</option>
-                        <option value="Jurusan" {{ isset($kegiatanjti) && $kegiatanjti->cakupan_wilayah == 'Jurusan' ? 'selected' : '' }}>Jurusan</option>
-                        <option value="Program Studi" {{ isset($kegiatanjti) && $kegiatanjti->cakupan_wilayah == 'Program Studi' ? 'selected' : '' }}>Program Studi</option>
+                        <option value="Luar Institusi" {{ isset($kegiatannonjti) && $kegiatannonjti->cakupan_wilayah == 'Luar Institusi' ? 'selected' : '' }}>Luar Institusi</option>
+                        <option value="Institusi" {{ isset($kegiatannonjti) && $kegiatannonjti->cakupan_wilayah == 'Institusi' ? 'selected' : '' }}>Institusi</option>
+                        <option value="Jurusan" {{ isset($kegiatannonjti) && $kegiatannonjti->cakupan_wilayah == 'Jurusan' ? 'selected' : '' }}>Jurusan</option>
+                        <option value="Program Studi" {{ isset($kegiatannonjti) && $kegiatannonjti->cakupan_wilayah == 'Program Studi' ? 'selected' : '' }}>Program Studi</option>
                     </select>
                     <small id="error-cakupan_wilayah" class="error-text form-text text-danger"></small>
                 </div>
@@ -67,7 +67,7 @@
                         name="deadline" 
                         id="deadline" 
                         class="form-control" 
-                        value="{{ isset($kegiatanjti->deadline) ? \Carbon\Carbon::parse($kegiatanjti->deadline)->format('Y-m-d') : '' }}" 
+                        value="{{ isset($kegiatannonjti->deadline) ? \Carbon\Carbon::parse($kegiatannonjti->deadline)->format('Y-m-d') : '' }}" 
                         required>
                     <small id="error-deadline" class="error-text form-text text-danger"></small>
                 </div>                
@@ -78,7 +78,7 @@
                         name="waktu_mulai" 
                         id="waktu_mulai" 
                         class="form-control" 
-                        value="{{ isset($kegiatanjti->waktu_mulai) ? \Carbon\Carbon::parse($kegiatanjti->waktu_mulai)->format('Y-m-d') : '' }}">
+                        value="{{ isset($kegiatannonjti->waktu_mulai) ? \Carbon\Carbon::parse($kegiatannonjti->waktu_mulai)->format('Y-m-d') : '' }}">
                     <small id="error-waktu_mulai" class="error-text form-text text-danger"></small>
                 </div>                
                 <div class="form-group">
@@ -88,7 +88,7 @@
                         name="waktu_selesai" 
                         id="waktu_selesai" 
                         class="form-control" 
-                        value="{{ isset($kegiatanjti->waktu_selesai) ? \Carbon\Carbon::parse($kegiatanjti->waktu_selesai)->format('Y-m-d') : '' }}">
+                        value="{{ isset($kegiatannonjti->waktu_selesai) ? \Carbon\Carbon::parse($kegiatannonjti->waktu_selesai)->format('Y-m-d') : '' }}">
                     <small id="error-waktu_selesai" class="error-text form-text text-danger"></small>
                 </div>                
                 <div class="form-group">
@@ -160,7 +160,7 @@
                                     title: 'Berhasil',
                                     text: response.message
                                 });
-                                dataKegiatanJti.ajax.reload();
+                                dataKegiatanNonJti.ajax.reload();
                             } else {
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {

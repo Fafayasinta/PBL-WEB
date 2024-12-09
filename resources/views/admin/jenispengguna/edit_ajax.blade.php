@@ -33,6 +33,11 @@
                     <input value="{{ $jenispengguna->level_nama }}" type="text" name="level_nama" id="level_nama" class="form-control" required>
                     <small id="error-level_nama" class="error-text form-text text-danger"></small>
                 </div>
+                <div class="form-group">
+                    <label>DESKRIPSI</label>
+                    <input value="{{ $jenispengguna->level_deskripsi }}" type="text" name="level_deskripsi" id="level_deskripsi" class="form-control" required>
+                    <small id="error-level_deskripsi" class="error-text form-text text-danger"></small>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
@@ -46,6 +51,7 @@
             $("#form-edit").validate({
                 rules: {
                     level_nama: {required: true, minlength: 3, maxlength: 100},
+                    level_deskripsi: {required: true, minlength: 3, maxlength: 255},
                 },
                 submitHandler: function (form) {
                 var formData = new FormData(form);

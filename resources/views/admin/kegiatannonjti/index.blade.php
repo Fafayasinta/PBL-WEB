@@ -5,7 +5,7 @@
         <div class="card-header">
             {{-- <h3 class="card-title">{{ $page->title }}</h3> --}}
             <div class="card-tools">
-                <button onclick="#"class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
+                <button onclick="modalAction('{{ url('/kegiatannonjti/create_ajax') }}')"class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
             </div>
         </div>
         <div class="card-body">
@@ -34,14 +34,14 @@
             <table class="table-bordered table-striped table-hover table-sm table" id="table_kegiatannonjti" style="width: 100%">
                 <thead>
                     <tr>
-                        <th>NO</th>
-                        <th style="width: 20%">NAMA KEGIATAN</th>
-                        <th style="width: 15%">NAMA DOSEN</th>
-                        <th>JENIS</th>
-                        <th>WILAYAH KERJA</th>
-                        <th>WAKTU</th>
-                        <th>BEBAN</th>
-                        <th>AKSI</th>
+                        <th class="text-center">NO</th>
+                        <th class="text-center" style="width: 20%">NAMA KEGIATAN</th>
+                        <th class="text-center" style="width: 15%">NAMA DOSEN</th>
+                        <th class="text-center">JENIS</th>
+                        <th class="text-center">WILAYAH KERJA</th>
+                        <th class="text-center">WAKTU</th>
+                        <th class="text-center">BEBAN</th>
+                        <th class="text-center">AKSI</th>
                     </tr>
                 </thead>
             </table>
@@ -82,7 +82,7 @@
                         searchable: true
                     },
                     {
-                        data: "pic",
+                        data: "user.nama",
                         orderable: true,
                         searchable: true
                     },

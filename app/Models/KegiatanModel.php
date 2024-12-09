@@ -60,12 +60,12 @@ class KegiatanModel extends Model
         return $this->belongsTo(TahunModel::class, 'tahun_id', 'tahun_id');
     }
 
-    public function anggota(): HasMany
-    {
-        return $this->hasMany(AnggotaKegiatanModel::class, 'kegiatan_id', 'kegiatan_id');
-    }
     public function agenda(): HasMany
     {
         return $this->hasMany(KegiatanAgendaModel::class, 'kegiatan_id', 'kegiatan_id');
     }
+
+
 }
+
+

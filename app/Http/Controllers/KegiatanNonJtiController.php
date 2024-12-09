@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\BebanKegiatanModel;
+use App\Models\KategoriKegiatanModel;
 use App\Models\KegiatanModel;
+use App\Models\TahunModel;
+use App\Models\UserModel;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule as ValidationRule;
 use Illuminate\Support\Facades\Validator;
@@ -27,7 +32,8 @@ class KegiatanNonJtiController extends Controller
 
     public function list(Request $request)
     {
-        $kegiatannonjti = KegiatanModel::select('kegiatan_id', 'nama_kegiatan', 'pic', 'kategori_kegiatan_id', 'cakupan_wilayah', 'waktu_mulai', 'beban_kegiatan_id')
+        $kegiatannonjti = KegiatanModel::select('kegiatan_id', 'nama_kegiatan', 'user_id', 'kategori_kegiatan_id', 'cakupan_wilayah', 'waktu_mulai', 'beban_kegiatan_id')
+            ->with('user')
             ->with('kategori')
             ->with('beban')
             ->whereIn('kategori_kegiatan_id', [3]);
@@ -64,6 +70,84 @@ class KegiatanNonJtiController extends Controller
         })
         ->rawColumns(['action'])
         ->make(true); // Pastikan metode make(true) dipanggil
+    }
+
+    public function show_ajax(string $id)
+    {
+        $kegiatannonjti = KegiatanModel::find($id);
+
+        return view('admin.kegiatannonjti.show_ajax', ['kegiatannonjti' => $kegiatannonjti]);
+    }
+
+    public function create_ajax()
+    {
+        $kategori = KategoriKegiatanModel::select('kategori_kegiatan_id', 'nama_kategori')
+        ->whereIn('kategori_kegiatan_id', [3])
+        ->get();
+
+        $beban = BebanKegiatanModel::select('beban_kegiatan_id', 'nama_beban')->get();
+        $user = UserModel::select('user_id', 'nama')->get();
+        $tahun = TahunModel::select('tahun_id', 'tahun')->get();
+
+        return view('admin.kegiatannonjti.create_ajax')->with([
+            'kategori' => $kategori,
+            'beban' => $beban,
+            'user' => $user,
+            'tahun' => $tahun
+        ]);
+    }
+
+    public function store_ajax(Request $request)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'user_id' => 'required|integer|exists:m_user,user_id',
+                'tahun_id' => 'required|integer|exists:m_tahun,tahun_id',
+                'kategori_kegiatan_id' => 'required|integer|exists:m_kategori_kegiatan,kategori_kegiatan_id',
+                'beban_kegiatan_id' => 'required|integer|exists:m_beban_kegiatan,beban_kegiatan_id',
+                'nama_kegiatan' => 'required|string|max:200',
+                'cakupan_wilayah' => [
+                    'required',
+                    ValidationRule::in(['Luar Institusi', 'Institusi', 'Jurusan', 'Program Studi']),
+                ],
+                'deskripsi' => 'required|string|max:255',
+                'progres' => 'nullable|numeric',
+                'keterangan' => 'nullable|string|max:255',
+                'deadline' => 'required|date|after_or_equal:today',
+                'waktu_mulai' => 'nullable|date',
+                'waktu_selesai' => 'nullable|date|after_or_equal:waktu_mulai',
+                'status' => [
+                    'required',
+                    ValidationRule::in(['Belum Proses', 'Proses', 'Selesai']),
+                ]
+            ];
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validasi Gagal',
+                    'msgField' => $validator->errors(),
+                ]);
+            }
+
+            try {
+                KegiatanModel::create($request->all());
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data Kegiatan JTI berhasil disimpan'
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Terjadi kesalahan saat menyimpan data',
+                    'error' => $e->getMessage()
+                ]);
+            }
+        }
+
+        return redirect('/kegiatannonjti');
     }
 
     public function edit_ajax(string $id)

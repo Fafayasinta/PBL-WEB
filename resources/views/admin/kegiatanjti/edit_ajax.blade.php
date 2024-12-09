@@ -39,9 +39,17 @@
                     <small id="error-deskripsi" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>JENIS</label>
-                    <input value="{{ $kegiatanjti->kategori->nama_kategori }}" type="text" name="nama_kategori" id="nama_kategori" class="form-control" required>
-                    <small id="error-nama_kategori" class="error-text form-text text-danger"></small>
+                    <label>JENIS KEGIATAN</label>
+                    <select name="kategori_kegiatan_id" id="kategori_kegiatan_id" class="form-control" required>
+                        <option value="">Pilih Jenis</option>
+                        @foreach($kategori as $k)
+                            <option value="{{ $k->kategori_kegiatan_id }}" {{ $kegiatanjti->kategori_kegiatan_id == $k->kategori_kegiatan_id ? 'selected' : '' }}>
+                                {{ $k->nama_kategori }}
+                            </option>
+                            
+                        @endforeach
+                    </select>
+                    <small id="error-kategori_kegiatan_id" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
                     <label>STATUS</label>
@@ -55,8 +63,36 @@
                 </div>
                 <div class="form-group">
                     <label>BEBAN KERJA</label>
-                    <input value="{{ $kegiatanjti->beban->nama_beban }}" type="text" name="nama_beban" id="nama_beban" class="form-control" required>
-                    <small id="error-nama_beban" class="error-text form-text text-danger"></small>
+                    <select name="beban_kegiatan_id" id="beban_kegiatan_id" class="form-control" required>
+                        <option value="">Pilih Beban Kerja</option>
+                        @foreach($beban as $b)
+                            <option value="{{ $b->beban_kegiatan_id }}" {{ $kegiatanjti->beban_kegiatan_id == $b->beban_kegiatan_id ? 'selected' : '' }}>
+                                {{ $b->nama_beban }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <small id="error-beban_kegiatan_id" class="error-text form-text text-danger"></small>
+                </div>
+                <div class="form-group">
+                    <label>DAFTAR ANGGOTA KEGIATAN</label>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover table-bordered align-middle">
+                            <tbody id="anggota-list">
+                                @foreach($anggota as $anggota)
+                                <tr>
+                                    <td class="text-left">{{ $anggota->user->nama }}</td>
+                                </tr>
+                                @endforeach
+                                <tr>
+                                    <td class="text-center">
+                                        <button type="button" id="add-anggota-btn" class="btn btn-success btn-sm fw-bold" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 6px 25px; margin-right: 15px">
+                                            + Tambahkan Data
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -70,14 +106,11 @@
         $(document).ready(function() {
             $("#form-edit").validate({
                 rules: {
+                    kategori_kegiatan_id: {required: true, number: true},
+                    beban_kegiatan_id: {required: true, number: true},
                     nama_kegiatan: {required: true, maxlenght: 100},
                     deskripsi: {required: true, maxlenght: 255},
-                    nama_kategori: {required: true, maxlenght: 100},
-                    status: {
-                        required: true,
-                        inArray: ["Belum Proses", "Proses", "Selesai"], // Validasi nilai hanya pada daftar opsi.
-                    },
-                    nama_beban: {required: true, maxlenght: 100},
+                    status: {required: true},
                 },
                 submitHandler: function(form) {
                     $.ajax({
