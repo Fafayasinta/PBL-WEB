@@ -12,6 +12,7 @@ class KegiatanAgendaSeeder extends Seeder
         // Data agenda untuk kegiatan yang ada
         $data = [
             // Kegiatan 'JTI Play IT!' (Kegiatan ID = 1)
+
             ['kegiatan_id' => 1, 'user_id' => 17, 'nama_agenda' => 'Rapat Persiapan', 'deadline' => '2024-12-01 10:00:00', 'lokasi' => 'Ruang Rapat A', 'progres' => 1.00, 'keterangan' => 'Rapat persiapan awal untuk kegiatan JTI Play IT!'],
             ['kegiatan_id' => 1, 'user_id' => 62, 'nama_agenda' => 'Rapat Koordinasi', 'deadline' => '2024-12-05 14:00:00', 'lokasi' => 'Ruang Koordinasi B', 'progres' => 1.00, 'keterangan' => 'Rapat koordinasi dengan panitia utama'],
             ['kegiatan_id' => 1, 'user_id' => 51, 'nama_agenda' => 'Rapat Evaluasi', 'deadline' => '2024-12-10 09:00:00', 'lokasi' => 'Ruang Evaluasi C', 'progres' => 1.00, 'keterangan' => 'Rapat evaluasi tahapan kegiatan'],
@@ -46,6 +47,7 @@ class KegiatanAgendaSeeder extends Seeder
             ['kegiatan_id' => 6, 'user_id' => 39, 'nama_agenda' => 'Rapat Koordinasi', 'deadline' => '2024-07-05 14:00:00', 'lokasi' => 'Ruang Koordinasi B', 'progres' => 1.00, 'keterangan' => 'Rapat koordinasi dengan tim'],
             ['kegiatan_id' => 6, 'user_id' => 23, 'nama_agenda' => 'Rapat Evaluasi', 'deadline' => '2024-07-10 09:00:00', 'lokasi' => 'Ruang Evaluasi C', 'progres' => 0.00, 'keterangan' => 'Rapat evaluasi tentang hasil persiapan kegiatan'],
             ['kegiatan_id' => 6, 'user_id' => 45, 'nama_agenda' => 'Hari Pelaksanaan', 'deadline' => '2024-07-12 16:00:00', 'lokasi' => 'Outdoor Area', 'progres' => 0.00, 'keterangan' => 'Briefing dan simulasi kegiatan'],
+
         ];
 
         // Insert data ke dalam tabel kegiatan_agenda

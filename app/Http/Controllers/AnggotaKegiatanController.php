@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\AnggotaKegiatanModel;
 use Illuminate\Http\Request;
 
-class AnggotaController extends Controller
+class AnggotaKegiatanController extends Controller
 {
     public function index()
     {

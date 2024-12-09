@@ -61,6 +61,7 @@ class KegiatanJtiController extends Controller
                         style="border-radius: 10px; font-size: 16px; font-weight: bold; padding: 5px 30px; background-color: rgba(40, 167, 69, 0.5); color: green; border: rgba(40, 167, 69, 0.8);">
                         Detail
                      </button> ';
+            
             $btn .= '<button onclick="modalAction(\'' . url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/edit_ajax') . '\')" 
                         class="btn btn-warning btn-sm" 
                         style="border-radius: 10px; font-size: 16px; font-weight: bold; padding: 5px 30px; background-color: rgba(255, 193, 7, 0.5); color: orange; border: rgba(255, 193, 7, 0.8);">
@@ -248,6 +249,7 @@ class KegiatanJtiController extends Controller
         }
     }
 
+
     //DETAIL KEGIATAN JTI
     public function show($id)
     {
@@ -414,4 +416,11 @@ class KegiatanJtiController extends Controller
 
         return redirect('/kegiatanjti/' . $id . '/show');
     }
+
+    public function show_ajax($id)
+{
+    
+}
+
+
 }
