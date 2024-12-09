@@ -79,6 +79,7 @@ class JenisPenggunaController extends Controller
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
                 'level_nama' => 'required|string|max:100',
+                'level_deskripsi' => 'required|string|max:255',
             ];
 
             // use Illuminate\Support\Facades\Validator;

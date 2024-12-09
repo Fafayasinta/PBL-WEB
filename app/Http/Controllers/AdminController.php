@@ -18,25 +18,52 @@ class AdminController extends Controller
         $activeMenu = 'dashboard';
 
         // Menghitung jumlah kegiatan yang selesai
-        $totalKegiatanSelesai = 9;  //Kegiatan::where('status', 'selesai')->count(); // Mengambil jumlah kegiatan yang selesai dari database
+        $totalKegiatan = KegiatanModel::count();  
+        $totalKegiatanSelesai = KegiatanModel::where('status', 'selesai')->count();  
+        $totalKegiatanProses = KegiatanModel::where('status', 'proses')->count();  
+        $totalKegiatanBelum = KegiatanModel::where('status', 'belum')->count();  
     
         // Mengirim data ke view
         return view('admin.dashboard', [
             'breadcrumb' => $breadcrumb,
             'activeMenu' => $activeMenu,
-            'totalKegiatanSelesai' => $totalKegiatanSelesai
+            'totalKegiatan' => $totalKegiatan,
+            'totalKegiatanSelesai' => $totalKegiatanSelesai,
+            'totalKegiatanProses' => $totalKegiatanProses,
+            'totalKegiatanBelum' => $totalKegiatanBelum
         ]);
     }
 
     public function list(Request $request)
     {
-        $admin = KegiatanModel::select('kegiatan_id', 'nama_kegiatan', 'waktu_mulai', 'waktu_selesai', 'pic', 'progres', 'keterangan');
+        // Query awal untuk mengambil data kegiatan
+        $admin = KegiatanModel::select(
+            'kegiatan_id',
+            'nama_kegiatan',
+            'waktu_mulai',
+            'waktu_selesai',
+            'user_id',
+            'keterangan'
+        )->with('user');
 
+        // Filter berdasarkan nama kegiatan jika ada
         if ($request->nama_kegiatan) {
-            $admin->where('nama_kegiatan', $request->nama_kegiatan);
+            $admin->where('nama_kegiatan', 'like', '%' . $request->nama_kegiatan . '%');
         }
 
-        return DataTables::of($admin)
+        // Perhitungan progres berdasarkan agenda
+        $data = $admin->get()->map(function ($item) {
+            $totalAgenda = $item->agenda()->count(); // Total agenda terkait kegiatan
+            $completedAgenda = $item->agenda()->where('progres', 1)->count(); // Agenda yang selesai
+
+            // Hitung progres sebagai persentase
+            $item->progres = $totalAgenda > 0 ? round(($completedAgenda / $totalAgenda) * 100, 2) : 0;
+
+            return $item;
+        });
+
+        // Return data ke DataTables
+        return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
     }

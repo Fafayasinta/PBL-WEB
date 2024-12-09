@@ -35,11 +35,11 @@
             <table class="table-bordered table-striped table-hover table-sm table" id="table_jabatankegiatan" style="width: 100%">
                 <thead>
                     <tr>
-                        <th>NO</th>
-                        <th>CAKUPAN WILAYAH</th>
-                        <th>JABATAN</th>
-                        <th>SKOR</th>
-                        <th>AKSI</th>
+                        <th class="text-center">NO</th>
+                        <th class="text-center">CAKUPAN WILAYAH</th>
+                        <th class="text-center">JABATAN</th>
+                        <th class="text-center">SKOR</th>
+                        <th class="text-center">AKSI</th>
                     </tr>
                 </thead>
             </table>

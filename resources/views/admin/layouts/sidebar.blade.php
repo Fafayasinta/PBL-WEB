@@ -28,8 +28,8 @@
           </li>
           <!-- DROPDOWN -->
           <li class="nav-header">KEGIATAN</li>
-          <li class="nav-item {{ in_array($activeMenu, ['jeniskegiatan', 'jabatankegiatan', 'kegiatanjti', 'kegiatannonjti', 'periode']) ? 'menu-open' : '' }}">
-              <a href="#" class="nav-link {{ in_array($activeMenu, ['jeniskegiatan', 'jabatankegiatan', 'kegiatanjti', 'kegiatannonjti', 'periode']) ? 'active' : '' }}">
+          <li class="nav-item {{ in_array($activeMenu, ['jeniskegiatan', 'jabatankegiatan', 'kegiatanjti', 'kegiatannonjti', 'periode', 'agenda']) ? 'menu-open' : '' }}">
+              <a href="#" class="nav-link {{ in_array($activeMenu, ['jeniskegiatan', 'jabatankegiatan', 'kegiatanjti', 'kegiatannonjti', 'periode', 'agenda']) ? 'active' : '' }}">
                   <i class="nav-icon fas fa-clipboard-list"></i>
                   <p>Kegiatan Dosen<i class="right fas fa-angle-left"></i></p>
               </a>
@@ -53,15 +53,21 @@
                       </a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{ url('/kegiatannonjti') }}" class="nav-link {{ ($activeMenu == 'kegiatannonjti')? 'active' : '' }}">
+                    <a href="{{ url('/agenda') }}" class="nav-link {{ ($activeMenu == 'agenda')? 'active' : '' }}">
                           <i class="far fa-circle nav-icon"></i>
-                          <p>Kelola Kegiatan Non JTI</p>
+                          <p>Agenda Kegiatan</p>
                       </a>
                   </li>
                   <li class="nav-item">
                     <a href="{{ url('/periode') }}" class="nav-link {{ ($activeMenu == 'periode')? 'active' : '' }}">
                           <i class="far fa-circle nav-icon"></i>
                           <p>Periode Kegiatan</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ url('/kegiatannonjti') }}" class="nav-link {{ ($activeMenu == 'kegiatannonjti')? 'active' : '' }}">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Kelola Kegiatan Non JTI</p>
                       </a>
                   </li>
               </ul>

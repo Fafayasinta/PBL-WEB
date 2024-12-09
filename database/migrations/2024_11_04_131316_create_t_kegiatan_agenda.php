@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('t_kegiatan_agenda', function (Blueprint $table) {
             $table->id('agenda_id');
             $table->unsignedBigInteger('kegiatan_id')->index();
+            $table->unsignedBigInteger('user_id')->index();
             $table->string('nama_agenda');
             $table->date('deadline');  
             $table->string('lokasi');
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
             $table->foreign('kegiatan_id')->references('kegiatan_id')->on('t_kegiatan');
+            $table->foreign('user_id')->references('user_id')->on('m_user');
         });
     }
 
