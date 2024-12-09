@@ -98,14 +98,13 @@ Route::middleware(['auth'])->group(function () {
         Route::group(['prefix' => 'agenda'], function () {
             Route::get('/', [AgendaKegiatanController::class, 'index']);
             Route::post('/list', [AgendaKegiatanController::class, 'list']);
-            Route::get('/{id}/show_ajax', [KegiatanJtiController::class, 'show_ajax']);
-            Route::post('{id}/list_anggota', [KegiatanJtiController::class, 'list_anggota']);
-            Route::get('/create_ajax', [KegiatanJtiController::class, 'create_ajax']);
-            Route::post('/ajax', [KegiatanJtiController::class, 'store_ajax']);
-            Route::get('/{id}/edit_ajax', [KegiatanJtiController::class, 'edit_ajax']);
-            Route::put('/{id}/update_ajax', [KegiatanJtiController::class, 'update_ajax']);
-            Route::get('/{id}/delete_ajax', [KegiatanJtiController::class, 'confirm_ajax']);
-            Route::delete('/{id}/delete_ajax', [KegiatanJtiController::class, 'delete_ajax']);
+            Route::get('/create_ajax', [AgendaKegiatanController::class, 'create_ajax']);
+            Route::post('/ajax', [AgendaKegiatanController::class, 'store_ajax']);
+            Route::get('/{id}/show_ajax', [AgendaKegiatanController::class, 'show_ajax']);
+            Route::get('/{id}/edit_ajax', [AgendaKegiatanController::class, 'edit_ajax']);
+            Route::put('/{id}/update_ajax', [AgendaKegiatanController::class, 'update_ajax']);
+            Route::get('/{id}/delete_ajax', [AgendaKegiatanController::class, 'confirm_ajax']);
+            Route::delete('/{id}/delete_ajax', [AgendaKegiatanController::class, 'delete_ajax']);
         });
 
         Route::group(['prefix' => 'periode'], function () {

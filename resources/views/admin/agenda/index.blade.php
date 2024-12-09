@@ -6,7 +6,7 @@
             <br>
             {{-- <h3 class="card-title">{{ $page->title }}</h3> --}}
             <div class="card-tools">
-                <button onclick="modalAction('{{ url('#') }}')"class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
+                <button onclick="modalAction('{{ url('/agenda/create_ajax') }}')"class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
             </div>
         </div>
         <div class="card-body">
@@ -23,7 +23,7 @@
                         <div class="col-3">
                             <select type="text" class="form-control" id="kegiatan_id" name="kegiatan_id" required>
                                 <option value="">Semua</option>
-                                @foreach ($agenda as $item)
+                                @foreach ($agendaUnique as $item)
                                     <option value="{{ $item->kegiatan_id }}">{{ $item->kegiatan->nama_kegiatan }}</option>
                                 @endforeach
                             </select>
@@ -37,10 +37,10 @@
                     <tr>
                         <th class="text-center">NO</th>
                         <th class="text-center">NAMA AGENDA</th>
-                        <th class="text-center">PENANGGUNG JAWAB</th>
-                        <th class="text-center">DEADLINE</th>
+                        <th class="text-center" style="width: 20%">PENANGGUNG JAWAB</th>
+                        <th class="text-center" >DEADLINE</th>
                         <th class="text-center">LOKASI</th>
-                        <th class="text-center">KETERANGAN</th>
+                        <th class="text-center" style="width: 20%">KETERANGAN</th>
                         <th class="text-center">AKSI</th>
                     </tr>
                 </thead>
@@ -126,9 +126,9 @@
             });
 
             // Reload tabel saat filter kategori diubah
-            // $('#tahun').on('change', function() {
-            //     dataPengguna.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
-            // });
+            $('#kegiatan_id').on('change', function() {
+                dataAgenda.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
+            });
         });
     </script>
 @endpush

@@ -86,7 +86,6 @@ class KegiatanJtiController extends Controller
         return view('admin.kegiatanjti.show_ajax', ['kegiatanjti' => $kegiatanjti]);
     }
 
-
     public function create_ajax()
     {
         $kategori = KategoriKegiatanModel::select('kategori_kegiatan_id', 'nama_kategori')
