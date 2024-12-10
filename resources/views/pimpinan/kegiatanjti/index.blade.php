@@ -56,7 +56,7 @@
                         <th class="text-center">JENIS</th>
                         <th class="text-center">STATUS</th>
                         <th class="text-center">BEBAN KERJA</th>
-                        <th class="text-center">TAHUN</th>
+                        <th class="text-center">PERIODE</th>
                         <th class="text-center">AKSI</th>
                     </tr>
                 </thead>

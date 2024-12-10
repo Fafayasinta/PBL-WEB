@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="card card-outline card-primary">
-        <div class="card-header"><br>
+        <div class="card-header">
             {{-- <h3 class="card-title">{{ $page->title }}</h3> --}}
             <div class="card-tools">
                 <button onclick="modalAction('{{ url('/kegiatanjti/create_ajax') }}')"class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
@@ -17,20 +17,35 @@
             @endif
             <div class="row">
                 <div class="col-md-12">
-                    {{-- <div class="form-group row">
-                        <label class="col-1 control-label col-form-label">Filter</label>
+                    <div class="form-group row">
+                        <label class="col-1 control-label col-form-label">Filter By Status</label>
                         <div class="col-3">
-                            <select type="text" class="form-control" id="status" name="status" required>
-                                <option value="">Semua</option>
-                                @foreach ($status as $item)
-                                    <option value="{{ $item->status }}">{{ $item->status }}</option>
+                            <select type="text" class="form-control" id="status_select" name="status" required>
+                                <option value="">Semua</option>  
+                                    <option value="Belum Proses">Belum Proses</option>
+                                    <option value="Proses">Proses</option>
+                                    <option value="Selesai">Selesai</option>
+                            </select>
+                            <small class="form-text text-muted">Status</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label class="col-1 control-label col-form-label">Filter By Periode</label>
+                        <div class="col-3">
+                            <select type="text" class="form-control" id="tahun_select" name="tahun" required>
+                                <option value="">Semua</option>  
+                                @foreach ($tahun as $item)
+                                    <option value="{{ $item->tahun }}">{{ $item->tahun }}</option>
                                 @endforeach
                             </select>
-                            <small class="form-text text-muted">Jenis Kegiatan</small>
+                            <small class="form-text text-muted">Periode</small>
                         </div>
-                    </div> --}}
+                    </div>
                 </div>
-                <br>
             </div>
             <table class="table-bordered table-striped table-hover table-sm table" id="table_kegiatanjti" style="width: 100%">
                 <thead>
@@ -41,6 +56,7 @@
                         <th class="text-center">JENIS</th>
                         <th class="text-center">STATUS</th>
                         <th class="text-center">BEBAN KERJA</th>
+                        <th class="text-center">PERIODE</th>
                         <th class="text-center">AKSI</th>
                     </tr>
                 </thead>
@@ -68,6 +84,7 @@
                     "type": "POST",
                     "data": function(d) {
                         d.status = $('#kegiatanjti').val(); // Mengirim data filter kategori_kode
+                        d.tahun = $('#kegiatanjti').val(); // Mengirim data filter kategori_kode
                     }
                 },
                 columns: [{
@@ -102,10 +119,17 @@
                         searchable: true
                     },
                     {
+                        data: "tahun.tahun",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
                         data: "action", // Kolom aksi (Edit, Hapus)
                         orderable: false,
                         searchable: false
                     }
+                   
+                    
                 ]
             });
 
@@ -113,6 +137,29 @@
             $('#status').on('change', function() {
                 dataKegiatanJti.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
             });
+            $('#tahun_id').on('change', function() {
+                dataKegiatanJti.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
+            });
+            const statusSelect = $('#status_select')
+            console.log(statusSelect);
+            const tahunSelect = $('#tahun_select')
+            console.log(tahunSelect);
+
+            statusSelect.on('change', ()=>{
+                dataKegiatanJti.columns(4).data().search(statusSelect.find(':selected').val()).draw();
+        }
+        
+         );
+         tahunSelect.on('change', ()=>{
+                dataKegiatanJti.columns(7).data().search(tahunSelect.find(':selected').val()).draw();
+        }
+        
+         );
+            
+
         });
+        
+
+        
     </script>
 @endpush
