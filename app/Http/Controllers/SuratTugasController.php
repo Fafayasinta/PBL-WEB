@@ -6,6 +6,10 @@ use App\Models\SuratTugasModel;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
 use PDF;
+use App\Models\KegiatanAgendaModel;
+use App\Models\KegiatanModel;
+use App\Models\UserModel;
+use App\Models\AnggotaKegiatanModel;
 
 class SuratTugasController extends Controller
 {
@@ -41,6 +45,10 @@ class SuratTugasController extends Controller
 
     public function exportPDF(SuratTugasModel $suratTugas)
     {
+        $kegiatan = KegiatanModel::all();
+        $agenda = KegiatanAgendaModel::all();
+        $anggota = AnggotaKegiatanModel::all();
+        
         // Load data yang diperlukan
         $suratTugas->load(['user', 'kegiatan']);
         
