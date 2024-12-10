@@ -30,8 +30,14 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Kegiatan
     Route::get('/kegiatan', [KegiatanController::class, 'index']);
+    Route::get('/kegiatan/{id}', [KegiatanController::class, 'show']);
     Route::get('/kegiatan-user', [KegiatanController::class, 'userKegiatan']);
-    Route::get('/amount-kegiatan', [KegiatanController::class, 'countByStatus']);
+    Route::prefix('amount-kegiatan')->group(function () {
+        Route::get('/', [KegiatanController::class, 'countByStatus']);
+        Route::get('/by-user', [KegiatanController::class, 'countByUser']);
+        Route::get('/by-category', [KegiatanController::class, 'countByCategory']);
+    });
+
 
     // Notifikasi
     Route::get('/notifikasi', [NotifikasiController::class, 'index']);
