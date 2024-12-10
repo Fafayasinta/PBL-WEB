@@ -27,6 +27,9 @@ class KegiatanJtiController extends Controller
         ];
 
         $status = KegiatanModel::all();
+        $tahun = TahunModel::all();
+
+    
         switch(auth()->user()->level->level_kode){
             case('ADMIN'):
                 $redirect =  'admin';
@@ -41,15 +44,17 @@ class KegiatanJtiController extends Controller
         return view($redirect.'.kegiatanjti.index', [
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
-            'status' => $status
+            'status' => $status,
+            'tahun' => $tahun
         ]);
     }
 
     public function list(Request $request)
     {
-        $kegiatanjti = KegiatanModel::select('kegiatan_id', 'nama_kegiatan', 'user_id', 'deskripsi', 'kategori_kegiatan_id', 'status', 'beban_kegiatan_id')
+        $kegiatanjti = KegiatanModel::select('kegiatan_id', 'nama_kegiatan', 'user_id', 'deskripsi', 'kategori_kegiatan_id', 'status', 'beban_kegiatan_id','tahun_id')
             ->with('kategori')
             ->with('beban')
+            ->with('tahun')
             ->with('user')
             ->whereIn('kategori_kegiatan_id', [1, 2]);
 
@@ -62,6 +67,9 @@ class KegiatanJtiController extends Controller
     //  if ($request->status) {
     //      $kegiatanjti->where('status', $request->status);
     //  }
+
+    $tahun = TahunModel::all();
+
 
         return DataTables::of($kegiatanjti)
         ->addIndexColumn()

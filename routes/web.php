@@ -15,6 +15,7 @@ use App\Http\Controllers\KegiatanNonJtiController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SuratTugasController;
 use App\Http\Controllers\StatistikController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
@@ -205,6 +206,7 @@ Route::middleware(['auth'])->group(function () {
             // Route::put('/{id}/update_ajax', [KegiatanJtiController::class, 'update_ajax']);
             // Route::get('/{id}/delete_ajax', [KegiatanJtiController::class, 'confirm_ajax']);
             // Route::delete('/{id}/delete_ajax', [KegiatanJtiController::class, 'delete_ajax']);
+            Route::get('/exportPDF', [SuratTugasController::class, 'exportPDF']);
         });
 
         Route::group(['prefix' => 'agenda'], function () {
@@ -230,5 +232,6 @@ Route::middleware(['auth'])->group(function () {
             // Route::get('/{id}/delete_ajax', [KegiatanNonJtiController::class, 'confirm_ajax']);
             // Route::delete('/{id}/delete_ajax', [KegiatanNonJtiController::class, 'delete_ajax']);
         });
+        
     });
 });

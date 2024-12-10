@@ -45,7 +45,7 @@ class SuratTugasController extends Controller
         $suratTugas->load(['user', 'kegiatan']);
         
         // Generate PDF menggunakan package dompdf
-        $pdf = FacadePdf::loadView('surat-tugas.pdf', compact('suratTugas'));
+        $pdf = FacadePdf::loadView('pimpinan.kegiatanjti.surat-tugas', compact('suratTugas'));
         
         // Download PDF dengan nama yang dinamis
         return $pdf->download('surat-tugas-'.$suratTugas->nomor_surat.'.pdf');
