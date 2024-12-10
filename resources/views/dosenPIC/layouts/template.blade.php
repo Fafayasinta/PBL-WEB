@@ -61,7 +61,7 @@
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
-  @include('pimpinan.layouts.header')
+  @include('dosenPIC.layouts.header')
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
@@ -79,14 +79,14 @@
     <br>
 
     <!-- Sidebar -->
-    @include('pimpinan.layouts.sidebar')
+    @include('dosenPIC.layouts.sidebar')
     <!-- /.sidebar -->
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    @include('pimpinan.layouts.breadcrumb')
+    @include('dosenPIC.layouts.breadcrumb')
 
     <!-- Main content -->
     <section class="content">
@@ -96,7 +96,7 @@
   </div>
   <!-- /.content-wrapper -->
 
-  @include('pimpinan.layouts.footer')
+  @include('dosenPIC.layouts.footer')
 </div>
 <!-- ./wrapper -->
 

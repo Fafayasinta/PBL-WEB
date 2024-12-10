@@ -24,7 +24,6 @@ class DatabaseSeeder extends Seeder
         KegiatanDosenSeeder::class,
         BobotDosenSeeder::class,
         KegiatanAgendaSeeder::class,
-        NotifikasiSeeder::class,
     ]);
 }
 }

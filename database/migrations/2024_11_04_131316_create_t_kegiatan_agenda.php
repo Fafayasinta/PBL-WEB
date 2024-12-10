@@ -16,9 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('kegiatan_id')->index();
             $table->unsignedBigInteger('user_id')->index();
             $table->string('nama_agenda');
-            $table->string('icon');
-            $table->date('deadline');
-        $table->string('lokasi');
+            $table->date('deadline');  
+            $table->string('lokasi');
             $table->decimal('progres', 8, 2);
             $table->text('keterangan');
             $table->timestamp('created_at')->useCurrent();

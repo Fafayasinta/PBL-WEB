@@ -1,4 +1,4 @@
-@extends('pimpinan.layouts.template')
+@extends('dosenAnggota.layouts.template')
 
 @section('content')
 

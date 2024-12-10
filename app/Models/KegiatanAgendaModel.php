@@ -9,15 +9,13 @@ class KegiatanAgendaModel extends Model
 {
     protected $table = 't_kegiatan_agenda';
     protected $primaryKey = 'agenda_id';
-
+    
     protected $fillable = [
         'kegiatan_id',
         'user_id',
-        'nama_agenda',
         'deadline',
-        'lokasi',
+        'lokasi', 
         'progres',
-        'user_id',
         'keterangan'
     ];
 

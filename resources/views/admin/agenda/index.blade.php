@@ -3,9 +3,10 @@
 @section('content')
     <div class="card card-outline card-primary">
         <div class="card-header">
+            <br>
             {{-- <h3 class="card-title">{{ $page->title }}</h3> --}}
             <div class="card-tools">
-                <button onclick="modalAction('{{ url('/kegiatanjti/create_ajax') }}')"class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
+                <button onclick="modalAction('{{ url('#') }}')"class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
             </div>
         </div>
         <div class="card-body">
@@ -20,26 +21,26 @@
                     <div class="form-group row">
                         <label class="col-1 control-label col-form-label">Filter</label>
                         <div class="col-3">
-                            <select type="text" class="form-control" id="status" name="status" required>
+                            <select type="text" class="form-control" id="kegiatan_id" name="kegiatan_id" required>
                                 <option value="">Semua</option>
-                                @foreach ($status as $item)
-                                    <option value="{{ $item->status }}">{{ $item->status }}</option>
+                                @foreach ($agenda as $item)
+                                    <option value="{{ $item->kegiatan_id }}">{{ $item->kegiatan->nama_kegiatan }}</option>
                                 @endforeach
                             </select>
-                            <small class="form-text text-muted">Jenis Kegiatan</small>
+                            <small class="form-text text-muted">Pilih Kegiatan</small>
                         </div>
                     </div>
                 </div>
             </div>
-            <table class="table-bordered table-striped table-hover table-sm table" id="table_kegiatanjti" style="width: 100%">
+            <table class="table-bordered table-striped table-hover table-sm table" id="table_agenda" style="width: 100%">
                 <thead>
                     <tr>
                         <th class="text-center">NO</th>
-                        <th class="text-center" style="width: 15%">NAMA</th>
-                        <th class="text-center" style="width: 20%">DESKRIPSI</th>
-                        <th class="text-center">JENIS</th>
-                        <th class="text-center">STATUS</th>
-                        <th class="text-center">BEBAN KERJA</th>
+                        <th class="text-center">NAMA AGENDA</th>
+                        <th class="text-center">PENANGGUNG JAWAB</th>
+                        <th class="text-center">DEADLINE</th>
+                        <th class="text-center">LOKASI</th>
+                        <th class="text-center">KETERANGAN</th>
                         <th class="text-center">AKSI</th>
                     </tr>
                 </thead>
@@ -57,16 +58,16 @@
                 $('#myModal').modal('show');
             })
         }
-        var dataKegiatanJti;
+        var dataAgenda;
         $(document).ready(function() {
-            dataKegiatanJti = $('#table_kegiatanjti').DataTable({
+            dataAgenda = $('#table_agenda').DataTable({
                 serverSide: true, // Menggunakan server-side processing
                 ajax: {
-                    "url": "{{ url('kegiatanjti/list') }}", // Endpoint untuk mengambil data kategori
+                    "url": "{{ url('agenda/list') }}", // Endpoint untuk mengambil data kategori
                     "dataType": "json",
                     "type": "POST",
                     "data": function(d) {
-                        d.status = $('#kegiatanjti').val(); // Mengirim data filter kategori_kode
+                        d.kegiatan_id = $('#kegiatan_id').val(); // Mengirim data filter kategori_kode
                     }
                 },
                 columns: [{
@@ -76,32 +77,48 @@
                         searchable: false
                     },
                     {
-                        data: "nama_kegiatan",
+                        data: "nama_agenda",
+                        // className: "text-center",
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: "deskripsi",
+                        data: "user.nama",
+                        // className: "text-center",
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: "kategori.nama_kategori",
+                        data: "deadline",
+                        orderable: true,
+                        searchable: true,
+                        render: function(data, type, row) {
+                            if (data) {
+                                let date = new Date(data);
+                                return date.toLocaleDateString("id-ID", {
+                                    day: "2-digit",
+                                    month: "long",
+                                    year: "numeric"
+                                });
+                            }
+                            return "-";
+                        }
+                    },
+                    {
+                        data: "lokasi",
+                        // className: "text-center",
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: "status",
-                        orderable: true,
-                        searchable: true
-                    },
-                    {
-                        data: "beban.nama_beban",
+                        data: "keterangan",
+                        // className: "text-center",
                         orderable: true,
                         searchable: true
                     },
                     {
                         data: "action", // Kolom aksi (Edit, Hapus)
+                        // className: "text-center",
                         orderable: false,
                         searchable: false
                     }
@@ -109,9 +126,9 @@
             });
 
             // Reload tabel saat filter kategori diubah
-            $('#status').on('change', function() {
-                dataKegiatanJti.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
-            });
+            // $('#tahun').on('change', function() {
+            //     dataPengguna.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
+            // });
         });
     </script>
 @endpush
