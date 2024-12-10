@@ -9,26 +9,17 @@ class AnggotaKegiatanModel extends Model
 {
     protected $table = 't_anggota_kegiatan';
     protected $primaryKey = 'anggota_id';
-<<<<<<< HEAD
-    public $timestamps = false;
-    
-=======
-
->>>>>>> 09a3213b37efd1093bf2700e7eb6dd9529a6b46f
     protected $fillable = [
         'user_id',
         'kegiatan_id',
         'jabatan',
-<<<<<<< HEAD
         'skor'
-=======
         'beban_kerja',
         'skor',
     ];
     
     protected $casts = [
         'skor' => 'decimal:2',
->>>>>>> 09a3213b37efd1093bf2700e7eb6dd9529a6b46f
     ];
 
     // Relasi ke User

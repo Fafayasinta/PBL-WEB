@@ -23,8 +23,19 @@ class KegiatanNonJtiController extends Controller
             'title' => 'Data Kegiatan Non JTI',
             'list' => ['Home', 'kegiatannonjti']
         ];
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
 
-        return view('admin.kegiatannonjti.index', [
+        return view($redirect.'.kegiatannonjti.index', [
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
         ]);
@@ -75,8 +86,18 @@ class KegiatanNonJtiController extends Controller
     public function show_ajax(string $id)
     {
         $kegiatannonjti = KegiatanModel::find($id);
-
-        return view('admin.kegiatannonjti.show_ajax', ['kegiatannonjti' => $kegiatannonjti]);
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
+        return view($redirect.'.kegiatannonjti.show_ajax', ['kegiatannonjti' => $kegiatannonjti]);
     }
 
     public function create_ajax()

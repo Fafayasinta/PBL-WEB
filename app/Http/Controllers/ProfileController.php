@@ -14,8 +14,18 @@ class ProfileController extends Controller
             'title' => 'Profile',
             'list' => ['Home', 'profile']
         ];
-
-        return view('admin.profile.index', [
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
+        return view($redirect . '.profile.index', [
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
         ]);

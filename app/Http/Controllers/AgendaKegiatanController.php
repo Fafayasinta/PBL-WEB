@@ -22,7 +22,7 @@ class AgendaKegiatanController extends Controller
 
         $agenda = KegiatanAgendaModel::all();
         $agendaUnique = $agenda->unique('kegiatan_id');
-
+        
         return view('admin.agenda.index', [
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
