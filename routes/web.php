@@ -231,8 +231,8 @@ Route::middleware(['auth'])->group(function () {
         });
         
         Route::group(['prefix' => 'kegiatanjti'], function () {
-            Route::get('/', [KegiatanJtiController::class, 'indexDosen']);
-            Route::post('/list', [KegiatanJtiController::class, 'listDosen']);
+            Route::get('{id}/', [KegiatanJtiController::class, 'indexDosen']);
+            Route::post('{id}/list', [KegiatanJtiController::class, 'listDosen']);
             Route::get('/{id}/show_ajax', [KegiatanJtiController::class, 'show_ajax']);
             Route::post('{id}/list_anggota', [KegiatanJtiController::class, 'list_anggota']);
             Route::get('/create_ajax', [KegiatanJtiController::class, 'create_ajax']);
