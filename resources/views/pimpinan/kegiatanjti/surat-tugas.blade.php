@@ -106,8 +106,8 @@
             untuk dosen-dosen dari Jurusan Teknologi Informasi yang akan mengikuti kegiatan berikut:
         </p>
         <p>
-            <strong>Nama Kegiatan</strong>: {{$kegiatan -> kegiatan_nama }}<br>
-            <strong>Tanggal</strong>: {{$kegiatan-> waktu_mulai - $kegiatan-> waktu_selesai}} <br>
+            <strong>Nama Kegiatan</strong>: {{ $kegiatan->kegiatan_nama }}<br>
+            <strong>Tanggal</strong>: {{$kegiatan->waktu_mulai}} - {{ $kegiatan->waktu_selesai}} <br>
             <strong>Agenda</strong>: 
             <ul>
                 //tabel t_kegiatan_agenda
@@ -115,6 +115,15 @@
                 <li>Workshop Pengembangan Digital Learning</li>
                 <li>Diskusi Panel "Teknologi dan Pendidikan Masa Depan"</li>
                 <li>Studi Banding Infrastruktur Teknologi Informasi</li>
+                @endif
+            </ul>
+            <ul>
+                @if (!empty($agenda))
+                    @foreach ($agenda as $item)
+                        <li>{{ $item->agenda_nama }}</li>
+                    @endforeach
+                @else
+                    <li>Agenda belum tersedia.</li>
                 @endif
             </ul>
         </p>

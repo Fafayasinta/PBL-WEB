@@ -43,19 +43,17 @@ class SuratTugasController extends Controller
         return view('surat-tugas.show', compact('suratTugas'));
     }
 
-    public function exportPDF(SuratTugasModel $suratTugas)
-    {
-        $kegiatan = KegiatanModel::all();
-        $agenda = KegiatanAgendaModel::all();
-        $anggota = AnggotaKegiatanModel::all();
-        
-        // Load data yang diperlukan
-        $suratTugas->load(['user', 'kegiatan']);
-        
-        // Generate PDF menggunakan package dompdf
-        $pdf = FacadePdf::loadView('pimpinan.kegiatanjti.surat-tugas', compact('suratTugas'));
-        
-        // Download PDF dengan nama yang dinamis
-        return $pdf->download('surat-tugas-'.$suratTugas->nomor_surat.'.pdf');
-    }
+    public function exportPDF($id)
+{
+    $suratTugas = SuratTugasModel::findOrFail($id);
+    $kegiatan = KegiatanModel::find($suratTugas->kegiatan_id);
+    $agenda = KegiatanAgendaModel::where('kegiatan_id', $suratTugas->kegiatan_id)->get();
+    $dosen = AnggotaKegiatanModel::where('kegiatan_id', $suratTugas->kegiatan_id)->get();
+
+    $suratTugas->load('user');
+
+    $pdf = FacadePdf::loadView('pimpinan.kegiatanjti.surat-tugas', compact('suratTugas', 'kegiatan', 'agenda', 'dosen'));
+    return $pdf->download('surat-tugas-' . $suratTugas->nomor_surat . '.pdf');
+}
+
 }
