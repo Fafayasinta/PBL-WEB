@@ -11,7 +11,7 @@
                 <div class="alert alert-danger">
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
                     Data yang anda cari tidak ditemukan</div>
-                <a href="{{ url('/agenda') }}" class="btn btn-warning">Kembali</a>
+                <a href="{{ url('/kegiatanjti') }}" class="btn btn-warning">Kembali</a>
             </div>
         </div>
     </div>
@@ -116,7 +116,8 @@
                                     title: 'Berhasil',
                                     text: response.message
                                 });
-                                dataAgenda.ajax.reload();
+                                dataAnggotaKegiatanJti.ajax.reload();
+                                dataAgendaKegiatanJti.ajax.reload();
                             }else{
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {

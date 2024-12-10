@@ -84,7 +84,7 @@ class AgendaKegiatanController extends Controller
                 'kegiatan_id' => 'required|numeric',
                 'user_id' => 'required|numeric',
                 'nama_agenda' => 'required',
-                'deadline' => 'required|date|after_or_equal:today',
+                'deadline' => 'required|date',
                 'lokasi' => 'required|string',
                 'progres' => 'required|numeric|between:0,9999.99', // Validasi skor sebagai angka desimal
                 'keterangan' => 'required|string',
@@ -107,7 +107,7 @@ class AgendaKegiatanController extends Controller
                 'message' => 'Data Jenis Kegiatan berhasil disimpan'
             ]);
         }
-        return redirect('/agenda');
+        return redirect('/kegiatanjti');
     }
 
     public function show_ajax(string $id){
@@ -168,7 +168,7 @@ class AgendaKegiatanController extends Controller
                 ]);
             }
         }
-        return redirect('/agenda');
+        return redirect(url('/kegiatanjti/' . $id->kegiatan_id . '/show'));
     }
 
     public function confirm_ajax(string $id)
@@ -195,7 +195,7 @@ class AgendaKegiatanController extends Controller
                     'message' => 'Data tidak ditemukan'
                 ]);
             }
-            return redirect('/agenda');
+            return redirect(url('/kegiatanjti/' . $id->kegiatan_id . '/show'));
         }
     }
 }

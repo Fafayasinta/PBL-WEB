@@ -1,4 +1,4 @@
-@empty($agenda)
+@empty($anggota)
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -14,7 +14,7 @@
         </div>
     </div>
 @else
-    <form action="{{ url('/agenda/' . $agenda->agenda_id.'/delete_ajax') }}" method="POST" id="form-delete">
+    <form action="{{ url('/anggota/' . $anggota->anggota_id.'/delete_ajax') }}" method="POST" id="form-delete">
     @csrf
     @method('DELETE')
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
@@ -31,11 +31,10 @@
                     Apakah Anda ingin menghapus data seperti di bawah ini?
                 </div>
                 <table class="table table-sm table-bordered table-striped">
-                    <tr><th class="text-left col-3">Nama Agenda:</th><td class="col-9">{{$agenda->nama_agenda }}</td></tr>
-                    <tr><th class="text-left col-3">Penanggung Jawab :</th><td class="col-9">{{$agenda->user->nama }}</td></tr>
-                    <tr><th class="text-left col-3">Deadline :</th><td class="col-9">{{ \Carbon\Carbon::parse($agenda->deadline)->format('d-m-Y') }}</td></tr>
-                    <tr><th class="text-left col-3">Lokasi :</th><td class="col-9">{{$agenda->lokasi }}</td></tr>
-                    <tr><th class="text-left col-3">Keterangan :</th><td class="col-9">{{$agenda->keterangan }}</td></tr>
+                    <tr><th class="text-left col-3">Nama Kegiatan:</th><td class="col-9">{{$anggota->kegiatan->nama_kegiatan }}</td></tr>
+                    <tr><th class="text-left col-3">Nama Dosen :</th><td class="col-9">{{$anggota->user->nama }}</td></tr>
+                    <tr><th class="text-left col-3">Jabatan :</th><td class="col-9">{{$anggota->jabatan }}</td></tr>
+                    <tr><th class="text-left col-3">Bobot :</th><td class="col-9">{{$anggota->skor }}</td></tr>
                 </table>
             </div>
             <div class="modal-footer">

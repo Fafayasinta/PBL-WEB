@@ -1,4 +1,4 @@
-@empty($agenda)
+@empty($anggota)
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-danger text-white">
@@ -18,48 +18,37 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD:resources/views/admin/anggota/show_ajax.blade.php
 @else
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-info text-white">
-                <h5 class="modal-title" id="exampleModalLabel">Detail Agenda Kegiatan</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Detail anggota Kegiatan</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-info">
-                    <strong>Data Agenda Kegiatan</strong><br>
-                    Berikut adalah Detail dari data agenda kegiatan.
+                    <strong>Data Anggota Kegiatan</strong><br>
+                    Berikut adalah Detail dari data anggota kegiatan.
                 </div>
                 <table class="table table-bordered">
                     <tr>
                         <th class="text-left">NAMA KEGIATAN</th>
-                        <td>{{ $agenda->kegiatan->nama_kegiatan }}</td>
+                        <td>{{ $anggota->kegiatan->nama_kegiatan }}</td>
                     </tr>
                     <tr>
-                        <th class="text-left">NAMA AGENDA</th>
-                        <td>{{ $agenda->nama_agenda }}</td>
+                        <th class="text-left">NAMA DOSEN</th>
+                        <td>{{ $anggota->user->nama }}</td>
                     </tr>
                     <tr>
-                        <th class="text-left">PENANGGUNG JAWAB</th>
-                        <td>{{ $agenda->user->nama }}</td>
+                        <th class="text-left">POSISI</th>
+                        <td>{{ $anggota->jabatan }}</td>
                     </tr>
                     <tr>
-                        <th class="text-left">DEADLINE</th>
-                        <td>{{ \Carbon\Carbon::parse($agenda->deadline)->format('d-m-Y') }}</td>
-                    </tr>
-                    <tr>
-                        <th class="text-left">LOKASI</th>
-                        <td>{{ $agenda->lokasi }}</td>
-                    </tr>
-                    <tr>
-                        <th class="text-left">PROGRES</th>
-                        <td>{{ $agenda->progres }}</td>
-                    </tr>
-                    <tr>
-                        <th class="text-left">KETERANGAN</th>
-                        <td>{{ $agenda->keterangan }}</td>
+                        <th class="text-left">BOBOT</th>
+                        <td>{{ $anggota->skor }}</td>
                     </tr>
                 </table>
             </div>
@@ -69,3 +58,6 @@
         </div>
     </div>
 @endempty
+=======
+@endif
+>>>>>>> 09a3213b37efd1093bf2700e7eb6dd9529a6b46f:resources/views/admin/kegiatanjti/show_ajax.blade.php
