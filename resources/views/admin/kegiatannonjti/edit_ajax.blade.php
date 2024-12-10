@@ -34,14 +34,24 @@
                     <small id="error-nama_kegiatan" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>NAMA DOSEN</label>
-                    <input value="{{ $kegiatannonjti->pic }}" type="text" name="pic" id="pic" class="form-control" required>
-                    <small id="error-pic" class="error-text form-text text-danger"></small>
+                    <label> NAMA DOSEN</label>
+                    <select name="user_id" id="user_id" class="form-control" required>
+                        <option value="">Pilih Dosen</option>
+                        @foreach($user as $u)
+                            <option value="{{ $u->user_id }}">{{ $u->nama }}</option>
+                        @endforeach
+                    </select>
+                    <small id="error-user_id" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>JENIS</label>
-                    <input value="{{ $kegiatannonjti->kategori->nama_kategori }}" type="text" name="nama_kategori" id="nama_kategori" class="form-control" required>
-                    <small id="error-nama_kategori" class="error-text form-text text-danger"></small>
+                    <label> JENIS KEGIATAN</label>
+                    <select name="kategori_kegiatan_id" id="kategori_kegiatan_id" class="form-control" required>
+                        <option value="">Pilih Jenis Kegiatan</option>
+                        @foreach($kategori as $k)
+                            <option value="{{ $k->kategori_kegiatan_id }}">{{ $k->nama_kategori }}</option>
+                        @endforeach
+                    </select>
+                    <small id="error-kategori_kegiatan_id" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
                     <label>WILAYAH KERJA</label>
@@ -55,9 +65,9 @@
                     <small id="error-cakupan_wilayah" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>WAKTU MULAI</label>
+                    <label>WAKTU PELAKSANAAN</label>
                     <input 
-                        type="datetime-local" 
+                        type="date" 
                         name="waktu_mulai" 
                         id="waktu_mulai" 
                         class="form-control" 
@@ -66,9 +76,14 @@
                     <small id="error-waktu_mulai" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>BEBAN KERJA</label>
-                    <input value="{{ $kegiatannonjti->beban->nama_beban }}" type="text" name="nama_beban" id="nama_beban" class="form-control" required>
-                    <small id="error-nama_beban" class="error-text form-text text-danger"></small>
+                    <label> BEBAN KEGIATAN</label>
+                    <select name="beban_kegiatan_id" id="beban_kegiatan_id" class="form-control" required>
+                        <option value="">Pilih Beban Kegiatan</option>
+                        @foreach($beban as $b)
+                            <option value="{{ $b->beban_kegiatan_id }}">{{ $b->nama_beban }}</option>
+                        @endforeach
+                    </select>
+                    <small id="error-beban_kegiatan_id" class="error-text form-text text-danger"></small>
                 </div>
             </div>
             <div class="modal-footer">
@@ -82,15 +97,15 @@
         $(document).ready(function() {
             $("#form-edit").validate({
                 rules: {
+                    user_id: {required: true, number: true},
+                    kategori_id: {required: true, number: true},
+                    beban_kegiatan_id: {required: true, number: true},
                     nama_kegiatan: {required: true, maxlenght: 200},
-                    pic: {required: true, maxlenght: 100},
-                    nama_kategori: {required: true, maxlenght: 100},
                     cakupan_wilayah: {
                         required: true,
                         inArray: ["Luar Institusi", "Institusi", "Jurusan", "Program Studi"], // Validasi nilai hanya pada daftar opsi.
                     },
                     waktu_mulai: {required: true, date},
-                    nama_beban: {required: true, maxlenght: 100},
                 },
                 submitHandler: function(form) {
                     $.ajax({

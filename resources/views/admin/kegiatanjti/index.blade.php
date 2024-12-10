@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="card card-outline card-primary">
-        <div class="card-header">
+        <div class="card-header"><br>
             {{-- <h3 class="card-title">{{ $page->title }}</h3> --}}
             <div class="card-tools">
                 <button onclick="modalAction('{{ url('/kegiatanjti/create_ajax') }}')"class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
@@ -17,7 +17,7 @@
             @endif
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <label class="col-1 control-label col-form-label">Filter</label>
                         <div class="col-3">
                             <select type="text" class="form-control" id="status" name="status" required>
@@ -28,8 +28,9 @@
                             </select>
                             <small class="form-text text-muted">Jenis Kegiatan</small>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
+                <br>
             </div>
             <table class="table-bordered table-striped table-hover table-sm table" id="table_kegiatanjti" style="width: 100%">
                 <thead>

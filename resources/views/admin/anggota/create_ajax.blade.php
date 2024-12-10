@@ -1,9 +1,9 @@
-<form action="{{ url('/agenda/ajax') }}" method="POST" id="form-tambah">
+<form action="{{ url('/anggota/ajax') }}" method="POST" id="form-tambah">
     @csrf
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-info text-white">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Agenda Kegiatan</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tambah anggota Kegiatan</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -20,12 +20,7 @@
                     <small id="error-kegiatan_id" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>NAMA AGENDA</label>
-                    <input value="" type="text" name="nama_agenda" id="nama_agenda" class="form-control" required>
-                    <small id="error-nama_agenda" class="error-text form-text text-danger"></small>
-                </div>
-                <div class="form-group">
-                    <label>PENANGGUNG JAWAB</label>
+                    <label> NAMA DOSEN</label>
                     <select name="user_id" id="user_id" class="form-control" required>
                         <option value="">Pilih Dosen</option>
                         @foreach($user as $u)
@@ -35,30 +30,20 @@
                     <small id="error-user_id" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>DEADLINE</label>
-                    <input 
-                        type="date" 
-                        name="deadline" 
-                        id="deadline" 
-                        class="form-control" 
-                        value="{{ isset($agenda->deadline) ? \Carbon\Carbon::parse($agenda->deadline)->format('Y-m-d') : '' }}" 
-                        required>
-                    <small id="error-deadline" class="error-text form-text text-danger"></small>
-                </div>  
-                <div class="form-group">
-                    <label>LOKASI</label>
-                    <input value="" type="text" name="lokasi" id="lokasi" class="form-control" required>
-                    <small id="error-lokasi" class="error-text form-text text-danger"></small>
+                    <label>JABATAN</label>
+                    <select name="jabatan" id="jabatan" class="form-control" required>
+                        <option value="">Pilih Status</option>
+                        <option value="PIC">PIC</option>
+                        <option value="Sekretaris">Sekretaris</option>
+                        <option value="Bendahara">Bendahara</option>
+                        <option value="Anggota">Anggota</option>
+                    </select>
+                    <small id="error-jabatan" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>PROGRES</label>
-                    <input value="" type="text" name="progres" id="progres" class="form-control" placeholder="Masukkan nilai 0.00 - 1.00" required>
-                    <small id="error-progres" class="error-text form-text text-danger"></small>
-                </div>
-                <div class="form-group">
-                    <label>KETERANGAN</label>
-                    <input value="" type="text" name="keterangan" id="keterangan" class="form-control" required>
-                    <small id="error-keterangan" class="error-text form-text text-danger"></small>
+                    <label>SKOR</label>
+                    <input value="" type="text" name="skor" id="skor" class="form-control" required>
+                    <small id="error-skor" class="error-text form-text text-danger"></small>
                 </div>
             </div>
             <div class="modal-footer">
@@ -73,12 +58,9 @@
             $("#form-tambah").validate({
                 rules: {
                     kegiatan_id: {required: true, number: true},
-                    nama_agenda: {required: true},
                     user_id: {required: true, number: true},
-                    deadline: { required: true, date: true },
-                    lokasi: {required: true},
-                    progres: {required: true, number: true},
-                    keterangan: {required: true},
+                    jabatan: { required: true},
+                    skor: {required: true, number: true},
                 },
                 submitHandler: function(form) {
                     $.ajax({

@@ -9,12 +9,13 @@ class AnggotaKegiatanModel extends Model
 {
     protected $table = 't_anggota_kegiatan';
     protected $primaryKey = 'anggota_id';
+    public $timestamps = false;
     
     protected $fillable = [
         'user_id',
         'kegiatan_id', 
         'jabatan',
-        'beban_kerja'
+        'skor'
     ];
 
     // Relasi ke User
