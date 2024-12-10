@@ -1,118 +1,85 @@
-@extends('pimpinan.layouts.template')
+<style>
+    .custom-blue-header {
+        background-color: #007bff; /* Warna biru */
+        color: white; /* Warna teks putih agar kontras */
+    }
+</style>
 
-@section('content')
-    <div class="container-fluid mt-4">
-        <!-- Detail Kegiatan -->
-        <div class="card mb-4">
-            <div class="card-header bg-primary text-white d-flex justify-content-between">
-                <h4 class="mb-0">Detail Kegiatan</h4>
+@if(!$kegiatanjti->isEmpty())
+    <div id="modal-master" class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="exampleModalLabel">Detail Kegiatan JTI</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="card-body">
-                <div class="row mb-3">
-                    <div class="col-md-4">
-                        <table class="table table-borderless">
-                            <tr>
-                                <th>Tanggal Kegiatan</th>
-                                <td>{{ $kegiatan->tanggal_kegiatan }}</td>
-                            </tr>
-                            <tr>
-                                <th>Progress</th>
-                                <td>
-                                    <div class="progress" style="height: 20px;">
-                                        <div class="progress-bar bg-success" style="width: {{ $kegiatan->progress }}%;">{{ $kegiatan->progress }}%</div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Keterangan Progress</th>
-                                <td>{{ $kegiatan->keterangan_progress }}</td>
-                            </tr>
-                            <tr>
-                                <th>Nama Ketua Pelaksana</th>
-                                <td>{{ $kegiatan->pic }}</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-8 text-end">
-                        <button class="btn btn-warning me-2">Cetak Draft Surat</button>
-                        <button class="btn btn-info me-2">Upload Surat</button>
-                        <button class="btn btn-success">Lihat Surat</button>
-                        <button class="btn btn-primary ms-2">Tambah</button>
-                    </div>
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    <strong>Data Kegiatan</strong><br>
+                    Berikut adalah Detail dari data jabatan kegiatan.
                 </div>
                 <table class="table table-bordered">
+                    <tr>
+                        <th class="text-left">Nama Kegiatan</th>
+                        <td>{{ $kegiatanjti->first()->kegiatan->nama_kegiatan }}</td>
+                    </tr>
+                    <tr>
+                        <th class="text-left">Deskripsi</th>
+                        <td>{{ $kegiatanjti->first()->kegiatan->deskripsi }}</td>
+                    </tr>
+                    <tr>
+                        <th class="text-left">Jenis Kegiatan</th>
+                        <td>{{ $kegiatanjti->first()->kegiatan->kategori->nama_kategori }}</td>
+                    </tr>
+                </table>
+                <br>
+                <div class="alert alert-info">
+                    <strong>Data Anggota Kegiatan</strong><br>
+                    Berikut adalah list nama anggota kegiatan.
+                </div>
+                <table class="table-bordered table-striped table-hover table-sm table" id="table_anggota" style="width: 100%">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Nama Anggota</th>
-                            <th>Posisi</th>
-                            <th>Bobot</th>
-                            <th>Aksi</th>
+                            <th class="text-center">NO</th>
+                            <th class="text-center">NAMA DOSEN</th>
+                            <th class="text-center">JABATAN</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($anggotaKegiatan as $index => $anggota)
+                        @foreach ($kegiatanjti as $index => $item)
                             <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $anggota->nama_anggota }}</td>
-                                <td>{{ $anggota->posisi }}</td>
-                                <td>{{ $anggota->bobot }}</td>
-                                <td>
-                                    <button class="btn btn-sm btn-info">Detail</button>
-                                    <button class="btn btn-sm btn-warning">Edit</button>
-                                    <button class="btn btn-sm btn-danger">Hapus</button>
-                                </td>
+                                <td>{{ $index + 1 }}</td> <!-- Menampilkan nomor urut -->
+                                <td>{{ $item->user->nama }}</td> <!-- Menampilkan nama dosen -->
+                                <td>{{ $item->jabatan }}</td> <!-- Menampilkan jabatan -->
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-        </div>
-
-        <!-- Agenda -->
-        <div class="card">
-            <div class="card-header bg-primary text-white d-flex justify-content-between">
-                <h4 class="mb-0">Agenda</h4>
-                <button class="btn btn-primary">Tambah</button>
-            </div>
-            <div class="card-body">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Agenda</th>
-                            <th>Waktu</th>
-                            <th>Tempat</th>
-                            <th>Keterangan</th>
-                            <th>Penanggung Jawab</th>
-                            <th>Progress</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($agendaKegiatan as $index => $agenda)
-                            <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $agenda->nama_agenda }}</td>
-                                <td>{{ $agenda->waktu }}</td>
-                                <td>{{ $agenda->tempat }}</td>
-                                <td>{{ $agenda->keterangan }}</td>
-                                <td>{{ $agenda->penanggung_jawab }}</td>
-                                <td>
-                                    <span class="badge bg-{{ $agenda->progress === 'Selesai' ? 'success' : 'danger' }}">
-                                        {{ $agenda->progress }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm btn-info">Detail</button>
-                                    <button class="btn btn-sm btn-warning">Edit</button>
-                                    <button class="btn btn-sm btn-danger">Hapus</button>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-warning">Kembali</button>
             </div>
         </div>
     </div>
-@endsection
+@else
+    <div id="modal-master" class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger text-center">
+                    <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
+                    Data yang Anda cari tidak ditemukan.
+                </div>
+                <div class="text-right">
+                    <a href="{{ url('/kegiatanjti') }}" class="btn btn-warning">Kembali</a>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif

@@ -5,7 +5,7 @@
         <div class="card-header">
             {{-- <h3 class="card-title">{{ $page->title }}</h3> --}}
             <div class="card-tools">
-                <button onclick="modalAction('{{ url('/kegiatanjti/create_ajax') }}')"class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
+                <button onclick="#"class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
             </div>
         </div>
         <div class="card-body">
@@ -20,27 +20,28 @@
                     <div class="form-group row">
                         <label class="col-1 control-label col-form-label">Filter</label>
                         <div class="col-3">
-                            <select type="text" class="form-control" id="status" name="status" required>
+                            <select type="text" class="form-control" id="" name="" required>
                                 <option value="">Semua</option>
-                                @foreach ($status as $item)
-                                    <option value="{{ $item->status }}">{{ $item->status }}</option>
-                                @endforeach
+                                {{-- @foreach ($level as $item)
+                                    <option value="{{ $item->level_kode }}">{{ $item->level_kode }}</option>
+                                @endforeach --}}
                             </select>
                             <small class="form-text text-muted">Jenis Kegiatan</small>
                         </div>
                     </div>
                 </div>
             </div>
-            <table class="table-bordered table-striped table-hover table-sm table" id="table_kegiatanjti" style="width: 100%">
+            <table class="table-bordered table-striped table-hover table-sm table" id="table_kegiatannonjti" style="width: 100%">
                 <thead>
                     <tr>
-                        <th class="text-center">NO</th>
-                        <th class="text-center" style="width: 15%">NAMA</th>
-                        <th class="text-center" style="width: 20%">DESKRIPSI</th>
-                        <th class="text-center">JENIS</th>
-                        <th class="text-center">STATUS</th>
-                        <th class="text-center">BEBAN KERJA</th>
-                        <th class="text-center">AKSI</th>
+                        <th>NO</th>
+                        <th style="width: 20%">NAMA KEGIATAN</th>
+                        <th style="width: 15%">NAMA DOSEN</th>
+                        <th>JENIS</th>
+                        <th>WILAYAH KERJA</th>
+                        <th>WAKTU</th>
+                        <th>BEBAN</th>
+                        <th>AKSI</th>
                     </tr>
                 </thead>
             </table>
@@ -57,16 +58,16 @@
                 $('#myModal').modal('show');
             })
         }
-        var dataKegiatanJti;
+        var dataLevel;
         $(document).ready(function() {
-            dataKegiatanJti = $('#table_kegiatanjti').DataTable({
+            dataKegiatanNonJti = $('#table_kegiatannonjti').DataTable({
                 serverSide: true, // Menggunakan server-side processing
                 ajax: {
-                    "url": "{{ url('kegiatanjti/list') }}", // Endpoint untuk mengambil data kategori
+                    "url": "{{ url('kegiatannonjti/list')}}", // Endpoint untuk mengambil data kategori
                     "dataType": "json",
                     "type": "POST",
                     "data": function(d) {
-                        d.status = $('#kegiatanjti').val(); // Mengirim data filter kategori_kode
+                        d.cakupan_wilayah = $('#cakupan_wilayah').val(); // Mengirim data filter kategori_kode
                     }
                 },
                 columns: [{
@@ -81,7 +82,7 @@
                         searchable: true
                     },
                     {
-                        data: "deskripsi",
+                        data: "pic",
                         orderable: true,
                         searchable: true
                     },
@@ -91,9 +92,25 @@
                         searchable: true
                     },
                     {
-                        data: "status",
+                        data: "cakupan_wilayah",
                         orderable: true,
                         searchable: true
+                    },
+                    {
+                        data: "waktu_mulai",
+                        orderable: true,
+                        searchable: true,
+                        render: function(data, type, row) {
+                            if (data) {
+                                let date = new Date(data);
+                                return date.toLocaleDateString("id-ID", {
+                                    day: "2-digit",
+                                    month: "long",
+                                    year: "numeric"
+                                });
+                            }
+                            return "-";
+                        }
                     },
                     {
                         data: "beban.nama_beban",
@@ -109,8 +126,8 @@
             });
 
             // Reload tabel saat filter kategori diubah
-            $('#status').on('change', function() {
-                dataKegiatanJti.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
+            $('#').on('change', function() {
+                dataLevel.ajax.reload(); // Memuat ulang tabel berdasarkan filter yang dipilih
             });
         });
     </script>
