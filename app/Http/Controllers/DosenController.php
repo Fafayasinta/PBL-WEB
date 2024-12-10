@@ -6,7 +6,7 @@ use App\Models\KegiatanModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
-class PimpinanController extends Controller
+class DosenController extends Controller
 {
     public function index()
     {
@@ -24,7 +24,7 @@ class PimpinanController extends Controller
         $totalKegiatanBelum = KegiatanModel::where('status', 'belum')->count();  
     
         // Mengirim data ke view
-        return view('pimpinan.dashboard', [
+        return view('admin.dashboard', [
             'breadcrumb' => $breadcrumb,
             'activeMenu' => $activeMenu,
             'totalKegiatan' => $totalKegiatan,
