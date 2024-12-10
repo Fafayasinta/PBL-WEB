@@ -18,6 +18,7 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD:resources/views/admin/anggota/show_ajax.blade.php
 @else
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -57,3 +58,6 @@
         </div>
     </div>
 @endempty
+=======
+@endif
+>>>>>>> 09a3213b37efd1093bf2700e7eb6dd9529a6b46f:resources/views/admin/kegiatanjti/show_ajax.blade.php

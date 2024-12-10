@@ -56,11 +56,20 @@ class KegiatanJtiController extends Controller
         return DataTables::of($kegiatanjti)
         ->addIndexColumn()
         ->addColumn('action', function ($kegiatanjti) {
+<<<<<<< HEAD
             $btn = '<a href="' . url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/show') . '" 
                     class="btn btn-info btn-sm" 
                     style="border-radius: 10px; font-size: 16px; font-weight: bold; padding: 5px 30px; background-color: rgba(40, 167, 69, 0.5); color: green; border: rgba(40, 167, 69, 0.8);">
                     Detail
                 </a>';
+=======
+            $btn  = '<button onclick="modalAction(\'' . url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/show_ajax') . '\')" 
+                        class="btn btn-info btn-sm" 
+                        style="border-radius: 10px; font-size: 16px; font-weight: bold; padding: 5px 30px; background-color: rgba(40, 167, 69, 0.5); color: green; border: rgba(40, 167, 69, 0.8);">
+                        Detail
+                     </button> ';
+            
+>>>>>>> 09a3213b37efd1093bf2700e7eb6dd9529a6b46f
             $btn .= '<button onclick="modalAction(\'' . url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/edit_ajax') . '\')" 
                         class="btn btn-warning btn-sm" 
                         style="border-radius: 10px; font-size: 16px; font-weight: bold; padding: 5px 30px; background-color: rgba(255, 193, 7, 0.5); color: orange; border: rgba(255, 193, 7, 0.8);">
@@ -347,4 +356,71 @@ class KegiatanJtiController extends Controller
         ->rawColumns(['action'])
         ->make(true); // Pastikan metode make(true) dipanggil
     }
+<<<<<<< HEAD
+=======
+
+    public function create_ajaxAnggota($id)
+    {
+        $anggota = AnggotaKegiatanModel::select('anggota_id', 'user_id', 'kegiatan_id', 'jabatan', 'skor')
+        ->where('kegiatan_id', $id)
+        ->get();
+
+        $user = UserModel::select('user_id', 'nama')->get();
+
+        return view('admin.kegiatanjti.anggota_create_ajax', compact('kegiatanjti'))->with([
+            'anggota' => $anggota,
+            'user' => $user
+        ]);
+    }
+
+    public function store_ajaxAnggota(Request $request, $id)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'user_id' => 'required|integer|exists:m_user,user_id',
+                'jabatan' => [
+                    'required',
+                    ValidationRule::in(['PIC', 'Sekretaris', 'Bendahara', 'Anggota']),
+                ],
+                'skor' => 'nullable|numeric'
+            ];
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validasi Gagal',
+                    'msgField' => $validator->errors(),
+                ]);
+            }
+
+            try {
+                $data = $request->all();
+                $data['kegiatan_id'] = $id;
+
+                AnggotaKegiatanModel::create($data);
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data Kegiatan JTI berhasil disimpan'
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Terjadi kesalahan saat menyimpan data',
+                    'error' => $e->getMessage()
+                ]);
+            }
+        }   
+
+        return redirect('/kegiatanjti/' . $id . '/show');
+    }
+
+    public function show_ajax($id)
+{
+    
+}
+
+
+>>>>>>> 09a3213b37efd1093bf2700e7eb6dd9529a6b46f
 }

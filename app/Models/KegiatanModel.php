@@ -45,17 +45,17 @@ class KegiatanModel extends Model
     }
 
     // Relasi ke model KategoriKegiatan
-    public function kategori() :BelongsTo
+    public function kategori(): BelongsTo
     {
         return $this->belongsTo(KategoriKegiatanModel::class, 'kategori_kegiatan_id', 'kategori_kegiatan_id');
     }
 
-    public function beban() :BelongsTo
+    public function beban(): BelongsTo
     {
         return $this->belongsTo(BebanKegiatanModel::class, 'beban_kegiatan_id', 'beban_kegiatan_id');
     }
 
-    public function tahun() :BelongsTo
+    public function tahun(): BelongsTo
     {
         return $this->belongsTo(TahunModel::class, 'tahun_id', 'tahun_id');
     }
@@ -65,8 +65,7 @@ class KegiatanModel extends Model
         return $this->hasMany(KegiatanAgendaModel::class, 'kegiatan_id', 'kegiatan_id');
     }
 
-    public function anggota(): HasMany
-    {
-        return $this->hasMany(AnggotaKegiatanModel::class, 'kegiatan_id', 'kegiatan_id');
-    }
+
 }
+
+

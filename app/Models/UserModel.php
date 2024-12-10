@@ -39,13 +39,16 @@ class UserModel extends Authenticatable
     // Casting tipe data
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
     ];
 
     // Relasi ke tabel level
     public function level() :BelongsTo
     {
         return $this->belongsTo(LevelModel::class, 'level_id', 'level_id');
+    }
+
+    public function kegiatan(){
+        return $this->hasMany(KegiatanModel::class, 'user_id', 'user_id');
     }
 
     // Accessor untuk foto profil (mengembalikan default jika null)
@@ -55,10 +58,7 @@ class UserModel extends Authenticatable
     }
 
     // Mutator untuk password (hash otomatis)
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
+    
 
     // Scope query untuk role
     public function getRole()
