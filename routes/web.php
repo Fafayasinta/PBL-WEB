@@ -276,9 +276,5 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{id}/delete_ajax', [KegiatanNonJtiController::class, 'confirm_ajax']);
             Route::delete('/{id}/delete_ajax', [KegiatanNonJtiController::class, 'delete_ajax']);
         });
-        
-        Route::group(['prefix' => 'statistik'], function () {
-            Route::get('/', [StatistikController::class, 'index']);
-        });
     });
 });
