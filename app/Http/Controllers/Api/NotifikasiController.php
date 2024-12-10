@@ -14,7 +14,7 @@ class NotifikasiController extends Controller
     public function index()
     {
         try {
-            $datas = NotifikasiModel::where('user_id', auth()->user()->user_id)->get();
+            $datas = NotifikasiModel::where('user_id', auth()->user()->user_id)->latest()->get();
             return $this->successResponse($datas, 'Data notifikasi');
         } catch (\Throwable $th) {
             return $this->errorResponse($th->getMessage(), 500);
