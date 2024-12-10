@@ -180,7 +180,7 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-//dosen
+//Dosen
 Route::middleware(['auth'])->group(function () {
     // Admin routes
     Route::get('/home', [WelcomeController::class, 'index']);

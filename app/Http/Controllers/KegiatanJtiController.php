@@ -73,12 +73,6 @@ class KegiatanJtiController extends Controller
                     Detail
                 </a>';
 
-            $btn  = '<button onclick="modalAction(\'' . url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/show_ajax') . '\')" 
-                        class="btn btn-info btn-sm" 
-                        style="border-radius: 10px; font-size: 16px; font-weight: bold; padding: 5px 30px; background-color: rgba(40, 167, 69, 0.5); color: green; border: rgba(40, 167, 69, 0.8);">
-                        Detail
-                     </button> ';
-
             $btn .= '<button onclick="modalAction(\'' . url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/edit_ajax') . '\')" 
                         class="btn btn-warning btn-sm" 
                         style="border-radius: 10px; font-size: 16px; font-weight: bold; padding: 5px 30px; background-color: rgba(255, 193, 7, 0.5); color: orange; border: rgba(255, 193, 7, 0.8);">
@@ -312,7 +306,7 @@ class KegiatanJtiController extends Controller
         $agendakegiatanjti = $this->listAgenda(request(), $id);
 
         // Kembalikan view dengan data yang telah difilter
-        return view('$redirect.kegiatanjti.show', [
+        return view($redirect.'.kegiatanjti.show', [
             'breadcrumb' => $breadcrumb, 
             'page' => $page, 
             'kegiatanjti' => $kegiatanjti, 

@@ -1,4 +1,4 @@
-@extends('pimpinan.layouts.template')
+@extends('dosen.layouts.template')
 
 @section('content')
     <div class="card card-outline card-primary">

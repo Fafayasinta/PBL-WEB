@@ -14,8 +14,6 @@ class AnggotaKegiatanModel extends Model
         'kegiatan_id',
         'jabatan',
         'skor'
-        'beban_kerja',
-        'skor',
     ];
     
     protected $casts = [
