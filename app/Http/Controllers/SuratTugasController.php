@@ -6,6 +6,10 @@ use App\Models\SuratTugasModel;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
 use PDF;
+use App\Models\KegiatanAgendaModel;
+use App\Models\KegiatanModel;
+use App\Models\UserModel;
+use App\Models\AnggotaKegiatanModel;
 
 class SuratTugasController extends Controller
 {
@@ -39,15 +43,17 @@ class SuratTugasController extends Controller
         return view('surat-tugas.show', compact('suratTugas'));
     }
 
-    public function exportPDF(SuratTugasModel $suratTugas)
-    {
-        // Load data yang diperlukan
-        $suratTugas->load(['user', 'kegiatan']);
-        
-        // Generate PDF menggunakan package dompdf
-        $pdf = FacadePdf::loadView('surat-tugas.pdf', compact('suratTugas'));
-        
-        // Download PDF dengan nama yang dinamis
-        return $pdf->download('surat-tugas-'.$suratTugas->nomor_surat.'.pdf');
-    }
+    public function exportPDF($id)
+{
+    $suratTugas = SuratTugasModel::findOrFail($id);
+    $kegiatan = KegiatanModel::find($suratTugas->kegiatan_id);
+    $agenda = KegiatanAgendaModel::where('kegiatan_id', $suratTugas->kegiatan_id)->get();
+    $dosen = AnggotaKegiatanModel::where('kegiatan_id', $suratTugas->kegiatan_id)->get();
+
+    $suratTugas->load('user');
+
+    $pdf = FacadePdf::loadView('pimpinan.kegiatanjti.surat-tugas', compact('suratTugas', 'kegiatan', 'agenda', 'dosen'));
+    return $pdf->download('surat-tugas-' . $suratTugas->nomor_surat . '.pdf');
+}
+
 }

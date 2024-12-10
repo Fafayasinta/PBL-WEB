@@ -23,8 +23,19 @@ class KegiatanNonJtiController extends Controller
             'title' => 'Data Kegiatan Non JTI',
             'list' => ['Home', 'kegiatannonjti']
         ];
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
 
-        return view('admin.kegiatannonjti.index', [
+        return view($redirect.'.kegiatannonjti.index', [
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
         ]);
@@ -53,17 +64,17 @@ class KegiatanNonJtiController extends Controller
         ->addColumn('action', function ($kegiatannonjti) {
             $btn  = '<button onclick="modalAction(\'' . url('/kegiatannonjti/' . $kegiatannonjti->kegiatan_id . '/show_ajax') . '\')" 
                         class="btn btn-info btn-sm" 
-                        style="border-radius: 10px; font-size: 16px; font-weight: bold; padding: 5px 30px; background-color: rgba(40, 167, 69, 0.5); color: green; border: rgba(40, 167, 69, 0.8);">
+                        style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(40, 167, 69, 0.5); color: green; border: rgba(40, 167, 69, 0.8);">
                         Detail
                      </button> ';
             $btn .= '<button onclick="modalAction(\'' . url('/kegiatannonjti/' . $kegiatannonjti->kegiatan_id . '/edit_ajax') . '\')" 
                         class="btn btn-warning btn-sm" 
-                        style="border-radius: 10px; font-size: 16px; font-weight: bold; padding: 5px 30px; background-color: rgba(255, 193, 7, 0.5); color: orange; border: rgba(255, 193, 7, 0.8);">
+                        style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(255, 193, 7, 0.5); color: orange; border: rgba(255, 193, 7, 0.8);">
                         Edit
                     </button> ';
             $btn .= '<button onclick="modalAction(\'' . url('/kegiatannonjti/' . $kegiatannonjti->kegiatan_id . '/delete_ajax') . '\')"  
                         class="btn btn-danger btn-sm" 
-                        style="border-radius: 10px; font-size: 16px; font-weight: bold; padding: 5px 30px; background-color: rgba(220, 53, 69, 0.5); color: red; border: rgba(220, 53, 69, 0.8);">
+                        style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(220, 53, 69, 0.5); color: red; border: rgba(220, 53, 69, 0.8);">
                         Hapus
                     </button> ';
             return $btn;
@@ -75,8 +86,18 @@ class KegiatanNonJtiController extends Controller
     public function show_ajax(string $id)
     {
         $kegiatannonjti = KegiatanModel::find($id);
-
-        return view('admin.kegiatannonjti.show_ajax', ['kegiatannonjti' => $kegiatannonjti]);
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
+        return view($redirect.'.kegiatannonjti.show_ajax', ['kegiatannonjti' => $kegiatannonjti]);
     }
 
     public function create_ajax()

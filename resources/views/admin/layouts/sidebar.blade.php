@@ -87,12 +87,14 @@
                           <p>Kelola Kegiatan Non JTI</p>
                       </a>
                   </li>
+                  @if(auth()->user()->level->level_kode == 'ADMIN')
                   <li class="nav-item">
                     <a href="{{ url('/periode') }}" class="nav-link {{ ($activeMenu == 'periode')? 'active' : '' }}">
                           <i class="far fa-circle nav-icon"></i>
                           <p>Periode Kegiatan</p>
                       </a>
                   </li>
+                  @endif
               </ul>
           </li>
           @if(auth()->user()->level->level_kode == 'ADMIN')

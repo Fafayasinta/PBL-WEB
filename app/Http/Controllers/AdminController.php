@@ -22,7 +22,7 @@ class AdminController extends Controller
         $totalKegiatanSelesai = KegiatanModel::where('status', 'selesai')->count();  
         $totalKegiatanProses = KegiatanModel::where('status', 'proses')->count();  
         $totalKegiatanBelum = KegiatanModel::where('status', 'belum proses')->count();  
-    
+        
         // Mengirim data ke view
         return view('admin.dashboard', [
             'breadcrumb' => $breadcrumb,

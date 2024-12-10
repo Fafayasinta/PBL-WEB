@@ -61,7 +61,7 @@
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
-  @include('dosenAnggota.layouts.header')
+  @include('dosen.layouts.header')
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
@@ -79,14 +79,14 @@
     <br>
 
     <!-- Sidebar -->
-    @include('dosenAnggota.layouts.sidebar')
+    @include('dosen.layouts.sidebar')
     <!-- /.sidebar -->
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    @include('dosenAnggota.layouts.breadcrumb')
+    @include('dosen.layouts.breadcrumb')
 
     <!-- Main content -->
     <section class="content">
@@ -96,7 +96,7 @@
   </div>
   <!-- /.content-wrapper -->
 
-  @include('dosenAnggota.layouts.footer')
+  @include('dosen.layouts.footer')
 </div>
 <!-- ./wrapper -->
 
