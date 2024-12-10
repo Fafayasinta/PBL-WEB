@@ -19,8 +19,7 @@ class PimpinanController extends Controller
 
         // Menghitung jumlah kegiatan yang selesai
         $totalKegiatanSelesai = 9;  //Kegiatan::where('status', 'selesai')->count(); // Mengambil jumlah kegiatan yang selesai dari database
-    
-        // Mengirim data ke view
+         // Mengirim data ke view
         return view('pimpinan.dashboard', [
             'breadcrumb' => $breadcrumb,
             'activeMenu' => $activeMenu,
