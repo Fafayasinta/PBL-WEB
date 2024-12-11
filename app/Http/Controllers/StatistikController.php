@@ -14,8 +14,15 @@ class StatistikController extends Controller
             'title' => 'Statistik Beban Kerja Dosen',
             'list' => ['Home', 'statistik']
         ];
-
-        return view('admin.statistik.index', [
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;        
+        }
+        return view($redirect.'.statistik.index', [
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
         ]);

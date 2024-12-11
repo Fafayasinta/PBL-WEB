@@ -101,6 +101,20 @@
                     <canvas id="donutChart4" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                 </div>
             </div>
+        </div>
+        <div class="card-body">
+            <table class="table-bordered table-striped table-hover table-sm table" id="table_statistik" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">NO</th>
+                        <th class="text-center">NAMA DOSEN</th>
+                        <th class="text-center">JTI TERPROGRAM</th>
+                        <th class="text-center">JTI NON PROGRAM</th>
+                        <th class="text-center">NON JTI</th>
+                        <th class="text-center">Keterangan</th>
+                    </tr>
+                </thead>
+            </table>
         </div>   
     </div>
 </div>
