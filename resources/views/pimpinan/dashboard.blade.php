@@ -113,7 +113,7 @@
         var dataAdmin = $('#table_admin').DataTable({
             serverSide: true, // Menggunakan server-side processing
             ajax: {
-                "url": "{{ url('admin/list') }}", // Endpoint untuk mengambil data kegiatan
+                "url": "{{ url('pimpinan/list') }}", // Endpoint untuk mengambil data kegiatan
                 "type": "POST",
                 "data": function (d) {
                     d.nama_kegiatan = $('#nama_kegiatan').val(); // Kirim filter jika ada
