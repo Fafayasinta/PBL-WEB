@@ -21,7 +21,7 @@ class UserResource extends JsonResource
             'nama' => $this->nama,
             'nip' => $this->nip,
             'level' => $this->level,
-            'foto_profil' => $this->foto_profil == 'default-profile.jpg' ? null : 'storage/' . $this->foto_profil,
+            'foto_profil' => $this->foto_profil == 'default-profile.jpg' ? null :  $this->foto_profil,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
