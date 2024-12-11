@@ -206,7 +206,8 @@ Route::middleware(['auth'])->group(function () {
             // Route::put('/{id}/update_ajax', [KegiatanJtiController::class, 'update_ajax']);
             // Route::get('/{id}/delete_ajax', [KegiatanJtiController::class, 'confirm_ajax']);
             // Route::delete('/{id}/delete_ajax', [KegiatanJtiController::class, 'delete_ajax']);
-            Route::get('/exportPDF/{id}', [SuratTugasController::class, 'exportPDF']);
+            // Route::get('/{id}/exportPDF', [KegiatanJtiController::class, 'exportPDF']);
+            Route::get('/{id}/exportPDF', [SuratTugasController::class, 'exportPDF']);
 
         });
 

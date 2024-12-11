@@ -70,52 +70,30 @@
             </div>
           
             <!-- Donut Chart Right 1 -->
-            <div class="card">
+            {{-- <div class="card">
                 <div class="card-top">
                     <h4>Chart 2</h4>
                 </div>
                 <div>
                     <canvas id="donutChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                 </div>
-            </div>
+            </div> --}}
         </div>   
-
-        <!-- Second Row: Donut Chart 3 and 4 -->
-        <div class="chart-row">
-            <!-- Donut Chart Left 2 -->
-            <div class="card">
-                <div class="card-top">
-                    <h4>Chart 3</h4>
-                </div>
-                <div>
-                    <canvas id="donutChart3" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                </div>
-            </div>
-          
-            <!-- Donut Chart Right 2 -->
-            <div class="card">
-                <div class="card-top">
-                    <h4>Chart 4</h4>
-                </div>
-                <div>
-                    <canvas id="donutChart4" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
-            <table class="table-bordered table-striped table-hover table-sm table" id="table_statistik" style="width: 100%">
-                <thead>
-                    <tr>
-                        <th class="text-center">NO</th>
-                        <th class="text-center">NAMA DOSEN</th>
-                        <th class="text-center">JTI TERPROGRAM</th>
-                        <th class="text-center">JTI NON PROGRAM</th>
-                        <th class="text-center">NON JTI</th>
-                        <th class="text-center">Keterangan</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>   
+         
     </div>
+    <div class="card-body">
+        <table class="table-bordered table-striped table-hover table-sm table" id="table_statistik" style="width: 100%">
+            <thead>
+                <tr>
+                    <th class="text-center">NO</th>
+                    <th class="text-center">NAMA DOSEN</th>
+                    <th class="text-center">JTI TERPROGRAM</th>
+                    <th class="text-center">JTI NON PROGRAM</th>
+                    <th class="text-center">NON JTI</th>
+                    <th class="text-center">TOTAL KEGIATAN</th>
+                </tr>
+            </thead>
+        </table>
+    </div> 
 </div>
 @endsection

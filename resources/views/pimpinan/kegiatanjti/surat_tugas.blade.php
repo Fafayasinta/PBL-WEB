@@ -145,10 +145,6 @@
                 <td>{{ $item->nama }}</td>
                 <td>{{ $item->nidn }}</td>
                 <td>{{ $item->jabatan }}</td>
-                <td>1</td>
-                <td>Fitria Ramadhani Prihandiva</td>
-                <td>1234567890</td>
-                <td>Dosen</td>
             </tr>
             @endforeach
             
