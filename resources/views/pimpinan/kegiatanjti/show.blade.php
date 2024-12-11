@@ -19,7 +19,7 @@
             </div>
             <br>
             <div class="card-tools">
-                <button onclick="modalAction('{{ url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/exportPDF') }}')" class="btn btn-success" style="font-size: 16px; background-color: #ffe14c; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Cetak Draft Surat</button>
+                <a href='{{ url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/exportPDF') }}' class="btn btn-success" style="font-size: 16px; background-color: #ffe14c; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Cetak Draft Surat</a>
                 <button onclick="modalAction('{{ url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/create_ajaxAnggota') }}')" class="btn btn-success" style="font-size: 16px; background-color: #fa8072; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Upload Surat</button>
                 <button onclick="modalAction('{{ url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/create_ajaxAnggota') }}')" class="btn btn-success" style="font-size: 16px; background-color: #50c878; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Lihat Surat</button>
                 <button onclick="modalAction('{{ url('/anggota/create_ajax') }}')" class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
