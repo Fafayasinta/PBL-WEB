@@ -226,12 +226,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [KegiatanNonJtiController::class, 'index']);
             Route::post('/list', [KegiatanNonJtiController::class, 'list']);
             Route::get('/{id}/show_ajax', [KegiatanNonJtiController::class, 'show_ajax']);
-            // Route::get('/create_ajax', [KegiatanNonJtiController::class, 'create_ajax']);
-            // Route::post('/ajax', [KegiatanNonJtiController::class, 'store_ajax']);
-            // Route::get('/{id}/edit_ajax', [KegiatanNonJtiController::class, 'edit_ajax']);
-            // Route::put('/{id}/update_ajax', [KegiatanNonJtiController::class, 'update_ajax']);
-            // Route::get('/{id}/delete_ajax', [KegiatanNonJtiController::class, 'confirm_ajax']);
-            // Route::delete('/{id}/delete_ajax', [KegiatanNonJtiController::class, 'delete_ajax']);
+            Route::get('/create_ajax', [KegiatanNonJtiController::class, 'create_ajax']);
+            Route::post('/ajax', [KegiatanNonJtiController::class, 'store_ajax']);
+            Route::get('/{id}/edit_ajax', [KegiatanNonJtiController::class, 'edit_ajax']);
+            Route::put('/{id}/update_ajax', [KegiatanNonJtiController::class, 'update_ajax']);
+            Route::get('/{id}/delete_ajax', [KegiatanNonJtiController::class, 'confirm_ajax']);
+            Route::delete('/{id}/delete_ajax', [KegiatanNonJtiController::class, 'delete_ajax']);
         });
         
     });
