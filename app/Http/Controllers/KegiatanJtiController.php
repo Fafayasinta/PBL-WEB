@@ -8,8 +8,10 @@ use App\Models\BebanKegiatanModel;
 use App\Models\KategoriKegiatanModel;
 use App\Models\KegiatanAgendaModel;
 use App\Models\KegiatanModel;
+use App\Models\SuratTugasModel;
 use App\Models\TahunModel;
 use App\Models\UserModel;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Validation\Rule as ValidationRule;
 use Illuminate\Support\Facades\Validator;
@@ -447,6 +449,9 @@ class KegiatanJtiController extends Controller
 
         return redirect('/kegiatanjti/' . $id . '/show');
     }
+
+
+
 
 
     

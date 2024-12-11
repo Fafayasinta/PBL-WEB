@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\SuratTugasModel;
-use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
-use PDF;
 use App\Models\KegiatanAgendaModel;
 use App\Models\KegiatanModel;
 use App\Models\UserModel;
 use App\Models\AnggotaKegiatanModel;
+use App\Models\BobotJabatanModel;
 
 class SuratTugasController extends Controller
 {
@@ -45,15 +45,40 @@ class SuratTugasController extends Controller
 
     public function exportPDF($id)
 {
-    $suratTugas = SuratTugasModel::findOrFail($id);
-    $kegiatan = KegiatanModel::find($suratTugas->kegiatan_id);
-    $agenda = KegiatanAgendaModel::where('kegiatan_id', $suratTugas->kegiatan_id)->get();
-    $dosen = AnggotaKegiatanModel::where('kegiatan_id', $suratTugas->kegiatan_id)->get();
+    switch(auth()->user()->level->level_kode){
+        case('ADMIN'):
+            $redirect =  'admin';
+            break;
+        case('PIMPINAN'):
+            $redirect =  'pimpinan';
+            break;
+        case('DOSEN'):
+            $redirect=  'dosen';
+            break;        
+        }
+    
 
-    $suratTugas->load('user');
+    $kegiatan = KegiatanModel::find($id);
+    $agenda = KegiatanAgendaModel::where('kegiatan_id', $id->kegiatan_id)->get();
+    $user = UserModel::select('user_id','nama')->get();
+    $jabatan = BobotJabatanModel::select('bobot_jabatan_id','jabatan')->get();
+    $dosen = AnggotaKegiatanModel::where('kegiatan_id', $id->kegiatan_id)
+    ->with(['user','jabatan'])
+    ->get();
 
-    $pdf = FacadePdf::loadView('pimpinan.kegiatanjti.surat-tugas', compact('suratTugas', 'kegiatan', 'agenda', 'dosen'));
-    return $pdf->download('surat-tugas-' . $suratTugas->nomor_surat . '.pdf');
+
+    $pdf = Pdf::loadView($redirect.'.kegiatanjti.surat_tugas',[
+        'kegiatan' => $kegiatan,
+        'user' => $user,
+        'jabatan' => $jabatan,
+        'agenda' => $agenda,
+        'anggota' => $dosen,
+    ]); 
+    $pdf->setPaper('a4', 'portrait'); // set ukuran kertas dan orientasi
+    $pdf->setOption("isRemoteEnabled", true); // set true jika ada gambar dari uri
+    $pdf->render();
+    // return $pdf->download('surat_tugas-' . $suratTugas->nomor_surat . '.pdf');
+    return $pdf->stream('Surat Pengantar '.$kegiatan->kegiatan_nama.'.pdf'); 
 }
 
 }
