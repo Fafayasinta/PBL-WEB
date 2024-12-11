@@ -200,13 +200,6 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{id}/show', [KegiatanJtiController::class, 'show']);
             Route::post('{id}/listAnggota', [KegiatanJtiController::class, 'listAnggota']);
             Route::post('{id}/listAgenda', [KegiatanJtiController::class, 'listAgenda']);
-            // Route::get('/create_ajax', [KegiatanJtiController::class, 'create_ajax']);
-            // Route::post('/ajax', [KegiatanJtiController::class, 'store_ajax']);
-            // Route::get('/{id}/edit_ajax', [KegiatanJtiController::class, 'edit_ajax']);
-            // Route::put('/{id}/update_ajax', [KegiatanJtiController::class, 'update_ajax']);
-            // Route::get('/{id}/delete_ajax', [KegiatanJtiController::class, 'confirm_ajax']);
-            // Route::delete('/{id}/delete_ajax', [KegiatanJtiController::class, 'delete_ajax']);
-            // Route::get('/{id}/exportPDF', [KegiatanJtiController::class, 'exportPDF']);
             Route::get('/{id}/exportPDF', [SuratTugasController::class, 'exportPDF']);
 
         });

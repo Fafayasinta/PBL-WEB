@@ -25,7 +25,7 @@ class KegiatanJtiController extends Controller
         $activeMenu = 'kegiatanjti';
         $breadcrumb = (object) [
             'title' => 'Data Kegiatan JTI',
-            'list' => ['Home', 'kegiatanjti']
+            'list' => ['Home', 'Kegiatan JTI']
         ];
 
         $status = KegiatanModel::all();

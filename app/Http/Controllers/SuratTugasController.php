@@ -44,41 +44,51 @@ class SuratTugasController extends Controller
     }
 
     public function exportPDF($id)
-{
-    switch(auth()->user()->level->level_kode){
-        case('ADMIN'):
-            $redirect =  'admin';
-            break;
-        case('PIMPINAN'):
-            $redirect =  'pimpinan';
-            break;
-        case('DOSEN'):
-            $redirect=  'dosen';
-            break;        
+    {
+        set_time_limit(300);
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect =  'dosen';
+                break;        
         }
     
-
-    $kegiatan = KegiatanModel::find($id);
-    $agenda = KegiatanAgendaModel::where('kegiatan_id', $id->kegiatan_id)->get();
-    $user = UserModel::select('user_id','nama')->get();
-    $jabatan = BobotJabatanModel::select('bobot_jabatan_id','jabatan')->get();
-    $dosen = AnggotaKegiatanModel::where('kegiatan_id', $id->kegiatan_id)
-    ->with(['user','jabatan'])
-    ->get();
-
-
-    $pdf = Pdf::loadView($redirect.'.kegiatanjti.surat_tugas',[
-        'kegiatan' => $kegiatan,
-        'user' => $user,
-        'jabatan' => $jabatan,
-        'agenda' => $agenda,
-        'anggota' => $dosen,
-    ]); 
-    $pdf->setPaper('a4', 'portrait'); // set ukuran kertas dan orientasi
-    $pdf->setOption("isRemoteEnabled", true); // set true jika ada gambar dari uri
-    $pdf->render();
-    // return $pdf->download('surat_tugas-' . $suratTugas->nomor_surat . '.pdf');
-    return $pdf->stream('Surat Pengantar '.$kegiatan->kegiatan_nama.'.pdf'); 
-}
+        // Ambil objek kegiatan berdasarkan ID
+        $kegiatan = KegiatanModel::find($id);
+    
+        // Pastikan kegiatan ditemukan sebelum melanjutkan
+        if (!$kegiatan) {
+            return redirect()->back()->with('error', 'Kegiatan tidak ditemukan.');
+        }
+    
+        // Ambil data yang berkaitan dengan kegiatan
+        $agenda = KegiatanAgendaModel::where('kegiatan_id', $kegiatan->kegiatan_id)->get();
+        $user = UserModel::select('user_id', 'nama')->get();
+        $jabatan = BobotJabatanModel::select('bobot_jabatan_id', 'jabatan')->get();
+        $dosen = AnggotaKegiatanModel::where('kegiatan_id', $kegiatan->kegiatan_id)
+            ->with(['user', 'jabatan'])
+            ->get();
+       // dd($jabatan);
+        // Buat file PDF
+        $pdf = Pdf::loadView($redirect . '.kegiatanjti.surat_tugas', [
+            'kegiatan' => $kegiatan,
+            'user' => $user,
+            'jabatan' => $jabatan,
+            'agenda' => $agenda,
+            'dosen' => $dosen,
+        ]);
+        $pdf->setPaper('a4', 'portrait'); // set ukuran kertas dan orientasi
+        $pdf->setOption("isRemoteEnabled", true); // set true jika ada gambar dari uri
+        $pdf->render();
+    
+        // Stream PDF
+        return $pdf->stream('Surat Pengantar ' . $kegiatan->kegiatan_nama . '.pdf');
+    }
+    
 
 }

@@ -106,21 +106,20 @@
             untuk dosen-dosen dari Jurusan Teknologi Informasi yang akan mengikuti kegiatan berikut:
         </p>
         <p>
-            <strong>Nama Kegiatan</strong>: {{ $kegiatan->kegiatan_nama }}<br>
-            <strong>Tanggal</strong>: {{$kegiatan->waktu_mulai}} - {{ $kegiatan->waktu_selesai}} <br>
+            <strong>Nama Kegiatan</strong>: {{ $kegiatan->nama_kegiatan }}<br>
+            <strong>Tanggal</strong>: {{ \Carbon\Carbon::parse($kegiatan->waktu_mulai)->format('d F Y') }} - {{ \Carbon\Carbon::parse($kegiatan->waktu_selesai)->format('d F Y') }} <br>
             <strong>Agenda</strong>: 
-            <ul>
-                //tabel t_kegiatan_agenda
-                @if
+           <!-- <ul>
+                
                 <li>Workshop Pengembangan Digital Learning</li>
                 <li>Diskusi Panel "Teknologi dan Pendidikan Masa Depan"</li>
                 <li>Studi Banding Infrastruktur Teknologi Informasi</li>
-                @endif
-            </ul>
+                
+            </ul>-->
             <ul>
                 @if (!empty($agenda))
                     @foreach ($agenda as $item)
-                        <li>{{ $item->agenda_nama }}</li>
+                        <li>{{ $item->nama_agenda }}</li>
                     @endforeach
                 @else
                     <li>Agenda belum tersedia.</li>
@@ -135,15 +134,13 @@
             <tr>
                 <th>No</th>
                 <th>Nama</th>
-                <th>NIDN</th>
                 <th>Jabatan</th>
             </tr> 
-            //tabel t_kegiatan_anggota
+            <!--tabel t_kegiatan_anggota-->
             @foreach ($dosen as $key => $item)
             <tr>
                 <td>{{ $key + 1 }}</td>
-                <td>{{ $item->nama }}</td>
-                <td>{{ $item->nidn }}</td>
+                <td>{{ $item->user->nama }}</td>
                 <td>{{ $item->jabatan }}</td>
             </tr>
             @endforeach
