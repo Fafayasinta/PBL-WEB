@@ -13,6 +13,7 @@ class KegiatanAgendaModel extends Model
     protected $fillable = [
         'kegiatan_id',
         'user_id',
+        'nama_agenda',
         'deadline',
         'lokasi', 
         'progres',

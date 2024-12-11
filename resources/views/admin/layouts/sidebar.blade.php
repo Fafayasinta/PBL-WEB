@@ -52,12 +52,12 @@
                           <p>Kelola Kegiatan JTI</p>
                       </a>
                   </li>
-                  <li class="nav-item">
+                  {{-- <li class="nav-item">
                     <a href="{{ url('/agenda') }}" class="nav-link {{ ($activeMenu == 'agenda')? 'active' : '' }}">
                           <i class="far fa-circle nav-icon"></i>
                           <p>Agenda Kegiatan</p>
                       </a>
-                  </li>
+                  </li> --}}
                   <li class="nav-item">
                     <a href="{{ url('/periode') }}" class="nav-link {{ ($activeMenu == 'periode')? 'active' : '' }}">
                           <i class="far fa-circle nav-icon"></i>

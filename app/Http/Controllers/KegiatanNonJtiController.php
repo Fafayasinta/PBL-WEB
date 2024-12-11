@@ -152,9 +152,21 @@ class KegiatanNonJtiController extends Controller
 
     public function edit_ajax(string $id)
     {
+        $user = UserModel::select('user_id', 'nama')->get();
+        $kategori = KategoriKegiatanModel::select('kategori_kegiatan_id', 'nama_kategori')
+        ->whereIn('kategori_kegiatan_id', [3])
+        ->get();
+        
+        $beban = BebanKegiatanModel::select('beban_kegiatan_id', 'nama_beban')->get();
+        
         $kegiatannonjti = KegiatanModel::find($id);
 
-        return view('admin.kegiatannonjti.edit_ajax', ['kegiatannonjti' => $kegiatannonjti]);
+        return view('admin.kegiatannonjti.edit_ajax', [
+            'kegiatannonjti' => $kegiatannonjti,
+            'user' => $user,
+            'kategori' => $kategori,
+            'beban' => $beban
+        ]);
     }
 
     public function update_ajax(Request $request, $id)
@@ -162,15 +174,14 @@ class KegiatanNonJtiController extends Controller
         // cek apakah request dari ajax
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'nama_kegiatan' => 'required|string|max:200',
-                'pic' => 'required|string|max:100',
-                'nama_kategori' => 'required|string|max:100|unique:m_kategori_kegiatan,kategori_kegiatan_id,' . $id . ',kategori_kegiatan_id',
+                'user_id' => 'required|integer',
+                'kategori_kegiatan_id' => 'required|integer',
+                'beban_kegiatan_id' => 'required|integer',
+                'nama_kegiatan' => 'required|string',
                 'cakupan_wilayah' => [
-                    'required',
-                    ValidationRule::in(['Luar Institusi','Institusi','Jurusan','Program Studi']),
+                    'required', ValidationRule::in(['Luar Institusi','Institusi','Jurusan','Program Studi']),
                 ],
-                'waktu_mulai' => 'required|date',
-                'nama_beban' => 'required|string|max:100|unique:m_beban_kegiatan,beban_kegiatan_id,' . $id . ',beban_kegiatan_id',
+                'waktu_mulai' => 'nullable|date',
             ];
 
             // use Illuminate\Support\Facades\Validator;
@@ -198,7 +209,7 @@ class KegiatanNonJtiController extends Controller
                 ]);
             }
         }
-        return redirect('/kegiatannonjti');
+        return redirect('/');
     }
 
     public function confirm_ajax(string $id)
