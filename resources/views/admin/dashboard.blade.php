@@ -71,18 +71,18 @@
             <h4>Kegiatan Jurusan Teknologi Informasi</h4>
             <div class="filter-container ml-auto" style="margin-right: 10px;">
                 <select class="form-control" name="filter" style="font-size: 14px; width: auto; border-radius: 10px" required>
-                    <option value="01" {{ request('month') == '01' ? 'selected' : '' }}>januari</option>
-                    <option value="02" {{ request('month') == '02' ? 'selected' : '' }}>februari</option>
-                    <option value="03" {{ request('month') == '03' ? 'selected' : '' }}>maret</option>
-                    <option value="04" {{ request('month') == '04' ? 'selected' : '' }}>april</option>
-                    <option value="05" {{ request('month') == '05' ? 'selected' : '' }}>mei</option>
-                    <option value="06" {{ request('month') == '06' ? 'selected' : '' }}>juni</option>
-                    <option value="07" {{ request('month') == '07' ? 'selected' : '' }}>juli</option>
-                    <option value="08" {{ request('month') == '08' ? 'selected' : '' }}>agustus</option>
-                    <option value="09" {{ request('month') == '09' ? 'selected' : '' }}>september</option>
-                    <option value="10" {{ request('month') == '10' ? 'selected' : '' }}>oktober</option>
-                    <option value="11" {{ request('month') == '11' ? 'selected' : '' }}>november</option>
-                    <option value="12" {{ request('month') == '12' ? 'selected' : '' }}>desember</option>
+                    <option value="01" {{ request('month') == '01' ? 'selected' : '' }}>Januari</option>
+                    <option value="02" {{ request('month') == '02' ? 'selected' : '' }}>Februari</option>
+                    <option value="03" {{ request('month') == '03' ? 'selected' : '' }}>Maret</option>
+                    <option value="04" {{ request('month') == '04' ? 'selected' : '' }}>April</option>
+                    <option value="05" {{ request('month') == '05' ? 'selected' : '' }}>Mei</option>
+                    <option value="06" {{ request('month') == '06' ? 'selected' : '' }}>Juni</option>
+                    <option value="07" {{ request('month') == '07' ? 'selected' : '' }}>Juli</option>
+                    <option value="08" {{ request('month') == '08' ? 'selected' : '' }}>Agustus</option>
+                    <option value="09" {{ request('month') == '09' ? 'selected' : '' }}>September</option>
+                    <option value="10" {{ request('month') == '10' ? 'selected' : '' }}>Oktober</option>
+                    <option value="11" {{ request('month') == '11' ? 'selected' : '' }}>November</option>
+                    <option value="12" {{ request('month') == '12' ? 'selected' : '' }}>Desember</option>
                 </select>
             </div>
         </div>             
