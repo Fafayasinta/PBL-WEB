@@ -72,7 +72,7 @@
             <div class="filter-container ml-auto" style="margin-right: 10px;">
                 <select class="form-control" name="filter" style="font-size: 14px; width: auto; border-radius: 10px" required>
                     <option value="01" {{ request('month') == '01' ? 'selected' : '' }}>Januari</option>
-                    <option value="02" {{ request('month') == '02' ? 'selected' : '' }}>Febuari</option>
+                    <option value="02" {{ request('month') == '02' ? 'selected' : '' }}>Februari</option>
                     <option value="03" {{ request('month') == '03' ? 'selected' : '' }}>Maret</option>
                     <option value="04" {{ request('month') == '04' ? 'selected' : '' }}>April</option>
                     <option value="05" {{ request('month') == '05' ? 'selected' : '' }}>Mei</option>
