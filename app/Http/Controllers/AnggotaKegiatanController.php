@@ -33,7 +33,7 @@ class AnggotaKegiatanController extends Controller
                     'required',
                     ValidationRule::in(['PIC', 'Sekretaris', 'Bendahara', 'Anggota']),
                 ],
-                'skor' => 'required|numeric|between:0,9999.99', // Validasi skor sebagai angka desimal
+                'skor' => 'required|numeric', // Validasi skor sebagai angka desimal
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -86,7 +86,7 @@ class AnggotaKegiatanController extends Controller
                     'required',
                     ValidationRule::in(['PIC', 'Sekretaris', 'Bendahara', 'Anggota']),
                 ],
-                'skor' => 'required|numeric|between:0,9999.99', // Validasi skor sebagai angka desimal
+                'skor' => 'required|numeric', // Validasi skor sebagai angka desimal
             ];
 
             // use Illuminate\Support\Facades\Validator;

@@ -58,7 +58,7 @@
                 $('#myModal').modal('show');
             })
         }
-        var dataLevel;
+        var dataKegiatanNonJti;
         $(document).ready(function() {
             dataKegiatanNonJti = $('#table_kegiatannonjti').DataTable({
                 serverSide: true, // Menggunakan server-side processing

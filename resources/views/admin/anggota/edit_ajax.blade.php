@@ -99,7 +99,6 @@
                                     text: response.message
                                 });
                                 dataAnggotaKegiatanJti.ajax.reload();
-                                dataAgendaKegiatanJti.ajax.reload();
                             }else{
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {
