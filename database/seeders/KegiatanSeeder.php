@@ -24,7 +24,6 @@ class KegiatanSeeder extends Seeder
                 'status' => 'Proses',
                 'progres' => 0.8,
                 'keterangan' => 'Kurang Penyusunan LPJ',
-                'icon' => 'kegiatan/jtiplayit.png',
             ],
             [
                 'nama_kegiatan' => 'Dialog Dosen Mahasiswa 2024',
@@ -40,7 +39,6 @@ class KegiatanSeeder extends Seeder
                 'status' => 'Selesai',
                 'progres' => 1.0,
                 'keterangan' => 'LPJ Telah diserahkan',
-                'icon' => 'kegiatan/dialog.png',
             ],
             [
                 'nama_kegiatan' => 'Coaching Clinic 2024',
@@ -56,7 +54,6 @@ class KegiatanSeeder extends Seeder
                 'status' => 'Selesai',
                 'progres' => 1.0,
                 'keterangan' => 'LPJ Telah diserahkan',
-                'icon' => 'kegiatan/coaching.png',
             ],
             [
                 'nama_kegiatan' => 'Magang Prodi D4 Teknik Informatika',
@@ -72,7 +69,6 @@ class KegiatanSeeder extends Seeder
                 'status' => 'Proses',
                 'progres' => 0.4,
                 'keterangan' => 'Tahap Penjaringan Mahasiswa',
-                'icon' => 'kegiatan/magangti.png',
             ],
             [
                 'nama_kegiatan' => 'Magang Prodi D4 Sistem Informasi Bisnis',
@@ -88,7 +84,6 @@ class KegiatanSeeder extends Seeder
                 'status' => 'Proses',
                 'progres' => 0.4,
                 'keterangan' => 'Tahap Penjaringan Mahasiswa',
-                'icon' => 'kegiatan/magangsib.png',
             ],
             [
                 'nama_kegiatan' => 'Intercomp 2024',
@@ -104,7 +99,6 @@ class KegiatanSeeder extends Seeder
                 'status' => 'Selesai',
                 'progres' => 1.0,
                 'keterangan' => 'LPJ Telah Diserahkan',
-                'icon' => 'kegiatan/intercomp.png',
             ],
             [
                 'nama_kegiatan' => 'Programmer di Puskom Polinema',
@@ -120,7 +114,6 @@ class KegiatanSeeder extends Seeder
                 'status' => 'Proses',
                 'progres' => 0.2,
                 'keterangan' => 'Menjadi Programmer di Puskom Polinema Pusat',
-                'icon' => 'kegiatan/programmer.png',
             ],
             [
                 'nama_kegiatan' => 'Upskilling Training dengan tema Communication Skill',
@@ -136,7 +129,6 @@ class KegiatanSeeder extends Seeder
                 'status' => 'Selesai',
                 'progres' => 1.0,
                 'keterangan' => 'Mengikuti training di luar polinema',
-                'icon' => 'kegiatan/upskill.png',
             ],
         ]);
     }

@@ -173,12 +173,14 @@ class KegiatanNonJtiController extends Controller
 
     public function edit_ajax(string $id)
     {
-        $kegiatannonjti = KegiatanModel::find($id);
         $user = UserModel::select('user_id', 'nama')->get();
-        $beban = BebanKegiatanModel::select('beban_kegiatan_id', 'nama_beban')->get();
         $kategori = KategoriKegiatanModel::select('kategori_kegiatan_id', 'nama_kategori')
         ->whereIn('kategori_kegiatan_id', [3])
         ->get();
+        
+        $beban = BebanKegiatanModel::select('beban_kegiatan_id', 'nama_beban')->get();
+        
+        $kegiatannonjti = KegiatanModel::find($id);
 
         return view('admin.kegiatannonjti.edit_ajax', [
             'kegiatannonjti' => $kegiatannonjti,
@@ -193,13 +195,12 @@ class KegiatanNonJtiController extends Controller
         // cek apakah request dari ajax
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'user_id' => 'required|numeric',
-                'kategori_kegiatan_id' => 'required|numeric',
-                'beban_kegiatan_id' => 'required|numeric',
-                'nama_kegiatan' => 'required|string|max:200',
+                'user_id' => 'required|integer',
+                'kategori_kegiatan_id' => 'required|integer',
+                'beban_kegiatan_id' => 'required|integer',
+                'nama_kegiatan' => 'required|string',
                 'cakupan_wilayah' => [
-                    'required',
-                    ValidationRule::in(['Luar Institusi','Institusi','Jurusan','Program Studi']),
+                    'required', ValidationRule::in(['Luar Institusi','Institusi','Jurusan','Program Studi']),
                 ],
                 'waktu_mulai' => 'nullable|date',
             ];
@@ -229,7 +230,7 @@ class KegiatanNonJtiController extends Controller
                 ]);
             }
         }
-        return redirect('/kegiatannonjti');
+        return redirect('/');
     }
 
     public function confirm_ajax(string $id)

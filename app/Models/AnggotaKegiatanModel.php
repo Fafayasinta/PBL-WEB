@@ -11,7 +11,7 @@ class AnggotaKegiatanModel extends Model
     protected $primaryKey = 'anggota_id';
     protected $fillable = [
         'user_id',
-        'kegiatan_id',
+        'kegiatan_id', 
         'jabatan',
         'skor'
     ];

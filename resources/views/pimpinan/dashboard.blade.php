@@ -1,4 +1,3 @@
-<!-- resources/views/dashboard.blade.php -->
 @extends('pimpinan.layouts.template')
 
 @section('content')

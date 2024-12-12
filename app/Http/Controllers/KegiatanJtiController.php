@@ -77,6 +77,7 @@ class KegiatanJtiController extends Controller
         ->addIndexColumn()
         ->addColumn('action', function ($kegiatanjti) {
 
+
             $btn = '<a href="' . url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/show') . '" 
                     class="btn btn-info btn-sm" 
                     style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(40, 167, 69, 0.5); color: green; border: rgba(40, 167, 69, 0.8);">
@@ -194,16 +195,13 @@ class KegiatanJtiController extends Controller
         $kategori = KategoriKegiatanModel::select('kategori_kegiatan_id', 'nama_kategori')
         ->whereIn('kategori_kegiatan_id', [1, 2])
         ->get();
-
-        $anggota = AnggotaKegiatanModel::with('user') // Memuat relasi user
-            ->where('kegiatan_id', $id) // Filter berdasarkan kegiatan_id
-            ->get();
+        $user = UserModel::select('user_id', 'nama')->get();
         $beban = BebanKegiatanModel::select('beban_kegiatan_id', 'nama_beban')->get();
         $kegiatanjti = KegiatanModel::find($id);
 
         return view('admin.kegiatanjti.edit_ajax', [
             'kategori' => $kategori,
-            'anggota' => $anggota,
+            'user' => $user,
             'beban' => $beban,
             'kegiatanjti' => $kegiatanjti
         ]);

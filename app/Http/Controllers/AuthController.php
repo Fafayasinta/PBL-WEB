@@ -79,9 +79,7 @@ class AuthController extends Controller
                     'msgField'  => $validator->errors(), // pesan error validasi
                 ]);
             }
-            $userData = $request->only(['level_id', 'username', 'nama', 'nip', 'email']);
-            $userData['password'] = Hash::make($request->password); 
-            UserModel::create($userData);
+            UserModel::create($request->all());
             return response()->json([
                 'status'    => true,
                 'message'   => 'Data user berhasil disimpan',

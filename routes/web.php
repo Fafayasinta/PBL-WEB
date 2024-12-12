@@ -19,6 +19,7 @@ use App\Http\Controllers\SuratTugasController;
 use App\Http\Controllers\StatistikController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
+use App\Models\AnggotaKegiatanModel;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,9 +99,9 @@ Route::middleware(['auth'])->group(function () {
         });
 
         Route::group(['prefix' => 'anggota'], function () {
+            Route::get('/{id}/show_ajax', [AnggotaKegiatanController::class, 'show_ajax']);
             Route::get('/create_ajax', [AnggotaKegiatanController::class, 'create_ajax']);
             Route::post('/ajax', [AnggotaKegiatanController::class, 'store_ajax']);
-            Route::get('/{id}/show_ajax', [AnggotaKegiatanController::class, 'show_ajax']);
             Route::get('/{id}/edit_ajax', [AnggotaKegiatanController::class, 'edit_ajax']);
             Route::put('/{id}/update_ajax', [AnggotaKegiatanController::class, 'update_ajax']);
             Route::get('/{id}/delete_ajax', [AnggotaKegiatanController::class, 'confirm_ajax']);
@@ -108,9 +109,9 @@ Route::middleware(['auth'])->group(function () {
         });
 
         Route::group(['prefix' => 'agenda'], function () {
+            Route::get('/{id}/show_ajax', [AgendaKegiatanController::class, 'show_ajax']);
             Route::get('/create_ajax', [AgendaKegiatanController::class, 'create_ajax']);
             Route::post('/ajax', [AgendaKegiatanController::class, 'store_ajax']);
-            Route::get('/{id}/show_ajax', [AgendaKegiatanController::class, 'show_ajax']);
             Route::get('/{id}/edit_ajax', [AgendaKegiatanController::class, 'edit_ajax']);
             Route::put('/{id}/update_ajax', [AgendaKegiatanController::class, 'update_ajax']);
             Route::get('/{id}/delete_ajax', [AgendaKegiatanController::class, 'confirm_ajax']);

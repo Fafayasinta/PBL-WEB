@@ -34,21 +34,25 @@
                     <small id="error-nama_kegiatan" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label> NAMA DOSEN</label>
+                    <label>NAMA DOSEN</label>
                     <select name="user_id" id="user_id" class="form-control" required>
                         <option value="">Pilih Dosen</option>
                         @foreach($user as $u)
-                            <option value="{{ $u->user_id }}">{{ $u->nama }}</option>
+                            <option value="{{ $u->user_id }}" {{ $kegiatannonjti->user_id == $u->user_id ? 'selected' : '' }}>
+                                {{ $u->nama }}
+                            </option>
                         @endforeach
                     </select>
                     <small id="error-user_id" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label> JENIS KEGIATAN</label>
+                    <label>JENIS KEGIATAN</label>
                     <select name="kategori_kegiatan_id" id="kategori_kegiatan_id" class="form-control" required>
-                        <option value="">Pilih Jenis Kegiatan</option>
+                        <option value="">Pilih Jenis</option>
                         @foreach($kategori as $k)
-                            <option value="{{ $k->kategori_kegiatan_id }}">{{ $k->nama_kategori }}</option>
+                            <option value="{{ $k->kategori_kegiatan_id }}" {{ $kegiatannonjti->kategori_kegiatan_id == $k->kategori_kegiatan_id ? 'selected' : '' }}>
+                                {{ $k->nama_kategori }}
+                            </option>
                         @endforeach
                     </select>
                     <small id="error-kategori_kegiatan_id" class="error-text form-text text-danger"></small>
@@ -56,31 +60,33 @@
                 <div class="form-group">
                     <label>WILAYAH KERJA</label>
                     <select name="cakupan_wilayah" id="cakupan_wilayah" class="form-control" required>
-                        <option value="">Pilih Wilayah Kerja</option>
-                        <option value="Luar Institusi" {{ $kegiatannonjti->cakupan_wilayah == 'Luar Institusi' ? 'selected' : '' }}>Luar Institusi</option>
-                        <option value="Institusi" {{ $kegiatannonjti->cakupan_wilayah == 'Institusi' ? 'selected' : '' }}>Institusi</option>
-                        <option value="Jurusan" {{ $kegiatannonjti->cakupan_wilayah == 'Jurusan' ? 'selected' : '' }}>Jurusan</option>
-                        <option value="Program Studi" {{ $kegiatannonjti->cakupan_wilayah == 'Program Studi' ? 'selected' : '' }}>Program Studi</option>
+                        <option value="" selected>Pilih Wilayah Kerja</option>
+                        <option value="Luar Institusi">Luar Institusi</option>
+                        <option value="Institusi">Institusi</option>
+                        <option value="Jurusan">Jurusan</option>
+                        <option value="Program Studi">Program Studi</option>
                     </select>
                     <small id="error-cakupan_wilayah" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>WAKTU PELAKSANAAN</label>
+                    <label>WAKTU</label>
                     <input 
                         type="date" 
                         name="waktu_mulai" 
                         id="waktu_mulai" 
                         class="form-control" 
-                        value="{{ $kegiatannonjti->waktu_mulai ? \Carbon\Carbon::parse($kegiatannonjti->waktu_mulai)->format('Y-m-d\TH:i') : '' }}" 
+                        value="{{ $kegiatannonjti->waktu_mulai ? \Carbon\Carbon::parse($kegiatannonjti->waktu_mulai)->format('Y-m-d') : '' }}" 
                         required>
                     <small id="error-waktu_mulai" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label> BEBAN KEGIATAN</label>
+                    <label>BEBAN KEGIATAN</label>
                     <select name="beban_kegiatan_id" id="beban_kegiatan_id" class="form-control" required>
-                        <option value="">Pilih Beban Kegiatan</option>
+                        <option value="" selected>Pilih Jenis</option>
                         @foreach($beban as $b)
-                            <option value="{{ $b->beban_kegiatan_id }}">{{ $b->nama_beban }}</option>
+                            <option value="{{ $b->beban_kegiatan_id }}" {{ $kegiatannonjti->beban_kegiatan_id == $b->beban_kegiatan_id ? 'selected' : '' }}>
+                                {{ $b->nama_beban }}
+                            </option>
                         @endforeach
                     </select>
                     <small id="error-beban_kegiatan_id" class="error-text form-text text-danger"></small>
@@ -98,14 +104,13 @@
             $("#form-edit").validate({
                 rules: {
                     user_id: {required: true, number: true},
-                    kategori_id: {required: true, number: true},
-                    beban_kegiatan_id: {required: true, number: true},
-                    nama_kegiatan: {required: true, maxlenght: 200},
+                    kategori_kegiatan_id: {required: true},
+                    beban_kegiatan_id: {required: true},
+                    nama_kegiatan: {required: true},
                     cakupan_wilayah: {
                         required: true,
-                        inArray: ["Luar Institusi", "Institusi", "Jurusan", "Program Studi"], // Validasi nilai hanya pada daftar opsi.
-                    },
-                    waktu_mulai: {required: true, date},
+                        },
+                    waktu_mulai: {required:false},
                 },
                 submitHandler: function(form) {
                     $.ajax({
@@ -113,7 +118,7 @@
                         type: form.method,
                         data: $(form).serialize(),
                         success: function(response) {
-                            if(response.cakupan_wilayah){
+                            if(response.status) {
                                 $('#myModal').modal('hide');
                                 Swal.fire({
                                     icon: 'success',
