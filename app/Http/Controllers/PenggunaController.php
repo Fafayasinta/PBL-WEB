@@ -107,15 +107,24 @@ class PenggunaController extends Controller
         $fotoProfilPath = null;
         if ($request->hasFile('foto_profil') && $request->file('foto_profil')->isValid()) {
             $fotoProfil = $request->file('foto_profil');
-            // Menyimpan file ke storage/public/foto_profil dan mendapatkan pathnya
-            $fotoProfilPath = $fotoProfil->store('public/foto_profil');
+            $filename = time() . '_' . $fotoProfil->getClientOriginalName(); // Nama file unik
+            $destinationPath = public_path('storage/foto_profil'); // Folder tujuan di `public/storage/foto_profil`
+
+            // Membuat folder jika belum ada
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            // Memindahkan file ke folder tujuan
+            $fotoProfil->move($destinationPath, $filename);
+            $fotoProfilPath = 'storage/foto_profil/' . $filename; // Path relatif untuk disimpan ke database
         }
 
         // Menyimpan data pengguna ke dalam database
         UserModel::create([
             'level_id' => $request->level_id,
             'username' => $request->username,
-            'password' => bcrypt($request->password),  // Enkripsi password
+            'password' => bcrypt($request->password), // Enkripsi password
             'nama' => $request->nama,
             'nip' => $request->nip,
             'email' => $request->email,
