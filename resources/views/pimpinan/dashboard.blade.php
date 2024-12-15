@@ -1,4 +1,5 @@
-@extends('pimpinan.layouts.template')
+<!-- resources/views/dashboard.blade.php -->
+@extends('admin.layouts.template')
 
 @section('content')
 <div class="card" style="border: 1px solid #ddd; padding: 20px; border-radius: 10px; background-color: #f9f9f9;">

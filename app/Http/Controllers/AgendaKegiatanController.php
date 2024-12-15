@@ -14,6 +14,17 @@ class AgendaKegiatanController extends Controller
 {
     public function index()
     {
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
         $activeMenu = 'agenda';
         $breadcrumb = (object) [
             'title' => 'Data Agenda Kegiatan',
@@ -23,7 +34,7 @@ class AgendaKegiatanController extends Controller
         $agenda = KegiatanAgendaModel::all();
         $agendaUnique = $agenda->unique('kegiatan_id');
 
-        return view('admin.agenda.index', [
+        return view($redirect.'.agenda.index', [
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
             'agenda' => $agenda,
@@ -66,11 +77,22 @@ class AgendaKegiatanController extends Controller
     }
 
     public function create_ajax()
-    {
+    {   
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
         $kegiatan = KegiatanModel::select('kegiatan_id', 'nama_kegiatan')->get();
         $user = UserModel::select('user_id', 'nama')->get();
         
-        return view('admin.agenda.create_ajax')->with([
+        return view($redirect.'.agenda.create_ajax')->with([
             'user' => $user,
             'kegiatan' => $kegiatan
         ]);
@@ -112,8 +134,19 @@ class AgendaKegiatanController extends Controller
 
     public function show_ajax(string $id){
         $agenda = KegiatanAgendaModel::find($id);
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
 
-        return view('admin.agenda.show_ajax', ['agenda' => $agenda]);
+        return view($redirect.'.agenda.show_ajax', ['agenda' => $agenda]);
     }
 
     public function edit_ajax(string $id)
@@ -122,7 +155,18 @@ class AgendaKegiatanController extends Controller
         $user = UserModel::select('user_id', 'nama')->get();
         $agenda = KegiatanAgendaModel::find($id);
 
-        return view('admin.agenda.edit_ajax', [
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
+        return view($redirect.'.agenda.edit_ajax', [
             'agenda' => $agenda,
             'kegiatan' => $kegiatan,
             'user' => $user

@@ -1,27 +1,30 @@
-@extends('admin.layouts.template')
+@extends('dosen.layouts.template')
 
 @section('content')
     <div class="card card-outline card-primary">
-        <div class="card-header" style="padding: 10px 15px;">
-            <br>
-            <h1 class="card-title" style="font-weight: bold; font-size: 20px; margin-left:10px">Detail Kegiatan</h1><br><br>
-            <div style="display: flex; justify-content: center; align-items: center;">
-                <table class="table table-bordered align-center" style="width: 95%">
+        <div class="card-header">
+            <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+                <table class="table table-bordered" style="width: 95%; text-align: left;">
                     <tr>
-                        <th class="text-left" style="width: 35%">Tanggal Kegiatan</th>
-                        <td style="font-weight: bold">{{ \Carbon\Carbon::parse($kegiatanjti->waktu_mulai)->format('d-m-Y') }}</td>
-                    </tr>
+                        <th class="text-left" style="font-weight: 16px">TANGGAL KEGIATAN</th>
+                        <td style="font-size: 16px">{{ \Carbon\Carbon::parse($kegiatanjti->waktu_mulai)->format('d-m-Y') }}</td>
+                    </tr>                    
                     <tr>
-                        <th class="text-left">Nama Ketua Pelaksanaan</th>
-                        <td style="font-weight: bold">{{ $kegiatanjti->user->nama }}</td>
+                        <th class="text-left" style="font-weight: 16px">NAMA KETUA PELAKSANA</th>
+                        <td style="font-size: 16px">{{ $kegiatanjti->user->nama }}</td>
                     </tr>
                 </table>
             </div>
+        </div>        
+        <div class="card-header" style="padding: 10px 15px;"><br>
+            <h1 class="card-title" style="font-weight: bold; font-size: 24px; margin-left:10px">Detail Kegiatan</h1><br>
             <br>
             <div class="card-tools">
-                <button onclick="modalAction('{{ url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/create_ajaxAnggota') }}')" class="btn btn-success" style="font-size: 16px; background-color: #ffe14c; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Cetak Draft Surat</button>
-                <button onclick="modalAction('{{ url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/create_ajaxAnggota') }}')" class="btn btn-success" style="font-size: 16px; background-color: #fa8072; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Upload Surat</button>
-                <button onclick="modalAction('{{ url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/create_ajaxAnggota') }}')" class="btn btn-success" style="font-size: 16px; background-color: #50c878; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Lihat Surat</button>
+                <button onclick="modalAction('{{ url('#') }}')" class="btn btn-success"  style="font-size: 16px; background-color: #F79FFF; color: white;border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px;">Upload Laporan</button>
+                <button onclick="modalAction('{{ url('#') }}')" class="btn btn-success" style="font-size: 16px;  background-color: rgba(215, 227, 244, 1); color: rgba(0, 66, 155, 1);border: none; border-radius: 15px; padding: 8px 30px;  margin-right: 15px;"> Lihat Laporan </button>
+                <a href='{{ url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/exportPDF') }}' class="btn btn-success" style="font-size: 16px; background-color: #ffe14c; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Cetak Draft Surat</a>
+                <button onclick="modalAction('{{ url('#') }}')" class="btn btn-success" style="font-size: 16px; background-color: #fa8072; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Upload Surat Tugas</button>
+                <button onclick="modalAction('{{ url('#') }}')" class="btn btn-success" style="font-size: 16px; background-color: #29ab87; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Lihat Surat Tugas</button>
                 <button onclick="modalAction('{{ url('/anggota/create_ajax') }}')" class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
             </div>
         </div>
@@ -35,15 +38,15 @@
             <div class="row">
                 <div class="col-md-12">
                     {{-- Filter jika diperlukan, bisa disesuaikan --}}
-                </div>
-            </div><br>
+                </div><br>
+            </div>
             <table class="table-bordered table-striped table-hover table-sm table" id="table_anggotakegiatanjti" style="width: 100%;">
                 <thead>
                     <tr>
                         <th class="text-center" style="width: 5%">NO</th>
-                        <th class="text-center" style="width: 40%">NAMA ANGGOTA</th>
-                        <th class="text-center" style="width: 15%">POSISI</th>
-                        <th class="text-center" style="width: 15%">BOBOT</th>
+                        <th class="text-center" >NAMA ANGGOTA</th>
+                        <th class="text-center" style="width: 10%">POSISI</th>
+                        <th class="text-center" style="width: 10%">BOBOT</th>
                         <th class="text-center">AKSI</th>
                     </tr>
                 </thead>
@@ -54,7 +57,7 @@
     <div class="card card-outline card-primary">
         <div class="card-header" style="padding: 10px 15px;">
             <br>
-            <h1 class="card-title" style="font-weight: bold; font-size: 20px; margin-left:10px">Agenda Kegiatan</h1>
+            <h1 class="card-title" style="font-weight: bold; font-size: 24px; margin-left:10px">Agenda Kegiatan</h1>
             <div class="card-tools">
                 <button onclick="modalAction('{{ url('/agenda/create_ajax') }}')" class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
             </div>
@@ -70,7 +73,7 @@
                 <div class="col-md-12">
                     {{-- Filter jika diperlukan, bisa disesuaikan --}}
                 </div>
-            </div><br>
+            </div>
             <table class="table-bordered table-striped table-hover table-sm table" id="table_agendakegiatanjti" style="width: 100%;">
                 <thead>
                     <tr>
@@ -78,8 +81,8 @@
                         <th class="text-center">NAMA AGENDA</th>
                         <th class="text-center">WAKTU</th>
                         <th class="text-center">TEMPAT</th>
-                        <th class="text-center" style="width: 15%">KETERANGAN</th>
-                        <th class="text-center" style="width: 17%">PENANGGUNG JAWAB</th>
+                        <th class="text-center" style="width: 18%">KETERANGAN</th>
+                        <th class="text-center" style="width: 15%">PENANGGUNG JAWAB</th>
                         <th class="text-center">PROGRES</th>
                         <th class="text-center">AKSI</th>
                     </tr>

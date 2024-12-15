@@ -15,7 +15,27 @@
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-              <a href="{{ url('/admin') }}" class="nav-link {{ ($activeMenu == 'dashboard')? 'active' : '' }}">
+                @switch(auth()->user()->level->level_kode)
+            @case('ADMIN')
+                <?php
+                $redirectdashboard =  url('/admin')
+                ?>
+                @break
+                @case('PIMPINAN')
+                <?php
+                $redirectdashboard =  url('/pimpinan')
+                ?>
+                @break
+                @case('DOSEN')
+                <?php
+                $redirectdashboard =  url('/dosen')
+                ?>
+                @break
+                @default
+                    
+            @endswitch
+
+              <a href="{{ $redirectdashboard }}" class="nav-link {{ ($activeMenu == 'dashboard')? 'active' : '' }}">
                     <i class="nav-icon fas fa-th"></i>
                     <p>Dashboard</p>
                 </a>
@@ -34,44 +54,46 @@
                     <p>Kegiatan Dosen<i class="right fas fa-angle-left"></i></p>
                 </a>
                 <ul class="nav nav-treeview">
+                    @if(auth()->user()->level->level_kode == 'ADMIN')
+
                     <li class="nav-item">
                       <a href="{{ url('/jeniskegiatan') }}" class="nav-link {{ $activeMenu == 'jeniskegiatan' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Kelola Jenis Kegiatan</p>
                         </a>
                     </li>
+                   
                     <li class="nav-item">
                       <a href="{{ url('/jabatankegiatan') }}" class="nav-link {{ ($activeMenu == 'jabatankegiatan')? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Kelola Jabatan Kegiatan</p>
                         </a>
                     </li>
+                    @endif
                     <li class="nav-item">
                       <a href="{{ url('/kegiatanjti') }}" class="nav-link {{ ($activeMenu == 'kegiatanjti')? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Kelola Kegiatan JTI</p>
                         </a>
                     </li>
-                    {{-- <li class="nav-item">
-                      <a href="{{ url('/agenda') }}" class="nav-link {{ ($activeMenu == 'agenda')? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Agenda Kegiatan</p>
-                        </a>
-                    </li> --}}
+                    @if(auth()->user()->level->level_kode == 'ADMIN')
                     <li class="nav-item">
                       <a href="{{ url('/periode') }}" class="nav-link {{ ($activeMenu == 'periode')? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Periode Kegiatan</p>
                         </a>
                     </li>
+                    @endif
                     <li class="nav-item">
                       <a href="{{ url('/kegiatannonjti') }}" class="nav-link {{ ($activeMenu == 'kegiatannonjti')? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Kelola Kegiatan Non JTI</p>
                         </a>
                     </li>
+                    
                 </ul>
             </li>
+            @if(auth()->user()->level->level_kode == 'ADMIN')
             <li class="nav-header">PENGGUNA</li>
             <li class="nav-item {{ in_array($activeMenu, ['jenispengguna', 'pengguna']) ? 'menu-open' : '' }}">
                 <a href="#" class="nav-link {{ in_array($activeMenu, ['jenispengguna', 'pengguna']) ? 'active' : '' }}">
@@ -93,12 +115,16 @@
                     </li>
                 </ul>
             </li>
+            @endif
+            @if(in_array(auth()->user()->level->level_kode,['ADMIN','PIMPINAN']))
+
             <li class="nav-item">
                 <a href="{{ url('/statistik') }}" class="nav-link {{ $activeMenu == 'statistik' ? 'active' : '' }}">
                     <i class="nav-icon fas fa-chart-pie"></i>
                     <p>Statistik Beban Kerja</p>
                 </a>
             </li>
+            @endif
         </ul>
     </nav>
     

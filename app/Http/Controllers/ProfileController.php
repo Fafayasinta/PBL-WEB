@@ -39,10 +39,21 @@ class ProfileController extends Controller
 
     public function edit_ajax(string $id)
     {
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
         $profile = UserModel::find($id);
         $level = LevelModel::select('level_id', 'level_nama')->get();
 
-        return view('admin.profile.edit_ajax', [
+        return view($redirect .'.profile.edit_ajax', [
             'profile' => $profile,
             'level' => $level
         ]);
@@ -104,9 +115,20 @@ public function update_ajax(Request $request, $id)
 
 public function edit_foto(string $id)
 {
+    switch(auth()->user()->level->level_kode){
+        case('ADMIN'):
+            $redirect =  'admin';
+            break;
+        case('PIMPINAN'):
+            $redirect =  'pimpinan';
+            break;
+        case('DOSEN'):
+            $redirect=  'dosen';
+            break;        
+    }
     $user = UserModel::find($id);
     $level = LevelModel::select('level_id', 'level_nama')->get();
-    return view('admin.profile.edit_foto', ['user' => $user, 'level' => $level]);
+    return view($redirect.'.profile.edit_foto', ['user' => $user, 'level' => $level]);
 }
 
 public function update_foto(Request $request, $id)

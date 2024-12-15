@@ -107,7 +107,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     //Admin, Pimpinan
-    Route::middleware(['authorize:PIMPINAN'])->group(function () {
+    Route::middleware(['authorize:PIMPINAN,ADMIN'])->group(function () {
         Route::get('/pimpinan', [PimpinanController::class, 'index'])->name('pimpinan.dashboard');
         Route::post('/pimpinan/list', [PimpinanController::class, 'list']);
 
@@ -142,6 +142,7 @@ Route::middleware(['auth'])->group(function () {
             Route::put('/{id}/update_ajax', [KegiatanJtiController::class, 'update_ajax']);
             Route::get('/{id}/delete_ajax', [KegiatanJtiController::class, 'confirm_ajax']);
             Route::delete('/{id}/delete_ajax', [KegiatanJtiController::class, 'delete_ajax']);
+            Route::get('/{id}/exportPDF', [SuratTugasController::class, 'exportPDF']);
         });
 
         Route::group(['prefix' => 'anggota'], function () {

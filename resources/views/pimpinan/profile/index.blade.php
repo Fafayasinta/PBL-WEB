@@ -1,4 +1,4 @@
-@extends('dosen.layouts.template')
+@extends('admin.layouts.template')
 
 <style>
     .card-header {
