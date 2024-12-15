@@ -37,7 +37,8 @@ Route::pattern('id', '[0-9]+');
 Route::get('/', function () {
     return redirect()->route('login');
 });
-
+Route::get('/import', [PenggunaController::class, 'import']); 
+Route::post('/import_ajax', [PenggunaController::class, 'import_ajax']);
 //Route Login
 Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('login', [AuthController::class, 'postlogin']);
@@ -103,6 +104,8 @@ Route::middleware(['auth'])->group(function () {
             Route::put('/{id}/update_ajax', [PenggunaController::class, 'update_ajax']);
             Route::get('/{id}/delete_ajax', [PenggunaController::class, 'confirm_ajax']);
             Route::delete('/{id}/delete_ajax', [PenggunaController::class, 'delete_ajax']);
+        //     Route::get('/import', [PenggunaController::class, 'import']); 
+        // Route::post('/import_ajax', [PenggunaController::class, 'import_ajax']);
         }); 
     });
 

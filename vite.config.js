@@ -9,3 +9,6 @@ export default defineConfig({
         }),
     ],
 });
+function modalAction() {
+    console.log("Modal action triggered");
+}
