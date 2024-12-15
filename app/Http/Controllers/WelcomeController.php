@@ -13,13 +13,15 @@ class WelcomeController extends Controller
             $user = Auth::user();
 
             // Arahkan ke dashboard admin jika level_id = 1
-            if ($user->level->level_kode == 'ADMIN') {
+            if ($user->level_id == 1) {
                 return redirect()->route('admin.dashboard');
             }
-            // Arahkan ke dashboard pimpinan jika level_id = 2
-            if ($user->level->level_kode == 'PIMPINAN') {
+
+            // Arahkan ke dashboard dosen jika level_id = 2
+            if ($user->level_id == 2) {
                 return redirect()->route('pimpinan.dashboard');
             }
+
             // Arahkan ke dashboard dosen jika level_id = 3
             if ($user->level_id == 3) {
                 return redirect()->route('dosen.dashboard');
