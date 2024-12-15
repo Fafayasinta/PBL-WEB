@@ -77,6 +77,13 @@ class KegiatanNonJtiController extends Controller
                         style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(220, 53, 69, 0.5); color: red; border: rgba(220, 53, 69, 0.8);">
                         Hapus
                     </button> ';
+            $btn .= '<button onclick="modalAction(\'' . url('/kegiatannonjti/' . $kegiatannonjti->kegiatan_id . '/delete_ajax') . '\')"  
+                    class="btn btn-danger btn-sm" 
+                    style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px; margin: 1px; background-color: rgba(215, 227, 244, 1); color: rgba(0, 66, 155, 1); border: rgba(215, 227, 244, 1);">
+                    Lihat Surat
+                </button> ';
+
+ 
             return $btn;
         })
         ->rawColumns(['action'])
@@ -101,7 +108,17 @@ class KegiatanNonJtiController extends Controller
     }
 
     public function create_ajax()
-    {
+    {   switch(auth()->user()->level->level_kode){
+        case('ADMIN'):
+            $redirect =  'admin';
+            break;
+        case('PIMPINAN'):
+            $redirect =  'pimpinan';
+            break;
+        case('DOSEN'):
+            $redirect=  'dosen';
+            break;        
+    }
         $kategori = KategoriKegiatanModel::select('kategori_kegiatan_id', 'nama_kategori')
         ->whereIn('kategori_kegiatan_id', [3])
         ->get();
@@ -110,7 +127,7 @@ class KegiatanNonJtiController extends Controller
         $user = UserModel::select('user_id', 'nama')->get();
         $tahun = TahunModel::select('tahun_id', 'tahun')->get();
 
-        return view('admin.kegiatannonjti.create_ajax')->with([
+        return view($redirect.'.kegiatannonjti.create_ajax')->with([
             'kategori' => $kategori,
             'beban' => $beban,
             'user' => $user,
@@ -172,7 +189,17 @@ class KegiatanNonJtiController extends Controller
     }
 
     public function edit_ajax(string $id)
-    {
+    {   switch(auth()->user()->level->level_kode){
+        case('ADMIN'):
+            $redirect =  'admin';
+            break;
+        case('PIMPINAN'):
+            $redirect =  'pimpinan';
+            break;
+        case('DOSEN'):
+            $redirect=  'dosen';
+            break;        
+    }
         $user = UserModel::select('user_id', 'nama')->get();
         $kategori = KategoriKegiatanModel::select('kategori_kegiatan_id', 'nama_kategori')
         ->whereIn('kategori_kegiatan_id', [3])
@@ -182,7 +209,7 @@ class KegiatanNonJtiController extends Controller
         
         $kegiatannonjti = KegiatanModel::find($id);
 
-        return view('admin.kegiatannonjti.edit_ajax', [
+        return view($redirect.'.kegiatannonjti.edit_ajax', [
             'kegiatannonjti' => $kegiatannonjti,
             'user' => $user,
             'kategori' => $kategori,
@@ -236,8 +263,18 @@ class KegiatanNonJtiController extends Controller
     public function confirm_ajax(string $id)
     {
         $kegiatannonjti = KegiatanModel::find($id);
-
-        return view('admin.kegiatannonjti.confirm_ajax', ['kegiatannonjti' => $kegiatannonjti]);
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
+        return view($redirect.'.kegiatannonjti.confirm_ajax', ['kegiatannonjti' => $kegiatannonjti]);
     }
 
     public function delete_ajax(Request $request, string $id)

@@ -120,7 +120,18 @@ class KegiatanJtiController extends Controller
     }
 
     public function create_ajax()
-    {
+    {   switch(auth()->user()->level->level_kode){
+        case('ADMIN'):
+            $redirect =  'admin';
+            break;
+        case('PIMPINAN'):
+            $redirect =  'pimpinan';
+            break;
+        case('DOSEN'):
+            $redirect=  'dosen';
+            break;        
+    }
+
         $kategori = KategoriKegiatanModel::select('kategori_kegiatan_id', 'nama_kategori')
         ->whereIn('kategori_kegiatan_id', [1, 2])
         ->get();
@@ -129,7 +140,7 @@ class KegiatanJtiController extends Controller
         $user = UserModel::select('user_id', 'nama')->get();
         $tahun = TahunModel::select('tahun_id', 'tahun')->get();
 
-        return view('admin.kegiatanjti.create_ajax')->with([
+        return view($redirect.'.kegiatanjti.create_ajax')->with([
             'kategori' => $kategori,
             'beban' => $beban,
             'user' => $user,
@@ -191,7 +202,17 @@ class KegiatanJtiController extends Controller
     }
 
     public function edit_ajax(string $id)
-    {
+    {   switch(auth()->user()->level->level_kode){
+        case('ADMIN'):
+            $redirect =  'admin';
+            break;
+        case('PIMPINAN'):
+            $redirect =  'pimpinan';
+            break;
+        case('DOSEN'):
+            $redirect=  'dosen';
+            break;        
+    }
         $kategori = KategoriKegiatanModel::select('kategori_kegiatan_id', 'nama_kategori')
         ->whereIn('kategori_kegiatan_id', [1, 2])
         ->get();
@@ -199,7 +220,7 @@ class KegiatanJtiController extends Controller
         $beban = BebanKegiatanModel::select('beban_kegiatan_id', 'nama_beban')->get();
         $kegiatanjti = KegiatanModel::find($id);
 
-        return view('admin.kegiatanjti.edit_ajax', [
+        return view($redirect.'.kegiatanjti.edit_ajax', [
             'kategori' => $kategori,
             'user' => $user,
             'beban' => $beban,
@@ -251,10 +272,20 @@ class KegiatanJtiController extends Controller
     }
 
     public function confirm_ajax(string $id)
-    {
+    {   switch(auth()->user()->level->level_kode){
+        case('ADMIN'):
+            $redirect =  'admin';
+            break;
+        case('PIMPINAN'):
+            $redirect =  'pimpinan';
+            break;
+        case('DOSEN'):
+            $redirect=  'dosen';
+            break;        
+    }
         $kegiatanjti = KegiatanModel::find($id);
 
-        return view('admin.kegiatanjti.confirm_ajax', ['kegiatanjti' => $kegiatanjti]);
+        return view($redirect.'.kegiatanjti.confirm_ajax', ['kegiatanjti' => $kegiatanjti]);
     }
 
     public function delete_ajax(Request $request, string $id)
@@ -358,7 +389,7 @@ class KegiatanJtiController extends Controller
     }
 
     public function listAgenda(Request $request, $id)
-    {
+    {   
         // Mengambil data anggota kegiatan berdasarkan kegiatan_id yang dipilih
         $agendakegiatanjti = KegiatanAgendaModel::select('agenda_id', 'user_id', 'kegiatan_id', 'nama_agenda', 'deadline', 'lokasi', 'progres', 'keterangan')
             ->with('user')
@@ -392,14 +423,25 @@ class KegiatanJtiController extends Controller
 
 
     public function create_ajaxAnggota($id)
-    {
+    {   //Cek siapa yg login
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
         $anggota = AnggotaKegiatanModel::select('anggota_id', 'user_id', 'kegiatan_id', 'jabatan', 'skor')
         ->where('kegiatan_id', $id)
         ->get();
 
         $user = UserModel::select('user_id', 'nama')->get();
 
-        return view('admin.kegiatanjti.anggota_create_ajax', compact('kegiatanjti'))->with([
+        return view($redirect.'.kegiatanjti.anggota_create_ajax', compact('kegiatanjti'))->with([
             'anggota' => $anggota,
             'user' => $user
         ]);
