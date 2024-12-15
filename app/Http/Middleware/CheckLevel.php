@@ -15,11 +15,15 @@ class CheckLevel
             $user = Auth::user();
 
             // Cek level dan redirect sesuai kebutuhan
-            if ($level == 'admin' && $user->level_id == 1) {
+            if ($level == 'ADMIN' && $user->level_id == 1) {
                 return $next($request); // Arahkan ke dashboard admin
             }
 
-            if ($level == 'dosen' && $user->level_id == 2) {
+            if ($level == 'PIMPINAN' && $user->level_id == 2) {
+                return $next($request); // Arahkan ke dashboard pimpinan
+            }
+
+            if ($level == 'DOSEN' && $user->level_id == 3) {
                 return $next($request); // Arahkan ke dashboard dosen
             }
         }

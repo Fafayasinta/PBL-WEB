@@ -19,6 +19,11 @@ class WelcomeController extends Controller
 
             // Arahkan ke dashboard dosen jika level_id = 2
             if ($user->level_id == 2) {
+                return redirect()->route('pimpinan.dashboard');
+            }
+
+            // Arahkan ke dashboard dosen jika level_id = 3
+            if ($user->level_id == 3) {
                 return redirect()->route('dosen.dashboard');
             }
         }

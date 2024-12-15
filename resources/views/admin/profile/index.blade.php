@@ -30,25 +30,20 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <h5 class="mb-0">Edit Profile</h5>
+            <h5 class="mb-0">Profile Pengguna</h5>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ url('/profile/' . Auth::user()->user_id . '/update') }}" enctype="multipart/form-data" id="form-edit-profile">
-                @csrf
-                @method('PUT') <!-- Pastikan menggunakan method PUT untuk mengupdate data -->
-
                 <div class="row mb-4">
                     <!-- Foto Profil -->
                     <div class="col-md-3 text-center">
-                        <img src="{{ asset('storage/' . (Auth::user()->foto_profil ?? 'default-profile.jpg')) }}" 
+                        <img src="{{ asset($profile->foto_profil) }}" 
                              alt="Profile Picture" 
                              class="rounded-circle mb-3" 
-                             style="width: 100px; height: 100px; object-fit: cover;">
-                        <div class="mt-2">
-                            <label for="foto_profil" class="btn btn-outline-secondary btn-sm" id="foto-label">
-                                Upload Foto
-                            </label>
-                            <input type="file" id="foto_profil" name="foto_profil" class="d-none" accept="image/*">
+                             style="width: 160px; height: 160px; obje   ct-fit: cover;">
+                        <div class="d-flex justify-content-center">
+                            <button onclick="modalAction('{{ url('/profile/' . $profile->user_id . '/edit_foto') }}')" class="btn btn-primary d-flex align-items-center">
+                                Edit Foto
+                            </button>
                         </div>
                     </div>
 
@@ -57,39 +52,45 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="name" class="form-label">Nama</label>
-                                <input type="text" class="form-control" id="name" name="name" 
-                                       value="{{ old('name', Auth::user()->nama) }}" required>
+                                <div class="form-control" style="border: 1px solid #ced4da; height: 38px; display: flex; align-items: center;">
+                                    {{ $profile->nama }}
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" 
-                                       value="{{ old('username', Auth::user()->username) }}" required>
+                                <div class="form-control" style="border: 1px solid #ced4da; height: 38px; display: flex; align-items: center;">
+                                    {{ $profile->username }}
+                                </div>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" 
-                                       value="{{ old('email', Auth::user()->email) }}" required>
+                                <div class="form-control" style="border: 1px solid #ced4da; height: 38px; display: flex; align-items: center;">
+                                    {{ $profile->email }}
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" 
-                                       placeholder="Masukkan Password Baru">
+                                <div class="form-control" style="border: 1px solid #ced4da; height: 38px; display: flex; align-items: center;">
+                                    ********
+                                </div>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="nip" class="form-label">NIP</label>
-                                <input type="text" class="form-control" id="nip" name="nip" 
-                                       value="{{ old('nip', Auth::user()->nip) }}">
+                                <div class="form-control" style="border: 1px solid #ced4da; height: 38px; display: flex; align-items: center;">
+                                    {{ $profile->nip }}
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label for="role" class="form-label">Role</label>
-                                <input type="text" class="form-control" id="role" name="role" 
-                                       value="{{ old('role', Auth::user()->level->level_kode ?? 'N/A') }}" readonly>
+                                <div class="form-control" style="border: 1px solid #ced4da; height: 38px; display: flex; align-items: center;">
+                                    {{ $profile->level->level_nama }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -97,11 +98,11 @@
 
                 <!-- Tombol Simpan -->
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary d-flex align-items-center">
-                        <i class="nav-icon fas fa-save me-2"></i>
-                        Simpan Perubahan
+                    <button type="submit" class="btn btn-primary d-flex align-items-center" onclick="modalAction('{{ url('/profile/' . $profile->user_id . '/edit_ajax') }}')">
+                        <i class="nav-icon fas fa-save me-2" style="margin-right: 5px"></i>
+                        <span>Edit Profile</span>
                     </button>
-                </div>
+                </div>                             
             </form>
         </div>
     </div>

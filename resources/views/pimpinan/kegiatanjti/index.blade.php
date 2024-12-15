@@ -68,7 +68,7 @@
 @push('css')
 @endpush
 @push('js')
-    <script>
+    {{-- <script>
         function modalAction(url = '') {
             $('#myModal').load(url, function() {
                 $('#myModal').modal('show');
@@ -161,5 +161,5 @@
         
 
         
-    </script>
+    </script> --}}
 @endpush
