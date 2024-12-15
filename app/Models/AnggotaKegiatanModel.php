@@ -11,7 +11,7 @@ class AnggotaKegiatanModel extends Model
     protected $primaryKey = 'anggota_id';
     protected $fillable = [
         'user_id',
-        'kegiatan_id', 
+        'kegiatan_id',
         'jabatan',
         'skor'
     ];
@@ -31,9 +31,4 @@ class AnggotaKegiatanModel extends Model
     {
         return $this->belongsTo(KegiatanModel::class, 'kegiatan_id', 'kegiatan_id');
     }
-    public function jabatan(): BelongsTo
-{
-    return $this->belongsTo(BobotJabatanModel::class, 'jabatan', 'bobot_jabatan_id');
-}
-
 }

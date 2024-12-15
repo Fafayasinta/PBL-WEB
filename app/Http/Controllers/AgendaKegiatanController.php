@@ -216,10 +216,20 @@ class AgendaKegiatanController extends Controller
     }
 
     public function confirm_ajax(string $id)
-    {
+    {   switch(auth()->user()->level->level_kode){
+        case('ADMIN'):
+            $redirect =  'admin';
+            break;
+        case('PIMPINAN'):
+            $redirect =  'pimpinan';
+            break;
+        case('DOSEN'):
+            $redirect=  'dosen';
+            break;        
+    }
         $agenda = KegiatanAgendaModel::find($id);
 
-        return view('admin.agenda.confirm_ajax', ['agenda' => $agenda]);
+        return view($redirect.'.agenda.confirm_ajax', ['agenda' => $agenda]);
     }
 
     public function delete_ajax(Request $request, string $id)
