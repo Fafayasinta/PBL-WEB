@@ -118,7 +118,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     //Admin, Pimpinan, Dosen
-    Route::middleware(['authorize:ADMIN,PIMPINAN,ADMIN'])->group(function () {
+    Route::middleware(['authorize:ADMIN,PIMPINAN,DOSEN'])->group(function () {
         Route::get('/dosen', [DosenController::class, 'index'])->name('dosen.dashboard');
         Route::post('/dosen/list', [DosenController::class, 'list']);
 
