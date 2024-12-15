@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LevelModel;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,57 +37,130 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function update(Request $request, $profile)
+    public function edit_ajax(string $id)
+    {
+        $profile = UserModel::find($id);
+        $level = LevelModel::select('level_id', 'level_nama')->get();
+
+        return view('admin.profile.edit_ajax', [
+            'profile' => $profile,
+            'level' => $level
+        ]);
+    }
+
+public function update_ajax(Request $request, $id)
 {
-    // Validasi input
-    $rules = [
-        'username'  => 'required|string|min:3|unique:m_user,username,' . $profile . ',user_id',
-        'nama'      => 'required|string|max:100',
-        'password'  => 'nullable|min:5',
-        'nip'       => 'required|string|max:50|unique:m_user,nip,' . $profile . ',user_id',
-        'email'     => 'required|string|unique:m_user,email,' . $profile . ',user_id',
-        'foto_profil' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Validasi foto_profil
-    ];
+    // cek apakah request dari ajax
+    if ($request->ajax() || $request->wantsJson()) {
+        $rules = [
+            'level_id' => 'required|numeric',
+            'nama' => 'required|string|max:100',
+            'username' => 'required|string|max:50|unique:m_user,user_id,' . $id . ',user_id',
+            'password' => 'required|string|min:5',
+            'email' => 'required|string|max:50|unique:m_user,user_id,' . $id . ',user_id',
+            'nip' => 'required|string|max:50|unique:m_user,user_id,' . $id . ',user_id',
+        ];
 
-    // Melakukan validasi
-    $validator = Validator::make($request->all(), $rules);
+        // Validasi input
+        $validator = Validator::make($request->all(), $rules);
 
-    // Jika validasi gagal
-    if ($validator->fails()) {
-        return redirect()->back()->withErrors($validator)->withInput();
-    }
-
-    // Mencari data pengguna berdasarkan ID
-    $user = UserModel::findOrFail($profile);
-
-    // Mengupdate data pengguna
-    $user->username = $request->username;
-    $user->nama = $request->nama;
-    $user->nip = $request->nip;
-    $user->email = $request->email;
-
-    // Update password jika diisi
-    if ($request->filled('password')) {
-        $user->password = bcrypt($request->password);
-    }
-
-    // Menyimpan foto profil jika ada file yang diupload
-    if ($request->hasFile('foto_profil') && $request->file('foto_profil')->isValid()) {
-        // Menghapus foto profil lama jika ada
-        if ($user->foto_profil && Storage::exists($user->foto_profil)) {
-            Storage::delete($user->foto_profil);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,    // response json: true: berhasil, false: gagal
+                'message' => 'Validasi gagal.',
+                'msgField' => $validator->errors()  // menunjukkan field mana yang error
+            ]);
         }
 
-        // Upload foto profil baru
-        $fotoProfil = $request->file('foto_profil');
-        $fotoProfilPath = $fotoProfil->store('public/foto_profil');
-        $user->foto_profil = $fotoProfilPath; // Menyimpan path foto ke database
+        // Ambil data profile yang ingin diupdate
+        $check = UserModel::find($id);
+
+        if ($check) {
+            // Jika password baru diberikan, kita hash password tersebut
+            if (!empty($request->password)) {
+                $request->merge(['password' => Hash::make($request->password)]);  // Hash password baru
+            } else {
+                // Jika password tidak diubah, biarkan password yang lama
+                $request->merge(['password' => $check->password]);
+            }
+
+            // Update data pengguna
+            $check->update($request->all());
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data berhasil diupdate'
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan'
+            ]);
+        }
     }
 
-    // Menyimpan perubahan
-    $user->save();
+    return redirect('/profile');
+}
 
-    // Redirect ke halaman profil setelah update
-    return redirect()->route('profile.index')->with('success', 'Data Pengguna berhasil diperbarui');
+public function edit_foto(string $id)
+{
+    $user = UserModel::find($id);
+    $level = LevelModel::select('level_id', 'level_nama')->get();
+    return view('admin.profile.edit_foto', ['user' => $user, 'level' => $level]);
+}
+
+public function update_foto(Request $request, $id)
+{
+    $rules = [
+        'foto_profil' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+    ];
+    $validator = Validator::make($request->all(), $rules);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Validasi gagal.',
+            'msgField' => $validator->errors()
+        ]);
+    }
+
+    $user = UserModel::find($id);
+
+    if ($user) {
+        if ($request->hasFile('foto_profil') && $request->file('foto_profil')->isValid()) {
+            // Hapus foto lama jika ada
+            if ($user->foto_profil && file_exists(public_path('storage/foto_profil/' . basename($user->foto_profil)))) {
+                unlink(public_path('storage/foto_profil/' . basename($user->foto_profil)));
+            }
+
+            // Simpan foto baru
+            $foto = $request->file('foto_profil');
+            $filename = time() . '_' . $foto->getClientOriginalName();
+            $path = public_path('storage/foto_profil'); // Path tujuan langsung di folder public
+            $foto->move($path, $filename); // Memindahkan file ke path tujuan
+
+            // Update path foto di database
+            $user->update([
+                'foto_profil' => 'storage/foto_profil/' . $filename
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Foto berhasil diperbarui'
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Foto tidak valid atau tidak ditemukan dalam request'
+            ]);
+        }
+    } else {
+        return response()->json([
+            'status' => false,
+            'message' => 'Data pengguna tidak ditemukan'
+        ]);
+    } 
+    return redirect('/profile');
 }
 }
+
