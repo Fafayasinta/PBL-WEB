@@ -77,11 +77,11 @@ class KegiatanNonJtiController extends Controller
                         style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(220, 53, 69, 0.5); color: red; border: rgba(220, 53, 69, 0.8);">
                         Hapus
                     </button> ';
-            $btn .= '<button onclick="modalAction(\'' . url('/kegiatannonjti/' . $kegiatannonjti->kegiatan_id . '/delete_ajax') . '\')"  
-                    class="btn btn-danger btn-sm" 
-                    style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px; margin: 1px; background-color: rgba(215, 227, 244, 1); color: rgba(0, 66, 155, 1); border: rgba(215, 227, 244, 1);">
-                    Lihat Surat
-                </button> ';
+            // $btn .= '<button onclick="modalAction(\'' . url('/kegiatannonjti/' . $kegiatannonjti->kegiatan_id . '/show_surat_tugas') . '\')"  
+            //         class="btn btn-danger btn-sm" 
+            //         style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px; margin: 1px; background-color: rgba(215, 227, 244, 1); color: rgba(0, 66, 155, 1); border: rgba(215, 227, 244, 1);">
+            //         Lihat Surat
+            //     </button> ';
 
  
             return $btn;
@@ -136,57 +136,85 @@ class KegiatanNonJtiController extends Controller
     }
 
     public function store_ajax(Request $request)
-    {
-        if ($request->ajax() || $request->wantsJson()) {
-            $rules = [
-                'user_id' => 'required|integer|exists:m_user,user_id',
-                'tahun_id' => 'required|integer|exists:m_tahun,tahun_id',
-                'kategori_kegiatan_id' => 'required|integer|exists:m_kategori_kegiatan,kategori_kegiatan_id',
-                'beban_kegiatan_id' => 'required|integer|exists:m_beban_kegiatan,beban_kegiatan_id',
-                'nama_kegiatan' => 'required|string|max:200',
-                'cakupan_wilayah' => [
-                    'required',
-                    ValidationRule::in(['Luar Institusi', 'Institusi', 'Jurusan', 'Program Studi']),
-                ],
-                'deskripsi' => 'required|string|max:255',
-                'progres' => 'nullable|numeric',
-                'keterangan' => 'nullable|string|max:255',
-                'deadline' => 'required|date|after_or_equal:today',
-                'waktu_mulai' => 'nullable|date',
-                'waktu_selesai' => 'nullable|date|after_or_equal:waktu_mulai',
-                'status' => [
-                    'required',
-                    ValidationRule::in(['Belum Proses', 'Proses', 'Selesai']),
-                ]
-            ];
+{
+    if ($request->ajax() || $request->wantsJson()) {
+        $rules = [
+            'user_id' => 'required|integer|exists:m_user,user_id',
+            'tahun_id' => 'required|integer|exists:m_tahun,tahun_id',
+            'kategori_kegiatan_id' => 'required|integer|exists:m_kategori_kegiatan,kategori_kegiatan_id',
+            'beban_kegiatan_id' => 'required|integer|exists:m_beban_kegiatan,beban_kegiatan_id',
+            'nama_kegiatan' => 'required|string|max:200',
+            'cakupan_wilayah' => [
+                'required',
+                ValidationRule::in(['Luar Institusi', 'Institusi', 'Jurusan', 'Program Studi']),
+            ],
+            'deskripsi' => 'required|string|max:255',
+            'progres' => 'nullable|numeric',
+            'keterangan' => 'nullable|string|max:255',
+            'deadline' => 'required|date|after_or_equal:today',
+            'waktu_mulai' => 'nullable|date',
+            'waktu_selesai' => 'nullable|date|after_or_equal:waktu_mulai',
+            'status' => [
+                'required',
+                ValidationRule::in(['Belum Proses', 'Proses', 'Selesai']),
+            ],
+            'surat_tugas' => 'nullable|file|mimes:pdf|max:2048' // Validasi khusus untuk file PDF
+        ];
 
-            $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), $rules);
 
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Validasi Gagal',
-                    'msgField' => $validator->errors(),
-                ]);
-            }
-
-            try {
-                KegiatanModel::create($request->all());
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Data Kegiatan JTI berhasil disimpan'
-                ]);
-            } catch (\Exception $e) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Terjadi kesalahan saat menyimpan data',
-                    'error' => $e->getMessage()
-                ]);
-            }
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validasi Gagal',
+                'msgField' => $validator->errors(),
+            ]);
         }
 
-        return redirect('/kegiatannonjti');
+        // Menyimpan file surat tugas jika ada file yang diupload
+        $suratTugasPath = null;
+        if ($request->hasFile('surat_tugas') && $request->file('surat_tugas')->isValid()) {
+            $suratTugas = $request->file('surat_tugas');
+            $filename = time() . '_' . $suratTugas->getClientOriginalName(); // Nama file unik
+            $destinationPath = public_path('storage/surat_tugas'); // Folder tujuan di `public/storage/surat_tugas`
+
+            // Membuat folder jika belum ada
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            // Memindahkan file ke folder tujuan
+            $suratTugas->move($destinationPath, $filename);
+            $suratTugasPath = 'storage/surat_tugas/' . $filename; // Path relatif untuk disimpan ke database
+        }
+
+        // Menyimpan data kegiatan ke dalam database
+        KegiatanModel::create([
+            'user_id' => $request->user_id,
+            'tahun_id' => $request->tahun_id,
+            'kategori_kegiatan_id' => $request->kategori_kegiatan_id,
+            'beban_kegiatan_id' => $request->beban_kegiatan_id,
+            'nama_kegiatan' => $request->nama_kegiatan,
+            'cakupan_wilayah' => $request->cakupan_wilayah,
+            'deskripsi' => $request->deskripsi,
+            'progres' => $request->progres,
+            'keterangan' => $request->keterangan,
+            'deadline' => $request->deadline,
+            'waktu_mulai' => $request->waktu_mulai,
+            'waktu_selesai' => $request->waktu_selesai,
+            'status' => $request->status,
+            'surat_tugas' => $suratTugasPath
+        ]);
+
+        // Mengembalikan response sukses
+        return response()->json([
+            'status' => true,
+            'message' => 'Data Kegiatan berhasil disimpan'
+        ]);
     }
+    return redirect('/kegiatannonjti');
+}
+
 
     public function edit_ajax(string $id)
     {   switch(auth()->user()->level->level_kode){
@@ -294,7 +322,30 @@ class KegiatanNonJtiController extends Controller
                     'message' => 'Data tidak ditemukan'
                 ]);
             }
-            return redirect('/kegiatannonjti');
         }
+        return redirect('/kegiatannonjti');
+    }
+
+    public function showSuratTugas($id)
+    {
+        // Cari data kegiatan berdasarkan ID
+        $kegiatannonjti = KegiatanModel::select('surat_tugas')->find($id);
+
+        // Periksa apakah data ditemukan
+        if (!$kegiatannonjti || !$kegiatannonjti->surat_tugas) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Surat tugas tidak ditemukan.',
+            ], 404);
+        }
+
+        // Path surat tugas
+        $pathSuratTugas = asset($kegiatannonjti->surat_tugas);
+
+        // Tampilkan path surat tugas
+        return response()->json([
+            'status' => 'success',
+            'surat_tugas' => $pathSuratTugas,
+        ]);
     }
 }
