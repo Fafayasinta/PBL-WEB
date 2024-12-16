@@ -10,12 +10,23 @@
         <div class="alert alert-danger">{{ session('error') }}</div>
     @endif
     <div class="row">
+        <div class="col-12">
+            <div class="card text-center" style="border-radius: 10px; border: 1px solid #ddd; color: white; background-color:#ffc107">
+                <div class="card-body">
+                    <h5><i class="nav-icon fas fa-info"></i> &nbsp;&nbsp; Total Kegiatan Anda : {{ $info }}</h5>
+                    {{-- <h5><i class="nav-icon fas fa-info"></i> INFO &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; Total Kegiatan Anda : {{ $totalKegiatan }}</h5> --}}
+                    {{-- <h5 style="margin-left: 20px">Total Kegiatan Anda : {{ $totalKegiatan }}</h5> --}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <!-- Stat Panels -->
         <div class="col-md-3">
             <div class="card text-center" style="border-radius: 10px; border: 1px solid #ddd;">
                 <div class="card-body">
                     <h6>Total Kegiatan</h6>
-                    <div class="d-flex justify-content-center align-items-center">
+                    <div class="d-flex justify-content-center align-items-cent">
                         <div style="background-color: #ffd572; padding: 10px; display: inline-block; border-radius: 10px;">
                             <i class="nav-icon fas fa-box"></i>    
                         </div>

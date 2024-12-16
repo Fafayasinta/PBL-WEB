@@ -16,7 +16,7 @@
         </div>
     </div>
 @else
-    <form action="{{ url('/kegiatanjti/' . $kegiatanjti->kegiatan_id.'/update_ajax') }}" method="POST" id="form-edit">
+    <form action="{{ url('/kegiatanjti/' . $kegiatanjti->kegiatan_id. '/update_ajax') }}" method="POST" id="form-edit">
     @csrf
     @method('PUT')
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
@@ -55,9 +55,9 @@
                     <label>STATUS</label>
                     <select name="status" id="status" class="form-control" required>
                         <option value="">Pilih Status</option>
-                        <option value="Belum Proses" {{ $kegiatanjti->status == 'Belum Proses' ? 'selected' : '' }}>Belum Proses</option>
-                        <option value="Proses" {{ $kegiatanjti->status == 'Proses' ? 'selected' : '' }}>Proses</option>
-                        <option value="Selesai" {{ $kegiatanjti->status == 'Selesai' ? 'selected' : '' }}>Selesai</option>
+                        <option value="Belum Proses">Belum Proses</option>
+                        <option value="Proses">Proses</option>
+                        <option value="Selesai">Selesai</option>
                     </select>
                     <small id="error-status" class="error-text form-text text-danger"></small>
                 </div>
@@ -73,27 +73,6 @@
                     </select>
                     <small id="error-beban_kegiatan_id" class="error-text form-text text-danger"></small>
                 </div>
-                <div class="form-group">
-                    <label>DAFTAR ANGGOTA KEGIATAN</label>
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover table-bordered align-middle">
-                            <tbody id="anggota-list">
-                                @foreach($anggota as $anggota)
-                                <tr>
-                                    <td class="text-left">{{ $anggota->user->nama }}</td>
-                                </tr>
-                                @endforeach
-                                <tr>
-                                    <td class="text-center">
-                                        <button type="button" id="add-anggota-btn" class="btn btn-success btn-sm fw-bold" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 6px 25px; margin-right: 15px">
-                                            + Tambahkan Data
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
@@ -106,42 +85,13 @@
         $(document).ready(function() {
             $("#form-edit").validate({
                 rules: {
-                    kategori_kegiatan_id: {required: true, number: true},
+                    kategori_kegiatan_id: {required: true},
                     beban_kegiatan_id: {required: true, number: true},
-                    nama_kegiatan: {required: true, maxlenght: 100},
-                    deskripsi: {required: true, maxlenght: 255},
+                    nama_kegiatan: {required: true, maxlength: 100}, // diperbaiki maxlength
+                    deskripsi: {required: true, maxlength: 255},    // diperbaiki maxlength
                     status: {required: true},
                 },
-                submitHandler: function(form) {
-                    $.ajax({
-                        url: form.action,
-                        type: form.method,
-                        data: $(form).serialize(),
-                        success: function(response) {
-                            if(response.status){
-                                $('#myModal').modal('hide');
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Berhasil',
-                                    text: response.message
-                                });
-                                dataKegiatanJti.ajax.reload();
-                            }else{
-                                $('.error-text').text('');
-                                $.each(response.msgField, function(prefix, val) {
-                                    $('#error-'+prefix).text(val[0]);
-                                });
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Terjadi Kesalahan',
-                                    text: response.message
-                                });
-                            }
-                        }
-                    });
-                    return false;
-                },
-                errorElement: 'span',
+                errorElement: 'span', // harus berada di level atas
                 errorPlacement: function (error, element) {
                     error.addClass('invalid-feedback');
                     element.closest('.form-group').append(error);
@@ -151,8 +101,47 @@
                 },
                 unhighlight: function (element, errorClass, validClass) {
                     $(element).removeClass('is-invalid');
+                },
+                submitHandler: function (form) {
+                    var formData = new FormData(form); // gunakan FormData untuk data form
+                    $.ajax({
+                        url: form.action,
+                        type: form.method,
+                        data: formData,
+                        processData: false, // khusus untuk FormData
+                        contentType: false, // khusus untuk FormData
+                        success: function (response) {
+                            if (response.status) {
+                                $('#myModal').modal('hide');
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: response.message
+                                });
+                                dataKegiatanJti.ajax.reload(); // reload data tabel
+                            } else {
+                                $('.error-text').text('');
+                                $.each(response.msgField, function (prefix, val) {
+                                    $('#error-' + prefix).text(val[0]); // tampilkan pesan error
+                                });
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Terjadi Kesalahan',
+                                    text: response.message
+                                });
+                            }
+                        },
+                        error: function (xhr, status, error) { // tambahkan handler error
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: 'Terjadi kesalahan pada server.'
+                            });
+                        }
+                    });
+                    return false; // mencegah reload default
                 }
             });
         });
-    </script>
+    </script>    
 @endempty
