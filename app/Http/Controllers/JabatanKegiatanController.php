@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule as ValidationRule;
 use Yajra\DataTables\DataTables;
 
+use App\Models\NotifikasiModel;
 class JabatanKegiatanController extends Controller
 {
     public function index()
@@ -27,6 +28,9 @@ class JabatanKegiatanController extends Controller
             $redirect=  'dosen';
             break;        
     }
+        $user = auth()->user()->user_id;
+        $notifikasi = NotifikasiModel::with('user')->where('user_id',$user)->latest('created_at')->get();
+    
         $activeMenu = 'jabatankegiatan';
         $breadcrumb = (object) [
             'title' => 'Data Jabatan Kegiatan',
@@ -38,6 +42,7 @@ class JabatanKegiatanController extends Controller
         return view($redirect.'.jabatankegiatan.index', [
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
+            'notifikasi'=> $notifikasi,
             'jabatankegiatan' => $jabatankegiatan,
         ]);
     }

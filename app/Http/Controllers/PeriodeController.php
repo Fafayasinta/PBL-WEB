@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
+use App\Models\NotifikasiModel;
 class PeriodeController extends Controller
 {
     public function index()
@@ -17,12 +18,15 @@ class PeriodeController extends Controller
             'title' => 'Data Periode',
             'list' => ['Home', 'Periode']
         ];
-
+        $user = auth()->user()->user_id;
+        $notifikasi = NotifikasiModel::with('user')->where('user_id',$user)->latest('created_at')->get();
+    
         $periode = TahunModel::all();
 
         return view('admin.periode.index', [
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
+            'notifikasi'=> $notifikasi,
             'periode' => $periode
         ]);
     }

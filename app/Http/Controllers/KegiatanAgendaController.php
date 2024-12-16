@@ -6,13 +6,16 @@ use App\Models\KegiatanAgendaModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+use App\Models\NotifikasiModel;
 class KegiatanAgendaController extends Controller
 {
     /**
      * Menampilkan daftar agenda kegiatan
      */
     public function index()
-    {
+    {   $user = auth()->user()->user_id;
+        $notifikasi = NotifikasiModel::with('user')->where('user_id',$user)->latest('created_at')->get();
+    
         $agendas = KegiatanAgendaModel::with('kegiatan')->get();
         return response()->json([
             'success' => true,

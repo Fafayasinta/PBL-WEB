@@ -5,13 +5,18 @@ use App\Models\LevelModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+use App\Models\NotifikasiModel;
 class LevelController extends Controller
 {
     public function index()
     {
+        $user = auth()->user()->user_id;
+        $notifikasi = NotifikasiModel::with('user')->where('user_id',$user)->latest('created_at')->get();
+    
         $levels = LevelModel::all();
         return response()->json([
             'status' => 'success',
+            'notifikasi'=> $notifikasi,
             'data' => $levels
         ]);
     }

@@ -14,6 +14,10 @@ use Illuminate\Validation\Rule as ValidationRule;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
+use App\Models\NotifikasiModel;
+use Illuminate\Support\Facades\Auth; // Pastikan Auth diimpor
+
+
 class KegiatanNonJtiController extends Controller
 {
     public function index()
@@ -23,6 +27,9 @@ class KegiatanNonJtiController extends Controller
             'title' => 'Data Kegiatan Non JTI',
             'list' => ['Home', 'kegiatannonjti']
         ];
+        $user = auth()->user()->user_id;
+        $notifikasi = NotifikasiModel::with('user')->where('user_id',$user)->latest('created_at')->get();
+    
         switch(auth()->user()->level->level_kode){
             case('ADMIN'):
                 $redirect =  'admin';
@@ -38,11 +45,13 @@ class KegiatanNonJtiController extends Controller
         return view($redirect.'.kegiatannonjti.index', [
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
+            'notifikasi'=> $notifikasi,
         ]);
     }
 
     public function list(Request $request)
     {
+        $loggedInUser = Auth::user(); // Ambil pengguna yang login
         $kegiatannonjti = KegiatanModel::select('kegiatan_id', 'nama_kegiatan', 'user_id', 'kategori_kegiatan_id', 'cakupan_wilayah', 'waktu_mulai', 'beban_kegiatan_id')
             ->with('user')
             ->with('kategori')
@@ -58,7 +67,13 @@ class KegiatanNonJtiController extends Controller
     //  if ($request->status) {
     //      $kegiatannonjti->where('status', $request->status);
     //  }
-
+        // Cek level pengguna login
+    if ($loggedInUser->level->level_kode == 'DOSEN') {
+        // Jika level pengguna adalah DOSEN, filter kegiatan berdasarkan user_id
+        $kegiatannonjti->whereHas('anggota', function ($query) use ($loggedInUser) {
+            $query->where('user_id', $loggedInUser->user_id);
+        });
+    }
         return DataTables::of($kegiatannonjti)
         ->addIndexColumn()
         ->addColumn('action', function ($kegiatannonjti) {
@@ -77,13 +92,7 @@ class KegiatanNonJtiController extends Controller
                         style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(220, 53, 69, 0.5); color: red; border: rgba(220, 53, 69, 0.8);">
                         Hapus
                     </button> ';
-            // $btn .= '<button onclick="modalAction(\'' . url('/kegiatannonjti/' . $kegiatannonjti->kegiatan_id . '/show_surat_tugas') . '\')"  
-            //         class="btn btn-danger btn-sm" 
-            //         style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px; margin: 1px; background-color: rgba(215, 227, 244, 1); color: rgba(0, 66, 155, 1); border: rgba(215, 227, 244, 1);">
-            //         Lihat Surat
-            //     </button> ';
 
- 
             return $btn;
         })
         ->rawColumns(['action'])

@@ -9,6 +9,7 @@ use App\Models\KategoriKegiatanModel;
 use App\Models\KegiatanAgendaModel;
 use App\Models\KegiatanModel;
 use App\Models\SuratTugasModel;
+
 use App\Models\TahunModel;
 use App\Models\UserModel;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -19,8 +20,9 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth; // Pastikan Auth diimpor
 
+use App\Models\NotifikasiModel;
 class KegiatanJtiController extends Controller
-{
+{ 
     public function index()
     {
         $activeMenu = 'kegiatanjti';
@@ -31,7 +33,9 @@ class KegiatanJtiController extends Controller
 
         $status = KegiatanModel::all();
         $tahun = TahunModel::all();
-
+        $user = auth()->user()->user_id;
+        $notifikasi = NotifikasiModel::with('user')->where('user_id',$user)->latest('created_at')->get();
+    
     
         switch(auth()->user()->level->level_kode){
             case('ADMIN'):
@@ -48,51 +52,11 @@ class KegiatanJtiController extends Controller
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
             'status' => $status,
+            'notifikasi'=> $notifikasi,
             'tahun' => $tahun
         ]);
     }
 
-    // public function list(Request $request)
-    // {
-    //     $kegiatanjti = KegiatanModel::select('kegiatan_id', 'nama_kegiatan', 'user_id', 'deskripsi', 'kategori_kegiatan_id', 'status', 'beban_kegiatan_id','tahun_id')
-    //         ->with('kategori')
-    //         ->with('beban')
-    //         ->with('tahun')
-    //         ->with('user')
-    //         ->whereIn('kategori_kegiatan_id', [1, 2]);
-            
-    //     $tahun = TahunModel::all();
-
-
-    //     return DataTables::of($kegiatanjti)
-    //     ->addIndexColumn()
-    //     ->addColumn('action', function ($kegiatanjti) {
-
-
-    //         $btn = '<a href="' . url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/show') . '" 
-    //                 class="btn btn-info btn-sm" 
-    //                 style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(40, 167, 69, 0.5); color: green; border: rgba(40, 167, 69, 0.8);">
-    //                 Detail
-    //             </a>';
-
-    //         $btn .= '<button onclick="modalAction(\'' . url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/edit_ajax') . '\')" 
-    //                     class="btn btn-warning btn-sm" 
-    //                     style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(255, 193, 7, 0.5); color: orange; border: rgba(255, 193, 7, 0.8);">
-    //                     Edit
-    //                 </button> ';
-    //         $btn .= '<button onclick="modalAction(\'' . url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/delete_ajax') . '\')"  
-    //                     class="btn btn-danger btn-sm" 
-    //                     style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(220, 53, 69, 0.5); color: red; border: rgba(220, 53, 69, 0.8);">
-    //                     Hapus
-    //                 </button> ';
-    //         return $btn;
-    //     })
-    //     ->rawColumns(['action'])
-    //     ->make(true); // Pastikan metode make(true) dipanggil
-    // }
-
-   
-    
 
 public function list(Request $request)
 {
@@ -129,6 +93,7 @@ public function list(Request $request)
     return DataTables::of($kegiatanjti)
         ->addIndexColumn()
         ->addColumn('action', function ($kegiatanjti) {
+            
             $btn = '<a href="' . url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/show') . '" 
                     class="btn btn-info btn-sm" 
                     style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(40, 167, 69, 0.5); color: green; border: rgba(40, 167, 69, 0.8);">
@@ -136,7 +101,7 @@ public function list(Request $request)
                 </a>';
             
             $pic = AnggotaKegiatanModel::where('user_id',auth()->user()->user_id)->first();
-            if($pic->jabatan == 'PIC'){
+            if($pic?->jabatan == 'PIC' ||auth()->user()->level->level_kode == 'ADMIN' ){
             $btn .= '<button onclick="modalAction(\'' . url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/edit_ajax') . '\')" 
                         class="btn btn-warning btn-sm" 
                         style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(255, 193, 7, 0.5); color: orange; border: rgba(255, 193, 7, 0.8);">
@@ -149,7 +114,7 @@ public function list(Request $request)
                         style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(220, 53, 69, 0.5); color: red; border: rgba(220, 53, 69, 0.8);">
                         Hapus
                     </button> ';
-                    }
+            }
             return $btn;
         })
         ->rawColumns(['action'])
@@ -381,9 +346,12 @@ public function list(Request $request)
                 $redirect=  'dosen';
                 break;        
         }
+        $user = auth()->user()->user_id;
+        $notifikasi = NotifikasiModel::with('user')->where('user_id',$user)->latest('created_at')->get();
+    
         // Ambil data kegiatan berdasarkan ID yang diberikan
         $kegiatanjti = KegiatanModel::find($id);
-
+        $pic = AnggotaKegiatanModel::where('user_id',auth()->user()->user_id)->first();
         // Menyiapkan breadcrumb dan halaman untuk tampilan
         $breadcrumb = (object) [
             'title' => 'Detail ' . $kegiatanjti->nama_kegiatan,
@@ -403,9 +371,12 @@ public function list(Request $request)
         // Kembalikan view dengan data yang telah difilter
         return view($redirect.'.kegiatanjti.show', [
             'breadcrumb' => $breadcrumb, 
+            
             'page' => $page, 
+            'pic' => $pic,
             'kegiatanjti' => $kegiatanjti, 
             'activeMenu' => $activeMenu,
+            'notifikasi'=> $notifikasi,
             'anggotakegiatanjti' => $anggotakegiatanjti, // Kirimkan data detail kegiatan
             'agendakegiatanjti' => $agendakegiatanjti // Kirimkan data detail kegiatan
         ]);
@@ -428,6 +399,7 @@ public function list(Request $request)
                             style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(40, 167, 69, 0.5); color: green; border: rgba(40, 167, 69, 0.8);">
                             Detail
                         </button> ';
+                if(auth()->user()->level->level_kode == 'ADMIN'){
                 $btn .= '<button onclick="modalAction(\'' . url('/anggota/' . $anggotakegiatanjti->anggota_id . '/edit_ajax') . '\')" 
                             class="btn btn-warning btn-sm" 
                             style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(255, 193, 7, 0.5); color: orange; border: rgba(255, 193, 7, 0.8);">
@@ -438,6 +410,7 @@ public function list(Request $request)
                             style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(220, 53, 69, 0.5); color: red; border: rgba(220, 53, 69, 0.8);">
                             Hapus
                         </button> ';
+                }
             return $btn;
         })
         ->rawColumns(['action'])
@@ -451,26 +424,33 @@ public function list(Request $request)
             ->with('user')
             ->with('kegiatan')
             ->whereIn('kegiatan_id', [$id]); // Filter berdasarkan kegiatan_id
-
+            $loggedInUser = Auth::user();
+            
         return DataTables::of($agendakegiatanjti)
             ->addIndexColumn()
             ->addColumn('action', function ($agendakegiatanjti) {
+                $pic = AnggotaKegiatanModel::where('user_id',auth()->user()->user_id)->first();
+            
                 // Menambahkan tombol aksi untuk setiap data anggota kegiatan
+                
                 $btn  = '<button onclick="modalAction(\'' . url('/agenda/' . $agendakegiatanjti->agenda_id . '/show_ajax') . '\')" 
                             class="btn btn-info btn-sm" 
                             style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px;margin: 1px; background-color: rgba(40, 167, 69, 0.5); color: green; border: rgba(40, 167, 69, 0.8);">
                             Detail
                         </button> ';
+                if($pic?->jabatan == 'PIC' || auth()->user()->level->level_kode == 'ADMIN'){
                 $btn .= '<button onclick="modalAction(\'' . url('/agenda/' . $agendakegiatanjti->agenda_id . '/edit_ajax') . '\')" 
                             class="btn btn-warning btn-sm" 
                             style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px;margin: 1px; background-color: rgba(255, 193, 7, 0.5); color: orange; border: rgba(255, 193, 7, 0.8);">
                             Edit
                         </button> ';
+                
                 $btn .= '<button onclick="modalAction(\'' . url('/agenda/' . $agendakegiatanjti->agenda_id . '/delete_ajax') . '\')"  
                             class="btn btn-danger btn-sm" 
                             style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px;margin: 1px; background-color: rgba(220, 53, 69, 0.5); color: red; border: rgba(220, 53, 69, 0.8);">
                             Hapus
                         </button> ';
+                }
             return $btn;
         })
         ->rawColumns(['action'])
@@ -546,3 +526,44 @@ public function list(Request $request)
         return redirect('/kegiatanjti/' . $id . '/show');
     }
 }
+
+// public function list(Request $request)
+    // {
+    //     $kegiatanjti = KegiatanModel::select('kegiatan_id', 'nama_kegiatan', 'user_id', 'deskripsi', 'kategori_kegiatan_id', 'status', 'beban_kegiatan_id','tahun_id')
+    //         ->with('kategori')
+    //         ->with('beban')
+    //         ->with('tahun')
+    //         ->with('user')
+    //         ->whereIn('kategori_kegiatan_id', [1, 2]);
+            
+    //     $tahun = TahunModel::all();
+
+
+    //     return DataTables::of($kegiatanjti)
+    //     ->addIndexColumn()
+    //     ->addColumn('action', function ($kegiatanjti) {
+
+
+    //         $btn = '<a href="' . url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/show') . '" 
+    //                 class="btn btn-info btn-sm" 
+    //                 style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(40, 167, 69, 0.5); color: green; border: rgba(40, 167, 69, 0.8);">
+    //                 Detail
+    //             </a>';
+
+    //         $btn .= '<button onclick="modalAction(\'' . url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/edit_ajax') . '\')" 
+    //                     class="btn btn-warning btn-sm" 
+    //                     style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(255, 193, 7, 0.5); color: orange; border: rgba(255, 193, 7, 0.8);">
+    //                     Edit
+    //                 </button> ';
+    //         $btn .= '<button onclick="modalAction(\'' . url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/delete_ajax') . '\')"  
+    //                     class="btn btn-danger btn-sm" 
+    //                     style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(220, 53, 69, 0.5); color: red; border: rgba(220, 53, 69, 0.8);">
+    //                     Hapus
+    //                 </button> ';
+    //         return $btn;
+    //     })
+    //     ->rawColumns(['action'])
+    //     ->make(true); // Pastikan metode make(true) dipanggil
+    // }
+
+   
