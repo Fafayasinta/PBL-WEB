@@ -10,6 +10,7 @@ use App\Models\KegiatanModel;
 use App\Models\UserModel;
 use App\Models\AnggotaKegiatanModel;
 use App\Models\BobotJabatanModel;
+use Illuminate\Support\Facades\Validator;
 
 class SuratTugasController extends Controller
 {
@@ -89,6 +90,62 @@ class SuratTugasController extends Controller
         // Stream PDF
         return $pdf->stream('Surat Pengantar ' . $kegiatan->kegiatan_nama . '.pdf');
     }
-    
 
+    public function surat_ajax(Request $request, $id)
+{
+    if ($request->ajax() || $request->wantsJson()) {
+        $rules = [
+            'surat_tugas' => 'nullable|file|mimes:pdf|max:2048' // Validasi khusus untuk file PDF
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validasi Gagal',
+                'msgField' => $validator->errors(),
+            ]);
+        }
+
+        // Temukan kegiatan berdasarkan kegiatan_id
+        $kegiatan = KegiatanModel::find($id);
+
+        if (!$kegiatan) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Kegiatan tidak ditemukan.',
+            ]);
+        }
+
+        // Menyimpan file surat tugas jika ada file yang diupload
+        $suratTugasPath = null;
+        if ($request->hasFile('surat_tugas') && $request->file('surat_tugas')->isValid()) {
+            $suratTugas = $request->file('surat_tugas');
+            $filename = time() . '_' . $suratTugas->getClientOriginalName(); // Nama file unik
+            $destinationPath = public_path('storage/surat_tugas'); // Folder tujuan di `public/storage/surat_tugas`
+
+            // Membuat folder jika belum ada
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            // Memindahkan file ke folder tujuan
+            $suratTugas->move($destinationPath, $filename);
+            $suratTugasPath = 'storage/surat_tugas/' . $filename; // Path relatif untuk disimpan ke database
+        }
+
+        // Menyimpan data surat tugas ke dalam kegiatan yang sudah ada
+        $kegiatan->surat_tugas = $suratTugasPath;
+        $kegiatan->save();
+
+        // Mengembalikan response sukses
+        return response()->json([
+            'status' => true,
+            'message' => 'Surat Tugas berhasil diupload dan kegiatan berhasil diperbarui.'
+        ]);
+    }
+
+    return redirect('/kegiatanjti/' . $id . '/show/');
+}
 }

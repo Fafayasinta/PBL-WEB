@@ -90,7 +90,7 @@
             <table class="table-bordered table-striped table-hover table-sm table" id="table_admin" style="width: 100%">
                 <thead>
                     <tr>
-                        <th class="text-center">Nama Kegiatan</th>
+                        <th class="text-center" style="width: 20%">Nama Kegiatan</th>
                         <th class="text-center">Waktu Mulai</th>
                         <th class="text-center">Waktu Akhir</th>
                         <th class="text-center">PIC</th>

@@ -116,6 +116,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::group(['prefix' => 'statistik'], function () {
             Route::get('/', [StatistikController::class, 'index']);
+            Route::post('/list', [StatistikController::class, 'list']);
         });
         
     });
@@ -146,6 +147,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{id}/delete_ajax', [KegiatanJtiController::class, 'confirm_ajax']);
             Route::delete('/{id}/delete_ajax', [KegiatanJtiController::class, 'delete_ajax']);
             Route::get('/{id}/exportPDF', [SuratTugasController::class, 'exportPDF']);
+            Route::get('/surat_create_ajax', [SuratTugasController::class, 'create_ajax']);
+            Route::get('/{id}/surat_ajax', [SuratTugasController::class, 'surat_ajax']);
         });
 
         Route::group(['prefix' => 'anggota'], function () {

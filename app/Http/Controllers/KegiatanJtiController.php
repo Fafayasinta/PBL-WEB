@@ -59,6 +59,7 @@ class KegiatanJtiController extends Controller
             ->with('tahun')
             ->with('user')
             ->whereIn('kategori_kegiatan_id', [1, 2]);
+            
 
     //  if ($request->nama_kategori) {
     //         $kegiatanjti->whereHas('kategori_kegiatan', function ($query) use ($request) {
@@ -305,8 +306,8 @@ class KegiatanJtiController extends Controller
                     'message' => 'Data tidak ditemukan'
                 ]);
             }
-            return redirect('/kegiatanjti');
         }
+        return redirect('/kegiatanjti');
     }
 
 

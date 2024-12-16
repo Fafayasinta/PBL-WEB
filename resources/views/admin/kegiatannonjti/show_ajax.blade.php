@@ -68,6 +68,9 @@
                 </table>
             </div>
             <div class="modal-footer">
+                @if ($kegiatannonjti->surat_tugas) 
+                    <a href="{{ asset($kegiatannonjti->surat_tugas) }}" target="_blank" class="btn btn-info">Lihat Surat Tugas</a>
+                @endif
                 <button type="button" data-dismiss="modal" class="btn btn-warning">Kembali</button>
             </div>
         </div>

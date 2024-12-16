@@ -76,6 +76,12 @@
                             <p>Kelola Kegiatan JTI</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                      <a href="{{ url('/kegiatannonjti') }}" class="nav-link {{ ($activeMenu == 'kegiatannonjti')? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Kelola Kegiatan Non JTI</p>
+                        </a>
+                    </li>
                     @if(auth()->user()->level->level_kode == 'ADMIN')
                     <li class="nav-item">
                       <a href="{{ url('/periode') }}" class="nav-link {{ ($activeMenu == 'periode')? 'active' : '' }}">
@@ -84,13 +90,6 @@
                         </a>
                     </li>
                     @endif
-                    <li class="nav-item">
-                      <a href="{{ url('/kegiatannonjti') }}" class="nav-link {{ ($activeMenu == 'kegiatannonjti')? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Kelola Kegiatan Non JTI</p>
-                        </a>
-                    </li>
-                    
                 </ul>
             </li>
             @if(auth()->user()->level->level_kode == 'ADMIN')

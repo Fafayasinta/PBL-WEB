@@ -1,43 +1,53 @@
-@extends('pimpinan.layouts.template')
+@extends('admin.layouts.template')
 
 @section('content')
 <style>
-.chart-row {
-  display: flex !important; /* Menempatkan elemen dalam satu baris */
-  justify-content: space-between !important; /* Menyebarkan elemen dengan jarak yang sama */
-  gap: 20px !important; /* Memberikan spasi antar card */
-  margin-top: 20px !important; /* Memberikan margin atas antara baris */
-  width: 100% !important; /* Memastikan baris mengisi seluruh lebar layar */
-  flex-wrap: wrap !important; /* Membungkus elemen ke baris baru jika ruang terbatas */
-}
+    .chart-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+        width: 100%;
+    }
 
-.card {
-  flex: 1 1 50% !important; /* Membuat setiap card memiliki ukuran yang fleksibel, 2 card dalam satu baris */
-  max-width: 100% !important; /* Batas lebar maksimal card untuk setiap chart */
-  background: #ffffff !important; /* Warna latar belakang card */
-  border: 1px solid #ddd !important; /* Menambahkan border */
-  border-radius: 8px !important; /* Membuat sudut kartu membulat */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important; /* Bayangan lembut */
-}
+    .card {
+        flex: 1 1 50%;
+        max-width: 100%;
+        background: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
 
-.card-top {
-  padding: 10px 15px;
-  background-color: #f4f4f9;
-  border-bottom: 1px solid #ddd;
-}
+    .card-top {
+        padding: 10px 15px;
+        background-color: #f4f4f9;
+        border-bottom: 1px solid #ddd;
+    }
 
-.card h4 {
-  margin: 0;
-  font-size: 18px;
-}
+    .card h4 {
+        margin: 0;
+        font-size: 18px;
+    }
 
-.card canvas {
-  width: 100%; /* Membuat canvas memenuhi lebar card */
-  height: auto; /* Menyesuaikan tinggi canvas secara proporsional */
-}
+    .card canvas {
+        width: 90%; /* Menyesuaikan dengan ukuran kontainer */
+        max-width: 500px; /* Membatasi lebar chart */
+        height: 300px; /* Menentukan tinggi chart */
+        margin: 0 auto; /* Membuat chart terpusat */
+    }
+
+    @media (max-width: 768px) {
+        .card canvas {
+            width: 100%; /* Ukuran penuh untuk perangkat mobile */
+            height: 250px; /* Lebih kecil pada perangkat mobile */
+        }
+    }
 </style>
 
-<div class="card" style="border: 1px solid #ddd; padding: 20px; border-radius: 0px; background-color: #f9f9f9; margin: 20px; margin-top: 0px;">
+
+<div class="card" style="border: 1px solid #ddd; padding: 20px; background-color: #f9f9f9; margin: 20px;">
     <div class="card-header">
         <div class="filter-container ml-auto">
             <select class="form-control" name="filter" style="font-size: 14px; width: auto; border-radius: 10px" required>
@@ -57,30 +67,18 @@
         </div>
     </div>
     <div class="card-body d-flex justify-content-between align-items-center">
-        <!-- First Row: Donut Chart 1 and 2 -->
         <div class="chart-row">
-            <!-- Donut Chart Left 1 -->
+            <!-- Statistik 1 -->
             <div class="card">
                 <div class="card-top">
-                    <h4>Chart 1</h4>
+                    <h4>STATISTIK JENIS KEGIATAN DOSEN</h4>
                 </div>
                 <div>
                     <canvas id="donutChart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                </div>
+                </div><br>
             </div>
-          
-            <!-- Donut Chart Right 1 -->
-            {{-- <div class="card">
-                <div class="card-top">
-                    <h4>Chart 2</h4>
-                </div>
-                <div>
-                    <canvas id="donutChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                </div>
-            </div> --}}
-        </div>   
-         
-    </div>
+        </div>
+    </div>    
     <div class="card-body">
         <table class="table-bordered table-striped table-hover table-sm table" id="table_statistik" style="width: 100%">
             <thead>
@@ -93,7 +91,65 @@
                     <th class="text-center">TOTAL KEGIATAN</th>
                 </tr>
             </thead>
+            <tbody>
+                @foreach($statistik as $index => $item)
+                <tr>
+                    <td class="text-center">{{ $index + 1 }}</td>
+                    <td class="text-center">{{ $item->user->nama }}</td>
+                    <td class="text-center">{{ $item->total_kategori_1 }}</td>
+                    <td class="text-center">{{ $item->total_kategori_2 }}</td>
+                    <td class="text-center">{{ $item->total_kategori_3 }}</td>
+                    <td class="text-center">{{ $item->total_kegiatan }}</td>
+                </tr>
+                @endforeach
+            </tbody>
         </table>
     </div> 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const chartData = @json($chartData);
+        const ctx1 = document.getElementById("donutChart1").getContext("2d");
+        new Chart(ctx1, {
+            type: "doughnut",
+            data: chartData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: "top",
+                    },
+                },
+            },
+        });
+    });
+</script>
+<script>
+    function modalAction(url = '') {
+        $('#myModal').load(url, function() {
+            $('#myModal').modal('show');
+        })
+    }
+    var dataStatistik;
+    $(document).ready(function () {
+    $('#table_pengguna').DataTable({
+        serverSide: true,
+        processing: true,
+        ajax: {
+            url: "{{ url('statistik/list') }}",
+            type: "POST"
+        },
+        columns: [
+            { data: "DT_RowIndex", className: "text-center", orderable: false, searchable: false },
+            { data: "user_id", className: "text-center" },
+            { data: "total_kategori_1", className: "text-center" },
+            { data: "total_kategori_2", className: "text-center" },
+            { data: "total_kategori_3", className: "text-center" }
+        ]
+    });
+});
+</script>
 @endsection
