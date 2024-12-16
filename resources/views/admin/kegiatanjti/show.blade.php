@@ -20,7 +20,7 @@
             <h1 class="card-title" style="font-weight: bold; font-size: 24px; margin-left:10px">Detail Kegiatan</h1><br>
             <br>
             <div class="card-tools">
-                @if($pic?->jabatan == 'PIC')
+                @if($pic?->jabatan == 'PIC' || auth()->user()->level->level_kode == 'ADMIN')
                 <button onclick="modalAction('{{ url('/kegiatanjti/'.$kegiatanjti->kegiatan_id.'/upload_laporan/') }}')" class="btn btn-success"  style="font-size: 16px; background-color: #F79FFF; color: white;border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px;">Upload Laporan</button>
                 @endif
                 
@@ -30,7 +30,7 @@
                     </a>
                 @endif
 
-                @if($pic?->jabatan == 'PIC')
+                @if($pic?->jabatan == 'PIC' || auth()->user()->level->level_kode == 'ADMIN')
                 <a href='{{ url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/exportPDF') }}' class="btn btn-success" style="font-size: 16px; background-color: #ffe14c; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Cetak Draft Surat</a>
                 <button onclick="modalAction('{{ url('/kegiatanjti/'.$kegiatanjti->kegiatan_id.'/upload_surat/') }}')" class="btn btn-success" style="font-size: 16px; background-color: #fa8072; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Upload Surat Tugas</button>
                 @endif
@@ -41,7 +41,7 @@
                     </a>
                 @endif
 
-                {{-- <button onclick="modalAction('{{ url('/anggota/create_ajax') }}')" class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button> --}}
+                <button onclick="modalAction('{{ url('/anggota/create_ajax') }}')" class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
             </div>
         </div>
 
@@ -76,7 +76,7 @@
             <br>
             <h1 class="card-title" style="font-weight: bold; font-size: 24px; margin-left:10px">Agenda Kegiatan</h1>
             <div class="card-tools">
-                @if($pic?->jabatan == 'PIC')
+                @if($pic?->jabatan == 'PIC' || auth()->user()->level->level_kode == 'ADMIN')
                 <button onclick="modalAction('{{ url('/agenda/create_ajax') }}')" class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
                 @endif
             </div>

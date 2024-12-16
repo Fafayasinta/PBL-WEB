@@ -17,7 +17,7 @@
             @endif
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <label class="col-1 control-label col-form-label">Filter</label>
                         <div class="col-3">
                             <select type="text" class="form-control" id="" name="" required>
@@ -25,10 +25,10 @@
                                 {{-- @foreach ($level as $item)
                                     <option value="{{ $item->level_kode }}">{{ $item->level_kode }}</option>
                                 @endforeach --}}
-                            </select>
+                            {{-- </select>
                             <small class="form-text text-muted">Jenis Kegiatan</small>
                         </div>
-                    </div>
+                    </div>  --}}
                 </div>
             </div>
             <table class="table-bordered table-striped table-hover table-sm table" id="table_kegiatannonjti" style="width: 100%">

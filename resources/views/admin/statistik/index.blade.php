@@ -49,7 +49,7 @@
 
 <div class="card" style="border: 1px solid #ddd; padding: 20px; background-color: #f9f9f9; margin: 20px;">
     <div class="card-header">
-        <div class="filter-container ml-auto">
+        {{-- <div class="filter-container ml-auto">
             <select class="form-control" name="filter" style="font-size: 14px; width: auto; border-radius: 10px" required>
                 <option value="01" {{ request('month') == '01' ? 'selected' : '' }}>Januari</option>
                 <option value="02" {{ request('month') == '02' ? 'selected' : '' }}>Februari</option>
@@ -64,7 +64,7 @@
                 <option value="11" {{ request('month') == '11' ? 'selected' : '' }}>November</option>
                 <option value="12" {{ request('month') == '12' ? 'selected' : '' }}>Desember</option>
             </select>
-        </div>
+        </div> --}}
     </div>
     <div class="card-body d-flex justify-content-between align-items-center">
         <div class="chart-row">
