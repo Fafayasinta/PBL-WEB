@@ -1,4 +1,4 @@
-@extends('dosen.layouts.template')
+@extends('admin.layouts.template')
 
 @section('content')
     <div class="card card-outline card-primary">

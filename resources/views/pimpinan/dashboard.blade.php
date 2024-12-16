@@ -1,5 +1,5 @@
 <!-- resources/views/dashboard.blade.php -->
-@extends('admin.layouts.template')
+@extends('dosen.layouts.template')
 
 @section('content')
 <div class="card" style="border: 1px solid #ddd; padding: 20px; border-radius: 10px; background-color: #f9f9f9;">
@@ -90,7 +90,7 @@
             <table class="table-bordered table-striped table-hover table-sm table" id="table_admin" style="width: 100%">
                 <thead>
                     <tr>
-                        <th class="text-center" style="width: 20%">Nama Kegiatan</th>
+                        <th class="text-center">Nama Kegiatan</th>
                         <th class="text-center">Waktu Mulai</th>
                         <th class="text-center">Waktu Akhir</th>
                         <th class="text-center">PIC</th>
@@ -113,7 +113,7 @@
         var dataAdmin = $('#table_admin').DataTable({
             serverSide: true, // Menggunakan server-side processing
             ajax: {
-                "url": "{{ url('pimpinan/list') }}", // Endpoint untuk mengambil data kegiatan
+                "url": "{{ url('dosen/list') }}", // Endpoint untuk mengambil data kegiatan
                 "type": "POST",
                 "data": function (d) {
                     d.nama_kegiatan = $('#nama_kegiatan').val(); // Kirim filter jika ada

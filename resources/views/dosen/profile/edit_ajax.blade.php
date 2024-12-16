@@ -22,7 +22,7 @@
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-info text-white">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Jenis Kegiatan</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Edit Data Profile</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>   
@@ -76,55 +76,75 @@
     <script>
         $(document).ready(function() {
             $("#form-edit").validate({
+                // Aturan validasi
                 rules: {
-                    level_id: {required: true, number: true}
-                    nama: {required: true, minlength: 3, maxlength: 100},
-                    username: {required: true, minlength: 5, maxlength: 50},
-                    password: {required: true},
-                    email: {required: true},
-                    nip: {required: true},
+                    level_id: { required: true, number: true },
+                    nama: { required: true, minlength: 3, maxlength: 100 },
+                    username: { required: true, minlength: 5, maxlength: 50 },
+                    password: { minlength: 6 }, // Password tidak wajib tapi harus minimal 6 karakter jika diisi
+                    email: { required: true, email: true },
+                    nip: { required: true },
                 },
+                // Submit handler untuk proses AJAX
                 submitHandler: function(form) {
                     $.ajax({
-                        url: form.action,
-                        type: form.method,
-                        data: $(form).serialize(),
+                        url: form.action, // URL dari action form
+                        type: form.method, // Method HTTP (POST/PUT)
+                        data: $(form).serialize(), // Data form yang akan dikirimkan
                         success: function(response) {
-                            if(response.status){
+                            if (response.status) {
+                                // Jika berhasil, sembunyikan modal dan tampilkan pesan sukses
                                 $('#myModal').modal('hide');
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Berhasil',
                                     text: response.message
+                                }).then(() => {
+                                    // Refresh halaman atau arahkan ke URL tertentu
+                                    window.location.href = '/profile'; // Ganti dengan URL tujuan
                                 });
-                                window.location.href = '/profile';
-                            }else{
-                                $('.error-text').text('');
-                                $.each(response.msgField, function(prefix, val) {
-                                    $('#error-'+prefix).text(val[0]);
-                                });
+                            } else {
+                                // Jika gagal, tampilkan pesan error di form
+                                $('.error-text').text(''); // Bersihkan pesan error sebelumnya
+                                if (response.errors) {
+                                    // Jika ada validasi field yang gagal
+                                    $.each(response.errors, function(prefix, val) {
+                                        $('#error-' + prefix).text(val[0]); // Menampilkan error untuk setiap field
+                                    });
+                                }
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Terjadi Kesalahan',
-                                    text: response.message
+                                    text: response.message || 'Data tidak valid. Silakan cek input Anda.'
                                 });
                             }
+                        },
+                        error: function(xhr) {
+                            // Error dari server (misalnya 500 atau 422)
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Kesalahan Server',
+                                text: xhr.responseJSON?.message || 'Terjadi kesalahan. Silakan coba lagi.',
+                            });
                         }
                     });
-                    return false;
+                    return false; // Mencegah form dari submit normal
                 },
+                // Konfigurasi error element
                 errorElement: 'span',
-                errorPlacement: function (error, element) {
+                errorPlacement: function(error, element) {
                     error.addClass('invalid-feedback');
                     element.closest('.form-group').append(error);
                 },
-                highlight: function (element, errorClass, validClass) {
+                // Highlight dan unhighlight input
+                highlight: function(element, errorClass, validClass) {
                     $(element).addClass('is-invalid');
                 },
-                unhighlight: function (element, errorClass, validClass) {
+                unhighlight: function(element, errorClass, validClass) {
                     $(element).removeClass('is-invalid');
                 }
             });
         });
     </script>
+    
 @endempty

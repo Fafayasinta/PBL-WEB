@@ -67,7 +67,7 @@
                                         title: 'Berhasil',
                                         text: response.message
                                     });
-                                    window.location.href = '/profile';
+                                    window.location.replace = '/profile';
                                 } else {
                                     $('.error-text').text('');
                                     $.each(response.msgField, function(prefix, val) {

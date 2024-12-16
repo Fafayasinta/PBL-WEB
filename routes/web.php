@@ -57,9 +57,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', [WelcomeController::class, 'index']);
 
     Route::middleware(['authorize:ADMIN'])->group(function () {
-        Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-        Route::post('/admin/list', [AdminController::class, 'list']);
-
         Route::group(['prefix' => 'jeniskegiatan'], function () {
             Route::get('/', [JenisKegiatanController::class, 'index']);
             Route::post('/list', [JenisKegiatanController::class, 'list']);
@@ -123,6 +120,12 @@ Route::middleware(['auth'])->group(function () {
 
     //Admin, Pimpinan, Dosen
     Route::middleware(['authorize:ADMIN,PIMPINAN,DOSEN'])->group(function () {
+        Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::post('/admin/list', [AdminController::class, 'list']);
+        
+        Route::get('/pimpinan', [PimpinanController::class, 'index'])->name('pimpinan.dashboard');
+        Route::post('/pimpinan/list', [PimpinanController::class, 'list']);
+        
         Route::get('/dosen', [DosenController::class, 'index'])->name('dosen.dashboard');
         Route::post('/dosen/list', [DosenController::class, 'list']);
 
@@ -147,8 +150,10 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{id}/delete_ajax', [KegiatanJtiController::class, 'confirm_ajax']);
             Route::delete('/{id}/delete_ajax', [KegiatanJtiController::class, 'delete_ajax']);
             Route::get('/{id}/exportPDF', [SuratTugasController::class, 'exportPDF']);
-            Route::get('/surat_create_ajax', [SuratTugasController::class, 'create_ajax']);
-            Route::get('/{id}/surat_ajax', [SuratTugasController::class, 'surat_ajax']);
+            Route::get('{id}/upload_surat', [SuratTugasController::class, 'upload_surat']);
+            Route::put('{id}/update_surat', [SuratTugasController::class, 'update_surat']);
+            Route::get('{id}/upload_laporan', [SuratTugasController::class, 'upload_laporan']);
+            Route::put('{id}/update_laporan', [SuratTugasController::class, 'update_laporan']);
         });
 
         Route::group(['prefix' => 'anggota'], function () {

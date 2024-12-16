@@ -20,11 +20,19 @@
             <h1 class="card-title" style="font-weight: bold; font-size: 24px; margin-left:10px">Detail Kegiatan</h1><br>
             <br>
             <div class="card-tools">
-                <button onclick="modalAction('{{ url('#') }}')" class="btn btn-success"  style="font-size: 16px; background-color: #F79FFF; color: white;border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px;">Upload Laporan</button>
-                <button onclick="modalAction('{{ url('#') }}')" class="btn btn-success" style="font-size: 16px;  background-color: rgba(215, 227, 244, 1); color: rgba(0, 66, 155, 1);border: none; border-radius: 15px; padding: 8px 30px;  margin-right: 15px;"> Lihat Laporan </button>
+                <button onclick="modalAction('{{ url('/kegiatanjti/'.$kegiatanjti->kegiatan_id.'/upload_laporan/') }}')" class="btn btn-success"  style="font-size: 16px; background-color: #F79FFF; color: white;border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px;">Upload Laporan</button>
+                @if ($kegiatanjti->laporan) 
+                    <a href="{{ asset($kegiatanjti->laporan) }}" target="_blank" class="btn btn-success" style="font-size: 16px;  background-color: rgba(215, 227, 244, 1); color: rgba(0, 66, 155, 1);border: none; border-radius: 15px; padding: 8px 30px;  margin-right: 15px;">
+                        Lihat Laporan
+                    </a>
+                @endif
                 <a href='{{ url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/exportPDF') }}' class="btn btn-success" style="font-size: 16px; background-color: #ffe14c; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Cetak Draft Surat</a>
-                <button onclick="modalAction('{{ url('#') }}')" class="btn btn-success" style="font-size: 16px; background-color: #fa8072; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Upload Surat Tugas</button>
-                <button onclick="modalAction('{{ url('#') }}')" class="btn btn-success" style="font-size: 16px; background-color: #29ab87; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Lihat Surat Tugas</button>
+                <button onclick="modalAction('{{ url('/kegiatanjti/'.$kegiatanjti->kegiatan_id.'/upload_surat/') }}')" class="btn btn-success" style="font-size: 16px; background-color: #fa8072; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Upload Surat Tugas</button>
+                @if ($kegiatanjti->surat_tugas) 
+                    <a href="{{ asset($kegiatanjti->surat_tugas) }}" target="_blank" class="btn btn-success" style="font-size: 16px; background-color: #29ab87; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">
+                        Lihat Surat Tugas
+                    </a>
+                @endif
                 <button onclick="modalAction('{{ url('/anggota/create_ajax') }}')" class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
             </div>
         </div>
