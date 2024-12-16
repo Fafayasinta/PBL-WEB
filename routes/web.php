@@ -101,8 +101,6 @@ Route::middleware(['auth'])->group(function () {
             Route::put('/{id}/update_ajax', [PenggunaController::class, 'update_ajax']);
             Route::get('/{id}/delete_ajax', [PenggunaController::class, 'confirm_ajax']);
             Route::delete('/{id}/delete_ajax', [PenggunaController::class, 'delete_ajax']);
-        //     Route::get('/import', [PenggunaController::class, 'import']); 
-        // Route::post('/import_ajax', [PenggunaController::class, 'import_ajax']);
         }); 
     });
 
@@ -125,7 +123,7 @@ Route::middleware(['auth'])->group(function () {
         
         Route::get('/pimpinan', [PimpinanController::class, 'index'])->name('pimpinan.dashboard');
         Route::post('/pimpinan/list', [PimpinanController::class, 'list']);
-        
+
         Route::get('/dosen', [DosenController::class, 'index'])->name('dosen.dashboard');
         Route::post('/dosen/list', [DosenController::class, 'list']);
 

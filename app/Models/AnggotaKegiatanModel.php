@@ -35,4 +35,6 @@ class AnggotaKegiatanModel extends Model
 {
     return $this->belongsTo(BobotJabatanModel::class, 'jabatan', 'bobot_jabatan_id');
 }
+
+
 }
