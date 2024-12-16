@@ -32,12 +32,12 @@
                 ?>
                 @break
                 @default
-
+                @endswitch
                 <a href="{{ $redirectdashboard }}" class="nav-link {{ ($activeMenu == 'dashboard')? 'active' : '' }}">
                     <i class="nav-icon fas fa-th"></i>
                     <p>Dashboard</p>
                 </a>
-                @endswitch
+                
             </li>
             <li class="nav-item">
               <a href="{{ url('/profile') }}" class="nav-link {{ ($activeMenu == 'profile')? 'active' : '' }}">

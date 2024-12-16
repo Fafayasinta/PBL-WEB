@@ -1,4 +1,4 @@
-@extends('admin.layouts.template')
+@extends('pimpinan.layouts.template')
 
 <style>
     .card-header {

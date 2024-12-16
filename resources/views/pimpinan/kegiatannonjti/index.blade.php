@@ -1,4 +1,4 @@
-@extends('admin.layouts.template')
+@extends('pimpinan.layouts.template')
 
 @section('content')
     <div class="card card-outline card-primary">
