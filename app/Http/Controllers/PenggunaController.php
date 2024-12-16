@@ -15,6 +15,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Hash;
 
+use App\Models\NotifikasiModel;
 
 class PenggunaController extends Controller
 {
@@ -25,12 +26,15 @@ class PenggunaController extends Controller
             'title' => 'Data Pengguna',
             'list' => ['Home', 'Pengguna']
         ];
-
+        $user = auth()->user()->user_id;
+        $notifikasi = NotifikasiModel::with('user')->where('user_id',$user)->latest('created_at')->get();
+    
         $level = UserModel::all();
 
         return view('admin.pengguna.index', [
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
+            'notifikasi'=> $notifikasi,
             'level' => $level
         ]);
     }

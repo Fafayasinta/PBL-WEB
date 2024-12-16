@@ -10,6 +10,7 @@ use App\Models\KegiatanModel;
 use App\Models\UserModel;
 use App\Models\AnggotaKegiatanModel;
 use App\Models\BobotJabatanModel;
+use App\Models\NotifikasiModel;
 use Illuminate\Support\Facades\Validator;
 
 class SuratTugasController extends Controller
@@ -145,6 +146,19 @@ class SuratTugasController extends Controller
             // Update path surat_tugas di database
             $surat->surat_tugas = 'storage/surat_tugas/' . $filename;
             $surat->save(); // Jangan lupa simpan perubahan ke database
+
+            $anggota =AnggotaKegiatanModel::find($id)->pluck('user_id');
+
+            foreach ($anggota as $value) {
+                NotifikasiModel::create([
+                    'user_id' => $value,
+                    'kegiatan_id' => $id,
+                    'judul' => 'Surat Tugas sudah ditambahkan',
+                    'deskripsi' => 'surat tugas sudah ditambahkan'
+                ]);
+            }
+            
+
 
             return response()->json([
                 'status' => true,

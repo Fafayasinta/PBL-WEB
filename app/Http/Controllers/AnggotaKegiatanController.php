@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule as ValidationRule;
 use Illuminate\Http\Request;
 
+use App\Models\NotifikasiModel;
 class AnggotaKegiatanController extends Controller
 {
     public function create_ajax()
@@ -68,6 +69,9 @@ class AnggotaKegiatanController extends Controller
     }
 
     public function show_ajax(string $id){
+        $user = auth()->user()->user_id;
+        $notifikasi = NotifikasiModel::with('user')->where('user_id',$user)->latest('created_at')->get();
+    
         switch(auth()->user()->level->level_kode){
             case('ADMIN'):
                 $redirect =  'admin';

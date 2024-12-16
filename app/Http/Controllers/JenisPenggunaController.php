@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Monolog\Level;
 use Yajra\DataTables\DataTables;
 
+use App\Models\NotifikasiModel;
 class JenisPenggunaController extends Controller
 {
     public function index()
@@ -21,10 +22,13 @@ class JenisPenggunaController extends Controller
         ];
 
         $level = LevelModel::all();
-
+        $user = auth()->user()->user_id;
+        $notifikasi = NotifikasiModel::with('user')->where('user_id',$user)->latest('created_at')->get();
+    
         return view('admin.jenispengguna.index', [
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
+            'notifikasi'=> $notifikasi,
             'level' => $level
         ]);
     }

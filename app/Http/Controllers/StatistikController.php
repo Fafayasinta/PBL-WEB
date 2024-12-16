@@ -8,6 +8,7 @@ use App\Models\AnggotaKegiatanModel;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
+use App\Models\NotifikasiModel;
 
 class StatistikController extends Controller
 {
@@ -30,6 +31,8 @@ class StatistikController extends Controller
             default:
                 abort(403, 'Unauthorized action.');
         }
+        $user = auth()->user()->user_id;
+        $notifikasi = NotifikasiModel::with('user')->where('user_id',$user)->latest('created_at')->get();
     
         // Data untuk statistik
         $totalKegiatan = KegiatanModel::count();
@@ -68,6 +71,7 @@ class StatistikController extends Controller
             'breadcrumb' => $breadcrumb,
             'activeMenu' => $activeMenu,
             'totalKegiatan' => $totalKegiatan,
+            'notifikasi'=> $notifikasi,
             'totalKegiatanSelesai' => $totalKegiatanSelesai,
             'totalKegiatanProses' => $totalKegiatanProses,
             'totalKegiatanBelum' => $totalKegiatanBelum,

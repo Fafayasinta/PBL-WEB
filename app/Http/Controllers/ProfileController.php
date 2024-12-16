@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
+use App\Models\NotifikasiModel;
 class ProfileController extends Controller
 {
     public function index()
@@ -30,9 +31,13 @@ class ProfileController extends Controller
                 $redirect=  'dosen';
                 break;        
         }
+        $user = auth()->user()->user_id;
+        $notifikasi = NotifikasiModel::with('user')->where('user_id',$user)->latest('created_at')->get();
+    
         return view($redirect . '.profile.index', [
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
+            'notifikasi'=> $notifikasi,
             'profile' => auth()->user()
         ]);
     }
