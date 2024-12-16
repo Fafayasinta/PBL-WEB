@@ -16,7 +16,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
                 @switch(auth()->user()->level->level_kode)
-            @case('ADMIN')
+                @case('ADMIN')
                 <?php
                 $redirectdashboard =  url('/admin')
                 ?>
@@ -32,13 +32,12 @@
                 ?>
                 @break
                 @default
-                    
-            @endswitch
 
-              <a href="{{ $redirectdashboard }}" class="nav-link {{ ($activeMenu == 'dashboard')? 'active' : '' }}">
+                <a href="{{ $redirectdashboard }}" class="nav-link {{ ($activeMenu == 'dashboard')? 'active' : '' }}">
                     <i class="nav-icon fas fa-th"></i>
                     <p>Dashboard</p>
                 </a>
+                @endswitch
             </li>
             <li class="nav-item">
               <a href="{{ url('/profile') }}" class="nav-link {{ ($activeMenu == 'profile')? 'active' : '' }}">

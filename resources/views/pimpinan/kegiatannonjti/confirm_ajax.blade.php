@@ -20,7 +20,7 @@
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-info text-white">
-                <h5 class="modal-title" id="exampleModalLabel">Hapus Data Jenis Kegiatan</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Hapus Data Kegiatan</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -32,10 +32,13 @@
                 </div>
                 <table class="table table-sm table-bordered table-striped">
                     <tr><th class="text-left col-3">Nama Kegiatan :</th><td class="col-9">{{$kegiatannonjti->nama_kegiatan }}</td></tr>
-                    <tr><th class="text-left col-3">Nama Dosen :</th><td class="col-9">{{$kegiatannonjti->pic }}</td></tr>
+                    <tr><th class="text-left col-3">Nama Dosen :</th><td class="col-9">{{$kegiatannonjti->user->nama }}</td></tr>
                     <tr><th class="text-left col-3">Jenis :</th><td class="col-9">{{$kegiatannonjti->kategori->nama_kategori }}</td></tr>
                     <tr><th class="text-left col-3">Wilayah Kerja :</th><td class="col-9">{{$kegiatannonjti->cakupan_wilayah }}</td></tr>
-                    <tr><th class="text-left col-3">Waktu :</th><td class="col-9">{{$kegiatannonjti->waktu_mulai }}</td></tr>
+                    <tr>
+                        <th class="text-left col-3">Waktu :</th>
+                        <td class="col-9">{{ \Carbon\Carbon::parse($kegiatannonjti->waktu_mulai)->format('d-m-Y') }}</td>
+                    </tr>                    
                     <tr><th class="text-left col-3">Beban :</th><td class="col-9">{{$kegiatannonjti->beban->nama_beban }}</td></tr>
                 </table>
             </div>

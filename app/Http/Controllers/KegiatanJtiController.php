@@ -60,17 +60,6 @@ class KegiatanJtiController extends Controller
             ->with('user')
             ->whereIn('kategori_kegiatan_id', [1, 2]);
             
-
-    //  if ($request->nama_kategori) {
-    //         $kegiatanjti->whereHas('kategori_kegiatan', function ($query) use ($request) {
-    //             $query->where('nama_kategori', $request->nama_kategori);
-    //      });
-    //  }
-
-    //  if ($request->status) {
-    //      $kegiatanjti->where('status', $request->status);
-    //  }
-
     $tahun = TahunModel::all();
 
 
@@ -490,11 +479,4 @@ class KegiatanJtiController extends Controller
 
         return redirect('/kegiatanjti/' . $id . '/show');
     }
-
-
-
-
-
-    
-
 }

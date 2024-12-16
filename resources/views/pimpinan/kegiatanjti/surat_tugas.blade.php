@@ -97,7 +97,7 @@
 
     <div class="isi-surat">
         <p>
-            Yth. Wakil Direktur I<br>
+            Yth. Wakil Direktur IV<br>
             Politeknik Negeri Malang<br>
             di Tempat
         </p>
