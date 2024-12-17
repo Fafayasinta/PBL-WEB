@@ -11,6 +11,7 @@ class NotifikasiModel extends Model
     public $timestamps = false;
 
     protected $fillable = [
+        'kegiatan_id',
         'user_id',
         'judul',
         'deskripsi'

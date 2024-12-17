@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Monolog\Level;
 use Yajra\DataTables\DataTables;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Hash;
+
+use App\Models\NotifikasiModel;
 
 class PenggunaController extends Controller
 {
@@ -20,12 +26,15 @@ class PenggunaController extends Controller
             'title' => 'Data Pengguna',
             'list' => ['Home', 'Pengguna']
         ];
-
+        $user = auth()->user()->user_id;
+        $notifikasi = NotifikasiModel::with('user')->where('user_id',$user)->latest('created_at')->get();
+    
         $level = UserModel::all();
 
         return view('admin.pengguna.index', [
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
+            'notifikasi'=> $notifikasi,
             'level' => $level
         ]);
     }
@@ -217,5 +226,62 @@ class PenggunaController extends Controller
             }
             return redirect('/pengguna');
         }
+    }
+    public function import()
+    {
+        return view('admin.pengguna.import');
+    }
+    public function import_ajax(Request $request)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                // validasi file harus xls atau xlsx, max 1MB
+                'file_user' => ['required', 'mimes:xlsx', 'max:1024']
+            ];
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validasi Gagal',
+                    'msgField' => $validator->errors()
+                ]);
+            }
+            $file = $request->file('file_user'); // ambil file dari request
+            $reader = IOFactory::createReader('Xlsx'); // load reader file excel
+            $reader->setReadDataOnly(true); // hanya membaca data
+            $spreadsheet = $reader->load($file->getRealPath()); // load file excel
+            $sheet = $spreadsheet->getActiveSheet(); // ambil sheet yang aktif
+            $data = $sheet->toArray(null, false, true, true); // ambil data excel
+            $insert = [];
+            if (count($data) > 1) { // jika data lebih dari 1 baris
+                foreach ($data as $baris => $value) {
+                    if ($baris > 1) { // baris ke 1 adalah header, maka lewati
+                        $insert[] = [
+                            'level_id' => $value['A'],
+                            'username' => $value['B'],
+                            'nama' => $value['C'],
+                            'password' => Hash::make($value['D']),
+                            'nip' => $value['E'],
+                            'email' => $value['F'],
+                            'created_at' => now(),
+                        ];
+                    }
+                }
+                if (count($insert) > 0) {
+                    // insert data ke database, jika data sudah ada, maka diabaikan
+                    UserModel::insertOrIgnore($insert);
+                }
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data berhasil diimport'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Tidak ada data yang diimport'
+                ]);
+            }
+        }
+        return redirect('/');
     }
 }   

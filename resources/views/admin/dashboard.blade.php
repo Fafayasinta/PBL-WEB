@@ -80,7 +80,7 @@
     <div class="card mt-4" style="border-radius: 10px; border: 1px solid #ddd;">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h4>Kegiatan Jurusan Teknologi Informasi</h4>
-            <div class="filter-container ml-auto" style="margin-right: 10px;">
+            {{-- <div class="filter-container ml-auto" style="margin-right: 10px;">
                 <select class="form-control" name="filter" style="font-size: 14px; width: auto; border-radius: 10px" required>
                     <option value="01" {{ request('month') == '01' ? 'selected' : '' }}>Januari</option>
                     <option value="02" {{ request('month') == '02' ? 'selected' : '' }}>Februari</option>
@@ -95,13 +95,13 @@
                     <option value="11" {{ request('month') == '11' ? 'selected' : '' }}>November</option>
                     <option value="12" {{ request('month') == '12' ? 'selected' : '' }}>Desember</option>
                 </select>
-            </div>
+            </div> --}}
         </div>             
         <div class="card-body">
             <table class="table-bordered table-striped table-hover table-sm table" id="table_admin" style="width: 100%">
                 <thead>
                     <tr>
-                        <th class="text-center">Nama Kegiatan</th>
+                        <th class="text-center" style="width: 20%">Nama Kegiatan</th>
                         <th class="text-center">Waktu Mulai</th>
                         <th class="text-center">Waktu Akhir</th>
                         <th class="text-center">PIC</th>

@@ -9,14 +9,26 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule as ValidationRule;
 use Illuminate\Http\Request;
 
+use App\Models\NotifikasiModel;
 class AnggotaKegiatanController extends Controller
 {
     public function create_ajax()
     {
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
         $kegiatan = KegiatanModel::select('kegiatan_id', 'nama_kegiatan')->get();
         $user = UserModel::select('user_id', 'nama')->get();
         
-        return view('admin.anggota.create_ajax')->with([
+        return view($redirect.'.anggota.create_ajax')->with([
             'user' => $user,
             'kegiatan' => $kegiatan
         ]);
@@ -57,18 +69,43 @@ class AnggotaKegiatanController extends Controller
     }
 
     public function show_ajax(string $id){
+        $user = auth()->user()->user_id;
+        $notifikasi = NotifikasiModel::with('user')->where('user_id',$user)->latest('created_at')->get();
+    
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
         $anggota = AnggotaKegiatanModel::find($id);
 
-        return view('admin.anggota.show_ajax', ['anggota' => $anggota]);
+        return view($redirect.'.anggota.show_ajax', ['anggota' => $anggota]);
     }
 
     public function edit_ajax(string $id)
     {
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
         $kegiatan = KegiatanModel::select('kegiatan_id', 'nama_kegiatan')->get();
         $user = UserModel::select('user_id', 'nama')->get();
         $anggota = AnggotaKegiatanModel::find($id);
 
-        return view('admin.anggota.edit_ajax', [
+        return view($redirect.'.anggota.edit_ajax', [
             'anggota' => $anggota,
             'kegiatan' => $kegiatan,
             'user' => $user
@@ -118,10 +155,20 @@ class AnggotaKegiatanController extends Controller
     }
 
     public function confirm_ajax(string $id)
-    {
+    {   switch(auth()->user()->level->level_kode){
+        case('ADMIN'):
+            $redirect =  'admin';
+            break;
+        case('PIMPINAN'):
+            $redirect =  'pimpinan';
+            break;
+        case('DOSEN'):
+            $redirect=  'dosen';
+            break;        
+    }
         $anggota = AnggotaKegiatanModel::find($id);
 
-        return view('admin.anggota.confirm_ajax', ['anggota' => $anggota]);
+        return view($redirect.'.anggota.confirm_ajax', ['anggota' => $anggota]);
     }
 
     public function delete_ajax(Request $request, string $id)

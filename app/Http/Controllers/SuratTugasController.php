@@ -10,6 +10,8 @@ use App\Models\KegiatanModel;
 use App\Models\UserModel;
 use App\Models\AnggotaKegiatanModel;
 use App\Models\BobotJabatanModel;
+use App\Models\NotifikasiModel;
+use Illuminate\Support\Facades\Validator;
 
 class SuratTugasController extends Controller
 {
@@ -89,6 +91,167 @@ class SuratTugasController extends Controller
         // Stream PDF
         return $pdf->stream('Surat Pengantar ' . $kegiatan->kegiatan_nama . '.pdf');
     }
-    
+
+    public function upload_surat(string $id)
+    {
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
+        $surat = KegiatanModel::find($id);
+
+        return view($redirect .'.kegiatanjti.upload_surat_tugas', [
+            'surat' => $surat
+        ]);
+    }
+
+    public function update_surat(Request $request, $id)
+{
+    $rules = [
+        'surat_tugas' => 'nullable|file|mimes:pdf|max:2048' // Validasi khusus untuk file PDF
+    ];
+
+    $validator = Validator::make($request->all(), $rules);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Validasi gagal.',
+            'msgField' => $validator->errors()
+        ]);
+    }
+
+    $surat = KegiatanModel::find($id);
+
+    if ($surat) {
+        if ($request->hasFile('surat_tugas') && $request->file('surat_tugas')->isValid()) {
+            // Hapus file lama jika ada
+            if ($surat->surat_tugas && file_exists(public_path('storage/surat_tugas/' . basename($surat->surat_tugas)))) {
+                unlink(public_path('storage/surat_tugas/' . basename($surat->surat_tugas)));
+            }
+
+            // Simpan file baru
+            $file = $request->file('surat_tugas');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $path = public_path('storage/surat_tugas'); // Path tujuan langsung di folder public
+            $file->move($path, $filename); // Memindahkan file ke path tujuan
+
+            // Update path surat_tugas di database
+            $surat->surat_tugas = 'storage/surat_tugas/' . $filename;
+            $surat->save(); // Jangan lupa simpan perubahan ke database
+
+            $anggota =AnggotaKegiatanModel::find($id)->pluck('user_id');
+
+            foreach ($anggota as $value) {
+                NotifikasiModel::create([
+                    'user_id' => $value,
+                    'kegiatan_id' => $id,
+                    'judul' => 'Surat Tugas sudah ditambahkan',
+                    'deskripsi' => 'surat tugas sudah ditambahkan'
+                ]);
+            }
+            
+
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Surat Tugas berhasil diperbarui'
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Surat tugas tidak valid atau tidak ditemukan dalam request'
+            ]);
+        }
+    } else {
+        return response()->json([
+            'status' => false,
+            'message' => 'Data kegiatan tidak ditemukan'
+        ]);
+    } 
+
+}
+
+public function upload_laporan(string $id)
+    {
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
+        $laporan = KegiatanModel::find($id);
+
+        return view($redirect .'.kegiatanjti.upload_laporan', [
+            'laporan' => $laporan
+        ]);
+    }
+
+
+    public function update_laporan(Request $request, $id)
+{
+    $rules = [
+        'laporan' => 'nullable|file|mimes:pdf|max:2048' // Validasi khusus untuk file PDF
+    ];
+
+    $validator = Validator::make($request->all(), $rules);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Validasi gagal.',
+            'msgField' => $validator->errors()
+        ]);
+    }
+
+    $laporan = KegiatanModel::find($id);
+
+    if ($laporan) {
+        if ($request->hasFile('laporan') && $request->file('laporan')->isValid()) {
+            // Hapus file lama jika ada
+            if ($laporan->laporan && file_exists(public_path('storage/laporan/' . basename($laporan->laporan)))) {
+                unlink(public_path('storage/laporan/' . basename($laporan->laporan)));
+            }
+
+            // Simpan file baru
+            $file = $request->file('laporan');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $path = public_path('storage/laporan'); // Path tujuan langsung di folder public
+            $file->move($path, $filename); // Memindahkan file ke path tujuan
+
+            // Update path surat_tugas di database
+            $laporan->laporan = 'storage/laporan/' . $filename;
+            $laporan->save(); // Jangan lupa simpan perubahan ke database
+
+            return response()->json([
+                'status' => true,
+                'message' => 'File laporan berhasil diperbarui'
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'File laporan tidak valid atau tidak ditemukan dalam request'
+            ]);
+        }
+    } else {
+        return response()->json([
+            'status' => false,
+            'message' => 'Data kegiatan tidak ditemukan'
+        ]);
+    } 
+
+}
 
 }

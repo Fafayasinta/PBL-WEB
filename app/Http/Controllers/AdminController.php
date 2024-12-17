@@ -6,6 +6,7 @@ use App\Models\KegiatanModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
+use App\Models\NotifikasiModel;
 class AdminController extends Controller
 {
     public function index()
@@ -24,12 +25,15 @@ class AdminController extends Controller
         $totalKegiatanSelesai = KegiatanModel::where('status', 'selesai')->count();  
         $totalKegiatanProses = KegiatanModel::where('status', 'proses')->count();  
         $totalKegiatanBelum = KegiatanModel::where('status', 'belum proses')->count();  
-        
+        $user = auth()->user()->user_id;
+        $notifikasi = NotifikasiModel::with('user')->where('user_id',$user)->latest('created_at')->get();
+    
         // Mengirim data ke view
         return view('admin.dashboard', [
             'breadcrumb' => $breadcrumb,
             'activeMenu' => $activeMenu,
             'totalKegiatan' => $totalKegiatan,
+            'notifikasi'=> $notifikasi,
             'totalKegiatanSelesai' => $totalKegiatanSelesai,
             'totalKegiatanProses' => $totalKegiatanProses,
             'totalKegiatanBelum' => $totalKegiatanBelum,

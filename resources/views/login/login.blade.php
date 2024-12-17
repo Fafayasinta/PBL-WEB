@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>DOSIMAL - Login</title>
+  
 
   <!-- Google Font: Source Sans Pro --> 
   <link rel="stylesheet" 
@@ -152,12 +153,12 @@
           <button type="submit" class="btn btn-login btn-block">LOGIN</button>
         </div>
 
-        <div class="forgot-password-container">
+        {{-- <div class="forgot-password-container">
           <a href="{{ route('password.request') }}" class="text-danger">Lupa Password?</a>
         </div>
         <div class="forgot-password-container">
           <a href="{{ url('register') }}" class="text-center">Belum punya akun ?</a>
-        </div>
+        </div> --}}
       </form>
     </div>
   </div>

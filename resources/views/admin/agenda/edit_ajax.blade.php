@@ -74,9 +74,13 @@
                     <small id="error-lokasi" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>PROGRES</label>
-                    <input value="{{ $agenda->progres }}" type="text" name="progres" id="progres" class="form-control" required>
-                    <small id="error-progres" class="error-text form-text text-danger"></small>
+                    <label>WILAYAH KERJA</label>
+                    <select name="cakupan_wilayah" id="cakupan_wilayah" class="form-control" required>
+                        <option value="">Pilih Wilayah Kerja</option>
+                        <option value="1.00">Luar Institusi</option>
+                        <option value="0.00">Institusi</option>
+                    </select>
+                    <small id="error-cakupan_wilayah" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
                     <label>KETERANGAN</label>

@@ -1,3 +1,4 @@
+edit_ajax.blade.php (kegiatanjti):
 @empty($kegiatanjti)
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">

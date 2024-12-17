@@ -13,7 +13,8 @@ class NotifikasiController extends Controller
      */
     public function index()
     {
-        $notifikasi = NotifikasiModel::with('user')->latest('created_at')->get();
+        $user = auth()->user()->user_id;
+        $notifikasi = NotifikasiModel::with('user')->where('user_id',$user)->latest('created_at')->get();
         return response()->json([
             'status' => 'success',
             'data' => $notifikasi

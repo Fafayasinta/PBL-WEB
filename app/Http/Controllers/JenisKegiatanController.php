@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
+use App\Models\NotifikasiModel;
 class JenisKegiatanController extends Controller
 {
     public function index()
@@ -18,12 +19,15 @@ class JenisKegiatanController extends Controller
             'title' => 'Kelola Jenis Kegiatan',
             'list' => ['Home', 'Jenis Kegiatan']
         ];
-        
+        $user = auth()->user()->user_id;
+        $notifikasi = NotifikasiModel::with('user')->where('user_id',$user)->latest('created_at')->get();
+    
         $jeniskegiatan = KegiatanModel::all();
 
         return view('admin.jeniskegiatan.index', [
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
+            'notifikasi'=> $notifikasi,
             'jeniskegiatan' => $jeniskegiatan
         ]);
     }

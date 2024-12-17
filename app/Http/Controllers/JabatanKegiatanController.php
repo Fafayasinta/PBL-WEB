@@ -13,10 +13,24 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule as ValidationRule;
 use Yajra\DataTables\DataTables;
 
+use App\Models\NotifikasiModel;
 class JabatanKegiatanController extends Controller
 {
     public function index()
-    {
+    {   switch(auth()->user()->level->level_kode){
+        case('ADMIN'):
+            $redirect =  'admin';
+            break;
+        case('PIMPINAN'):
+            $redirect =  'pimpinan';
+            break;
+        case('DOSEN'):
+            $redirect=  'dosen';
+            break;        
+    }
+        $user = auth()->user()->user_id;
+        $notifikasi = NotifikasiModel::with('user')->where('user_id',$user)->latest('created_at')->get();
+    
         $activeMenu = 'jabatankegiatan';
         $breadcrumb = (object) [
             'title' => 'Data Jabatan Kegiatan',
@@ -25,9 +39,10 @@ class JabatanKegiatanController extends Controller
 
         $jabatankegiatan = BobotJabatanModel::all();
 
-        return view('admin.jabatankegiatan.index', [
+        return view($redirect.'.jabatankegiatan.index', [
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
+            'notifikasi'=> $notifikasi,
             'jabatankegiatan' => $jabatankegiatan,
         ]);
     }
@@ -65,10 +80,20 @@ class JabatanKegiatanController extends Controller
     }
 
     public function create_ajax()
-    {
+    {   switch(auth()->user()->level->level_kode){
+        case('ADMIN'):
+            $redirect =  'admin';
+            break;
+        case('PIMPINAN'):
+            $redirect =  'pimpinan';
+            break;
+        case('DOSEN'):
+            $redirect=  'dosen';
+            break;        
+    }
         $jabatankegiatan = BobotJabatanModel::select('bobot_jabatan_id', 'cakupan_wilayah', 'jabatan', 'skor')->get();
 
-        return view('admin.jabatankegiatan.create_ajax')->with('jabatankegiatan', $jabatankegiatan);
+        return view($redirect.'.jabatankegiatan.create_ajax')->with('jabatankegiatan', $jabatankegiatan);
     }
 
     public function store_ajax(Request $request)
@@ -109,14 +134,35 @@ class JabatanKegiatanController extends Controller
 
     public function show_ajax(string $id){
         $jabatankegiatan = BobotJabatanModel::find($id);
-        return view('admin.jabatankegiatan.show_ajax', ['jabatankegiatan' => $jabatankegiatan]);
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
+        return view($redirect.'.jabatankegiatan.show_ajax', ['jabatankegiatan' => $jabatankegiatan]);
     }
 
     public function edit_ajax(string $id)
     {
         $jabatankegiatan = BobotJabatanModel::find($id);
-
-        return view('admin.jabatankegiatan.edit_ajax', ['jabatankegiatan' => $jabatankegiatan]);
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
+        return view($redirect.'.jabatankegiatan.edit_ajax', ['jabatankegiatan' => $jabatankegiatan]);
     }
 
     public function update_ajax(Request $request, $id)
@@ -167,8 +213,18 @@ class JabatanKegiatanController extends Controller
     public function confirm_ajax(string $id)
     {
         $jabatankegiatan = BobotJabatanModel::find($id);
-
-        return view('admin.jabatankegiatan.confirm_ajax', ['jabatankegiatan' => $jabatankegiatan]);
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
+        return view($redirect.'.jabatankegiatan.confirm_ajax', ['jabatankegiatan' => $jabatankegiatan]);
     }
 
     public function delete_ajax(Request $request, string $id)

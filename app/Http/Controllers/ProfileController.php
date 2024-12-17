@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
+use App\Models\NotifikasiModel;
 class ProfileController extends Controller
 {
     public function index()
@@ -30,83 +31,101 @@ class ProfileController extends Controller
                 $redirect=  'dosen';
                 break;        
         }
+        $user = auth()->user()->user_id;
+        $notifikasi = NotifikasiModel::with('user')->where('user_id',$user)->latest('created_at')->get();
+    
         return view($redirect . '.profile.index', [
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
+            'notifikasi'=> $notifikasi,
             'profile' => auth()->user()
         ]);
     }
 
     public function edit_ajax(string $id)
     {
+        switch(auth()->user()->level->level_kode){
+            case('ADMIN'):
+                $redirect =  'admin';
+                break;
+            case('PIMPINAN'):
+                $redirect =  'pimpinan';
+                break;
+            case('DOSEN'):
+                $redirect=  'dosen';
+                break;        
+        }
         $profile = UserModel::find($id);
         $level = LevelModel::select('level_id', 'level_nama')->get();
 
-        return view('admin.profile.edit_ajax', [
+        return view($redirect .'.profile.edit_ajax', [
             'profile' => $profile,
             'level' => $level
         ]);
     }
 
-public function update_ajax(Request $request, $id)
-{
-    // cek apakah request dari ajax
-    if ($request->ajax() || $request->wantsJson()) {
-        $rules = [
-            'level_id' => 'required|numeric',
-            'nama' => 'required|string|max:100',
-            'username' => 'required|string|max:50|unique:m_user,user_id,' . $id . ',user_id',
-            'password' => 'required|string|min:5',
-            'email' => 'required|string|max:50|unique:m_user,user_id,' . $id . ',user_id',
-            'nip' => 'required|string|max:50|unique:m_user,user_id,' . $id . ',user_id',
-        ];
-
+    public function update_ajax(Request $request, $id)
+    {
         // Validasi input
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,    // response json: true: berhasil, false: gagal
-                'message' => 'Validasi gagal.',
-                'msgField' => $validator->errors()  // menunjukkan field mana yang error
-            ]);
-        }
-
-        // Ambil data profile yang ingin diupdate
-        $check = UserModel::find($id);
-
-        if ($check) {
-            // Jika password baru diberikan, kita hash password tersebut
-            if (!empty($request->password)) {
-                $request->merge(['password' => Hash::make($request->password)]);  // Hash password baru
-            } else {
-                // Jika password tidak diubah, biarkan password yang lama
-                $request->merge(['password' => $check->password]);
+        $validated = $request->validate([
+            'level_id' => 'required|integer',
+            'nama' => 'required|min:3|max:100',
+            'username' => 'required|min:5|max:50',
+            'email' => 'required|email',
+            'nip' => 'required',
+            'password' => 'nullable|min:6', // Hanya validasi jika ada password baru
+        ]);
+    
+        // Temukan profile berdasarkan user_id
+        $profile = UserModel::find($id);
+    
+        if ($profile) {
+            // Update data lainnya
+            $profile->level_id = $validated['level_id'];
+            $profile->nama = $validated['nama'];
+            $profile->username = $validated['username'];
+            $profile->email = $validated['email'];
+            $profile->nip = $validated['nip'];
+    
+            // Jika password diisi, enkripsi dan simpan password baru
+            if ($request->has('password') && !empty($request->password)) {
+                $profile->password = Hash::make($request->password);
             }
-
-            // Update data pengguna
-            $check->update($request->all());
-
+    
+            // Simpan data
+            $profile->save();
+    
+            // Mengembalikan response sukses
             return response()->json([
                 'status' => true,
-                'message' => 'Data berhasil diupdate'
-            ]);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => 'Data tidak ditemukan'
+                'message' => 'Profil berhasil diperbarui.',
             ]);
         }
+    
+        // Jika profile tidak ditemukan
+        return response()->json([
+            'status' => false,
+            'message' => 'Pengguna tidak ditemukan.',
+        ]);
     }
-
-    return redirect('/profile');
-}
+    
 
 public function edit_foto(string $id)
 {
+    switch(auth()->user()->level->level_kode){
+        case('ADMIN'):
+            $redirect =  'admin';
+            break;
+        case('PIMPINAN'):
+            $redirect =  'pimpinan';
+            break;
+        case('DOSEN'):
+            $redirect=  'dosen';
+            break;        
+    }
     $user = UserModel::find($id);
     $level = LevelModel::select('level_id', 'level_nama')->get();
-    return view('admin.profile.edit_foto', ['user' => $user, 'level' => $level]);
+    return view($redirect.'.profile.edit_foto', ['user' => $user, 'level' => $level]);
 }
 
 public function update_foto(Request $request, $id)
