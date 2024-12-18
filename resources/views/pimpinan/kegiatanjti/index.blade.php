@@ -6,8 +6,8 @@
         <div class="card-header">
             {{-- <h3 class="card-title">{{ $page->title }}</h3> --}}
             <div class="card-tools">
-                <button onclick="modalAction('{{ url('/kegiatanjti/create_ajax') }}')"class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
-            </div>
+                {{-- <button onclick="modalAction('{{ url('/kegiatanjti/create_ajax') }}')"class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button> --}}
+            </div><br>
         </div>
         <div class="card-body">
             @if (session('success'))

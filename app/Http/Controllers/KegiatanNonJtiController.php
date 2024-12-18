@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\AnggotaKegiatanModel;
 use App\Models\BebanKegiatanModel;
 use App\Models\KategoriKegiatanModel;
 use App\Models\KegiatanModel;
@@ -70,7 +71,7 @@ class KegiatanNonJtiController extends Controller
         // Cek level pengguna login
     if ($loggedInUser->level->level_kode == 'DOSEN') {
         // Jika level pengguna adalah DOSEN, filter kegiatan berdasarkan user_id
-        $kegiatannonjti->whereHas('anggota', function ($query) use ($loggedInUser) {
+        $kegiatannonjti->whereHas('user', function ($query) use ($loggedInUser) {
             $query->where('user_id', $loggedInUser->user_id);
         });
     }
@@ -82,17 +83,21 @@ class KegiatanNonJtiController extends Controller
                         style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(40, 167, 69, 0.5); color: green; border: rgba(40, 167, 69, 0.8);">
                         Detail
                      </button> ';
+            $pic = AnggotaKegiatanModel::where('user_id',auth()->user()->user_id)->first();
+            if($pic?->jabatan == 'PIC' ||auth()->user()->level->level_kode == 'ADMIN' ){
             $btn .= '<button onclick="modalAction(\'' . url('/kegiatannonjti/' . $kegiatannonjti->kegiatan_id . '/edit_ajax') . '\')" 
                         class="btn btn-warning btn-sm" 
                         style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(255, 193, 7, 0.5); color: orange; border: rgba(255, 193, 7, 0.8);">
                         Edit
                     </button> ';
+            }
+            if(auth()->user()->level->level_kode == 'ADMIN'){
             $btn .= '<button onclick="modalAction(\'' . url('/kegiatannonjti/' . $kegiatannonjti->kegiatan_id . '/delete_ajax') . '\')"  
                         class="btn btn-danger btn-sm" 
                         style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(220, 53, 69, 0.5); color: red; border: rgba(220, 53, 69, 0.8);">
                         Hapus
                     </button> ';
-
+            }
             return $btn;
         })
         ->rawColumns(['action'])

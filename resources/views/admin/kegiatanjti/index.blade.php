@@ -151,15 +151,15 @@
                 dataKegiatanJti.columns(4).data().search(statusSelect.find(':selected').val()).draw();
         }
         
-         );
+    );
          tahunSelect.on('change', ()=>{
                 dataKegiatanJti.columns(7).data().search(tahunSelect.find(':selected').val()).draw();
         }
         
-         );
+    );
             
 
-        });
+});
         
 
         

@@ -18,6 +18,8 @@ class AdminController extends Controller
 
         $activeMenu = 'dashboard';
 
+        $info = KegiatanModel::where('user_id', auth()->id())->count();
+
         // Menghitung jumlah kegiatan yang selesai
         $totalKegiatan = KegiatanModel::count();  
         $totalKegiatanSelesai = KegiatanModel::where('status', 'selesai')->count();  
@@ -34,7 +36,8 @@ class AdminController extends Controller
             'notifikasi'=> $notifikasi,
             'totalKegiatanSelesai' => $totalKegiatanSelesai,
             'totalKegiatanProses' => $totalKegiatanProses,
-            'totalKegiatanBelum' => $totalKegiatanBelum
+            'totalKegiatanBelum' => $totalKegiatanBelum,
+            'info' => $info
         ]);
     }
 

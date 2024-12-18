@@ -12,11 +12,15 @@ use App\Models\SuratTugasModel;
 
 use App\Models\TahunModel;
 use App\Models\UserModel;
+use App\Notifications\kegiatan;
+use App\Notifications\KegiatanNotification;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Validation\Rule as ValidationRule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Events\NotificationSent;
+use Illuminate\Support\Facades\Notification;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth; // Pastikan Auth diimpor
 
@@ -81,7 +85,7 @@ public function list(Request $request)
     // Cek level pengguna login
     if ($loggedInUser->level->level_kode == 'DOSEN') {
         // Jika level pengguna adalah DOSEN, filter kegiatan berdasarkan user_id
-        $kegiatanjti->whereHas('anggota', function ($query) use ($loggedInUser) {
+        $kegiatanjti->whereHas('user', function ($query) use ($loggedInUser) {
             $query->where('user_id', $loggedInUser->user_id);
         });
     }
@@ -101,7 +105,7 @@ public function list(Request $request)
                 </a>';
             
             $pic = AnggotaKegiatanModel::where('user_id',auth()->user()->user_id)->first();
-            if($pic?->jabatan == 'PIC' ||auth()->user()->level->level_kode == 'ADMIN' ){
+            if($pic?->jabatan == 'PIC' || auth()->user()->level->level_kode == 'ADMIN' ){
             $btn .= '<button onclick="modalAction(\'' . url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/edit_ajax') . '\')" 
                         class="btn btn-warning btn-sm" 
                         style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(255, 193, 7, 0.5); color: orange; border: rgba(255, 193, 7, 0.8);">
@@ -237,13 +241,11 @@ public function list(Request $request)
         $kategori = KategoriKegiatanModel::select('kategori_kegiatan_id', 'nama_kategori')
         ->whereIn('kategori_kegiatan_id', [1, 2])
         ->get();
-        $user = UserModel::select('user_id', 'nama')->get();
         $beban = BebanKegiatanModel::select('beban_kegiatan_id', 'nama_beban')->get();
         $kegiatanjti = KegiatanModel::find($id);
 
         return view($redirect.'.kegiatanjti.edit_ajax', [
             'kategori' => $kategori,
-            'user' => $user,
             'beban' => $beban,
             'kegiatanjti' => $kegiatanjti
         ]);
@@ -257,12 +259,9 @@ public function list(Request $request)
                 'nama_kegiatan' => 'required|string|max:200',
                 'deskripsi' => 'required|string|max:255',
                 'kategori_kegiatan_id' => 'required|integer|exists:m_kategori_kegiatan,kategori_kegiatan_id',
-                'status' => [
-                    'required',
-                    ValidationRule::in(['Belum Proses','Proses','Selesai']),
-                ],
+                'status' => 'required|in:Belum Proses,Proses,Selesai',
                 'beban_kegiatan_id' => 'required|integer|exists:m_beban_kegiatan,beban_kegiatan_id'
-            ];
+            ];            
 
             // use Illuminate\Support\Facades\Validator;
             $validator = Validator::make($request->all(), $rules);
@@ -310,25 +309,36 @@ public function list(Request $request)
     }
 
     public function delete_ajax(Request $request, string $id)
-    {
-        if ($request->ajax() || $request->wantsJson()) {
-            $kegiatanjti = KegiatanModel::find($id);
+{
+    if ($request->ajax() || $request->wantsJson()) {
+        $kegiatanjti = KegiatanModel::find($id);
 
-            if ($kegiatanjti) {
-                $kegiatanjti->delete();
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Data berhasil dihapus'
-                ]);
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Data tidak ditemukan'
-                ]);
-            }
+        if ($kegiatanjti) {
+            // Hapus semua data terkait di tabel anggota
+            $kegiatanjti->anggota()->delete();
+
+            // Jika ada tabel relasi lain yang terkait, tambahkan di sini
+            $kegiatanjti->agenda()->delete();
+
+            // Hapus data di tabel kegiatan
+            $kegiatanjti->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data berhasil dihapus'
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan'
+            ]);
         }
-        return redirect('/kegiatanjti');
     }
+
+    return redirect('/kegiatanjti');
+}
+
+
 
 
     //DETAIL KEGIATAN JTI

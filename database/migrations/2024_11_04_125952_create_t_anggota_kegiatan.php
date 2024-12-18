@@ -23,9 +23,7 @@ return new class extends Migration
             $table->decimal('skor', 4, 2);
 
             $table->foreign('user_id')->references('user_id')->on('m_user');
-            $table->foreign('kegiatan_id')->references('kegiatan_id')->on('t_kegiatan');
-            
-
+            $table->foreign('kegiatan_id')->references('kegiatan_id')->on('t_kegiatan');    
         });
     }
 

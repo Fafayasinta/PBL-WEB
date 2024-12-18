@@ -40,14 +40,8 @@
                     <small id="error-cakupan_wilayah" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>JABATAN</label>
-                    <select name="jabatan" id="jabatan" class="form-control" required>
-                        <option value="">Pilih Jabatan</option>
-                        <option value="PIC" {{ $jabatankegiatan->jabatan == 'PIC' ? 'selected' : '' }}>PIC</option>
-                        <option value="Sekretaris" {{ $jabatankegiatan->jabatan == 'Sekretaris' ? 'selected' : '' }}>Sekretaris</option>
-                        <option value="Bendahara" {{ $jabatankegiatan->jabatan == 'Bendahara' ? 'selected' : '' }}>Bendahara</option>
-                        <option value="Anggota" {{ $jabatankegiatan->jabatan == 'Anggota' ? 'selected' : '' }}>Anggota</option>
-                    </select>
+                    <label>Jabatan</label>
+                    <input value="{{ $jabatankegiatan->jabatan }}" type="text" name="jabatan" id="jabatan" class="form-control" required>
                     <small id="error-jabatan" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">

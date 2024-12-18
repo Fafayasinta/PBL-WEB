@@ -22,13 +22,7 @@
                 </div>
                 <div class="form-group">
                     <label>Jabatan</label>
-                    <select name="jabatan" id="jabatan" class="form-control" required>
-                        <option value="">Pilih Jabatan</option>
-                        <option value="PIC">PIC</option>
-                        <option value="Sekretaris">Sekretaris</option>
-                        <option value="Bendahara">Bendahara</option>
-                        <option value="Anggota">Anggota</option>
-                    </select>
+                    <input value="" type="text" name="jabatan" id="jabatan" class="form-control" required>
                     <small id="error-jabatan" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">

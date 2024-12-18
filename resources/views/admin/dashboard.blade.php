@@ -15,7 +15,7 @@
             <div class="card text-center" style="border-radius: 10px; border: 1px solid #ddd;">
                 <div class="card-body">
                     <h6>Total Kegiatan</h6>
-                    <div class="d-flex justify-content-center align-items-center">
+                    <div class="d-flex justify-content-center align-items-cent">
                         <div style="background-color: #ffd572; padding: 10px; display: inline-block; border-radius: 10px;">
                             <i class="nav-icon fas fa-box"></i>    
                         </div>

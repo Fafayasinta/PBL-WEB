@@ -56,11 +56,9 @@ class ProfileController extends Controller
                 break;        
         }
         $profile = UserModel::find($id);
-        $level = LevelModel::select('level_id', 'level_nama')->get();
 
         return view($redirect .'.profile.edit_ajax', [
-            'profile' => $profile,
-            'level' => $level
+            'profile' => $profile
         ]);
     }
 
@@ -68,7 +66,6 @@ class ProfileController extends Controller
     {
         // Validasi input
         $validated = $request->validate([
-            'level_id' => 'required|integer',
             'nama' => 'required|min:3|max:100',
             'username' => 'required|min:5|max:50',
             'email' => 'required|email',
@@ -81,7 +78,6 @@ class ProfileController extends Controller
     
         if ($profile) {
             // Update data lainnya
-            $profile->level_id = $validated['level_id'];
             $profile->nama = $validated['nama'];
             $profile->username = $validated['username'];
             $profile->email = $validated['email'];
