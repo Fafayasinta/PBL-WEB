@@ -85,7 +85,7 @@ public function list(Request $request)
     // Cek level pengguna login
     if ($loggedInUser->level->level_kode == 'DOSEN') {
         // Jika level pengguna adalah DOSEN, filter kegiatan berdasarkan user_id
-        $kegiatanjti->whereHas('anggota', function ($query) use ($loggedInUser) {
+        $kegiatanjti->whereHas('user', function ($query) use ($loggedInUser) {
             $query->where('user_id', $loggedInUser->user_id);
         });
     }
@@ -105,7 +105,7 @@ public function list(Request $request)
                 </a>';
             
             $pic = AnggotaKegiatanModel::where('user_id',auth()->user()->user_id)->first();
-            if($pic?->jabatan == 'PIC' ||auth()->user()->level->level_kode == 'ADMIN' ){
+            if($pic?->jabatan == 'PIC' || auth()->user()->level->level_kode == 'ADMIN' ){
             $btn .= '<button onclick="modalAction(\'' . url('/kegiatanjti/' . $kegiatanjti->kegiatan_id . '/edit_ajax') . '\')" 
                         class="btn btn-warning btn-sm" 
                         style="border-radius: 5px; font-size: 14px; font-weight: bold; padding: 5px 10px;margin: 1px; background-color: rgba(255, 193, 7, 0.5); color: orange; border: rgba(255, 193, 7, 0.8);">
@@ -309,25 +309,36 @@ public function list(Request $request)
     }
 
     public function delete_ajax(Request $request, string $id)
-    {
-        if ($request->ajax() || $request->wantsJson()) {
-            $kegiatanjti = KegiatanModel::find($id);
+{
+    if ($request->ajax() || $request->wantsJson()) {
+        $kegiatanjti = KegiatanModel::find($id);
 
-            if ($kegiatanjti) {
-                $kegiatanjti->delete();
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Data berhasil dihapus'
-                ]);
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Data tidak ditemukan'
-                ]);
-            }
+        if ($kegiatanjti) {
+            // Hapus semua data terkait di tabel anggota
+            $kegiatanjti->anggota()->delete();
+
+            // Jika ada tabel relasi lain yang terkait, tambahkan di sini
+            $kegiatanjti->agenda()->delete();
+
+            // Hapus data di tabel kegiatan
+            $kegiatanjti->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data berhasil dihapus'
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan'
+            ]);
         }
-        return redirect('/kegiatanjti');
     }
+
+    return redirect('/kegiatanjti');
+}
+
+
 
 
     //DETAIL KEGIATAN JTI

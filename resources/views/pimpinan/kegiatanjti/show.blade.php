@@ -41,7 +41,7 @@
                     </a>
                 @endif
 
-                <button onclick="modalAction('{{ url('/anggota/create_ajax') }}')" class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button>
+                {{-- <button onclick="modalAction('{{ url('/anggota/create_ajax') }}')" class="btn btn-success" style="font-size: 16px; background-color: #17A2B8; color: white; border: none; border-radius: 15px; padding: 8px 30px; margin-right: 15px">Tambah</button> --}}
             </div>
         </div>
 

@@ -41,10 +41,7 @@ class AnggotaKegiatanController extends Controller
             $rules = [
                 'kegiatan_id' => 'required|numeric',
                 'user_id' => 'required|numeric',
-                'jabatan' => [
-                    'required',
-                    ValidationRule::in(['PIC', 'Sekretaris', 'Bendahara', 'Anggota']),
-                ],
+                'jabatan' => 'required|in:PIC,Sekretaris,Bendahara,Anggota',
                 'skor' => 'required|numeric', // Validasi skor sebagai angka desimal
             ];
 
@@ -58,11 +55,16 @@ class AnggotaKegiatanController extends Controller
                 ]);
             }
 
-            AnggotaKegiatanModel::create($request->all());
+            AnggotaKegiatanModel::create([
+                'kegiatan_id' => $request->kegiatan_id,
+                'user_id'     => $request->user_id,
+                'jabatan'     => $request->jabatan,
+                'skor'        => $request->skor,
+            ]);    
 
             return response()->json([
                 'status' => true,
-                'message' => 'Data Jenis Kegiatan berhasil disimpan'
+                'message' => 'Data Anggota berhasil disimpan'
             ]);
         }
         return redirect('/kegiatanjti');

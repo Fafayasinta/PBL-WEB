@@ -29,18 +29,6 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>ROLE</label>
-                    <select name="level_id" id="level_id" class="form-control" required>
-                        <option value="">Pilih Role</option>
-                        @foreach($level as $l)
-                            <option value="{{ $l->level_id }}" {{ $profile->level_id == $l->level_id ? 'selected' : '' }}>
-                                {{ $l->level_nama }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <small id="error-level_id" class="error-text form-text text-danger"></small>
-                </div>
-                <div class="form-group">
                     <label>NAMA</label>
                     <input value="{{ $profile->nama }}" type="text" name="nama" id="nama" class="form-control" required>
                     <small id="error-nama" class="error-text form-text text-danger"></small>
@@ -78,7 +66,6 @@
             $("#form-edit").validate({
                 // Aturan validasi
                 rules: {
-                    level_id: { required: true, number: true },
                     nama: { required: true, minlength: 3, maxlength: 100 },
                     username: { required: true, minlength: 5, maxlength: 50 },
                     password: { minlength: 6 }, // Password tidak wajib tapi harus minimal 6 karakter jika diisi

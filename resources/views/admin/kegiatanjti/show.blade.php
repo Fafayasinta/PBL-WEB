@@ -97,7 +97,7 @@
                 <thead>
                     <tr>
                         <th class="text-center">NO</th>
-                        <th class="text-center">NAMA AGENDA</th>
+                        <th class="text-center" style="width: 18%">NAMA AGENDA</th>
                         <th class="text-center">WAKTU</th>
                         <th class="text-center">TEMPAT</th>
                         <th class="text-center" style="width: 18%">KETERANGAN</th>
