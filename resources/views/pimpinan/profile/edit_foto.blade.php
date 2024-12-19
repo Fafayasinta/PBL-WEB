@@ -66,8 +66,10 @@
                                         icon: 'success',
                                         title: 'Berhasil',
                                         text: response.message
-                                    });
-                                    window.location.replace = '/profile';
+                                    }).then(() => {
+                                    // Refresh halaman atau arahkan ke URL tertentu
+                                    window.location.href = '/profile'; // Ganti dengan URL tujuan
+                                });
                                 } else {
                                     $('.error-text').text('');
                                     $.each(response.msgField, function(prefix, val) {

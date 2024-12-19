@@ -83,6 +83,14 @@
                     <small id="error-cakupan_wilayah" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
+                    <label for="progres">PROGRES</label>
+                    <select name="progres" id="progres" class="form-control" required>
+                        <option value="1.00">Sudah</option>
+                        <option value="0.00">Belum</option>
+                    </select>
+                    <small id="error-progres" class="error-text form-text text-danger"></small>
+                </div>
+                <div class="form-group">
                     <label>KETERANGAN</label>
                     <input value="{{ $agenda->keterangan }}" type="text" name="keterangan" id="keterangan" class="form-control" required>
                     <small id="error-keterangan" class="error-text form-text text-danger"></small>

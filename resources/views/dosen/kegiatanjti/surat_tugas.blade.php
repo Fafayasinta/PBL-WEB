@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surat Pengantar Pengajuan Surat Tugas</title>
+    <title>Surat Pengantar</title>
     <style>
         body {
             font-family: "Times New Roman", Times, serif;
-            margin: 50px;
-            line-height: 1.5;
+            margin: 20mm;
+            line-height: 1.2;
+            font-size: 12pt;
         }
         .kop-surat {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 5px;
         }
         .kop-surat img {
-            width: 100px;
-            margin-right: 20px;
+            width: 70px;
+            margin-right: 10px;
         }
         .kop-surat div {
             text-align: center;
@@ -25,44 +26,47 @@
         }
         .kop-surat h1 {
             margin: 0;
-            font-size: 18px;
+            font-size: 14pt;
             text-transform: uppercase;
         }
         .kop-surat h2 {
             margin: 0;
-            font-size: 16px;
+            font-size: 13pt;
         }
         .kop-surat p {
             margin: 0;
-            font-size: 14px;
+            font-size: 10pt;
         }
         hr {
-            margin: 20px 0;
-            border: 1px solid black;
+            margin: 10px 0;
+            border: 0;
+            border-top: 1px solid black;
         }
         .judul-surat {
             text-align: center;
-            margin: 20px 0;
+            margin: 10px 0;
             font-weight: bold;
             text-decoration: underline;
-            font-size: 18px;
+            font-size: 14pt;
         }
         .nomor-surat {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            font-size: 12pt;
         }
         .isi-surat {
             text-align: justify;
-            font-size: 14px;
+            font-size: 11pt;
         }
         .tabel-dosen {
-            margin: 20px 0;
+            margin: 10px 0;
             border-collapse: collapse;
             width: 100%;
+            font-size: 11pt;
         }
         .tabel-dosen th, .tabel-dosen td {
             border: 1px solid black;
-            padding: 8px;
+            padding: 5px;
             text-align: left;
         }
         .tabel-dosen th {
@@ -70,19 +74,21 @@
         }
         .tanda-tangan {
             margin-top: 30px;
-            text-align: left;
+            text-align: right;
         }
         .tanda-tangan p {
             margin: 0;
+            font-size: 11pt;
         }
-        .tanda-tangan .penandatangan {
-            margin-top: 50px;
+        .penandatangan {
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
+    <!-- Kop Surat -->
     <div class="kop-surat">
-        <img src="{{ asset('adminlte/dist/img/polinema.png') }}" alt="Logo Institusi">
+        <img src="{{ public_path('path/to/logo.png') }}" alt="Logo Institusi">
         <div>
             <h1>KEMENTERIAN PENDIDIKAN, KEBUDAYAAN, RISET, DAN TEKNOLOGI</h1>
             <h2>POLITEKNIK NEGERI MALANG</h2>
@@ -92,9 +98,11 @@
     </div>
     <hr>
 
+    <!-- Judul Surat -->
     <div class="judul-surat">SURAT PENGANTAR</div>
-    <div class="nomor-surat">Nomor: ..../PL2/JTI/2024</div>
+    <div class="nomor-surat">Nomor: ..../PL2/JTI/{{ date('Y') }}</div>
 
+    <!-- Isi Surat -->
     <div class="isi-surat">
         <p>
             Yth. Wakil Direktur IV<br>
@@ -106,45 +114,55 @@
             untuk dosen-dosen dari Jurusan Teknologi Informasi yang akan mengikuti kegiatan berikut:
         </p>
         <p>
-            <strong>Nama Kegiatan</strong>: {{ $kegiatan->nama_kegiatan }}<br>
-            <strong>Tanggal</strong>: {{ \Carbon\Carbon::parse($kegiatan->waktu_mulai)->format('d F Y') }} - {{ \Carbon\Carbon::parse($kegiatan->waktu_selesai)->format('d F Y') }} <br>
-            <strong>Agenda</strong>: 
-           <!-- <ul>
-                
-                <li>Workshop Pengembangan Digital Learning</li>
-                <li>Diskusi Panel "Teknologi dan Pendidikan Masa Depan"</li>
-                <li>Studi Banding Infrastruktur Teknologi Informasi</li>
-                
-            </ul>-->
-            <ul>
-                @if (!empty($agenda))
-                    @foreach ($agenda as $item)
-                        <li>{{ $item->nama_agenda }}</li>
-                    @endforeach
-                @else
-                    <li>Agenda belum tersedia.</li>
-                @endif
-            </ul>
-        </p>
+            <table style="width: 100%; border-collapse: collapse; font-size: 11pt;">
+                <tr>
+                    <td style="width: 25%; vertical-align: top;"><strong>Nama Kegiatan</strong></td>
+                    <td style="width: 2%; vertical-align: top;">:</td>
+                    <td style="width: 73%;">{{ $kegiatan->nama_kegiatan }}</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Tanggal</strong></td>
+                    <td style="vertical-align: top;">:</td>
+                    <td>
+                        {{ \Carbon\Carbon::parse($kegiatan->waktu_mulai)->translatedFormat('d F Y') }} - 
+                        {{ \Carbon\Carbon::parse($kegiatan->waktu_selesai)->translatedFormat('d F Y') }}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><strong>Agenda</strong></td>
+                    <td style="vertical-align: top;">:</td>
+                    <td>
+                        <ul style="margin: 0; padding-left: 20px;">
+                            @forelse ($agendaList as $item)
+                                <li>{{ $item }}</li>
+                            @empty
+                                <li>Agenda belum tersedia.</li>
+                            @endforelse
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </p>        
         <p>
             Berikut adalah daftar nama dosen yang diusulkan untuk mendapatkan Surat Tugas:
         </p>
         <table class="tabel-dosen">
-            
-            <tr>
-                <th>No</th>
-                <th>Nama</th>
-                <th>Jabatan</th>
-            </tr> 
-            <!--tabel t_kegiatan_anggota-->
-            @foreach ($dosen as $key => $item)
-            <tr>
-                <td>{{ $key + 1 }}</td>
-                <td>{{ $item->user->nama }}</td>
-                <td>{{ $item->jabatan }}</td>
-            </tr>
-            @endforeach
-            
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Jabatan</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($dosenList as $key => $item)
+                    <tr>
+                        <td>{{ $key + 1 }}</td>
+                        <td>{{ $item['nama'] }}</td>
+                        <td>{{ $item['jabatan'] }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
         <p>
             Demikian surat pengantar ini kami buat. Besar harapan kami agar Surat Tugas dapat segera diproses untuk mendukung kelancaran kegiatan tersebut.
@@ -154,8 +172,9 @@
         </p>
     </div>
 
+    <!-- Tanda Tangan -->
     <div class="tanda-tangan">
-        <p>Malang, 1 Desember 2024</p>
+        <p>Malang, {{ date('d F Y') }}</p>
         <p>a.n. Ketua Jurusan,</p>
         <div class="penandatangan">
             <p>(Rosa Andrie Asmara, ST., MT., Dr. Eng.)</p>

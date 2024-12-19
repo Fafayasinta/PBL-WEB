@@ -74,8 +74,11 @@
                     <small id="error-lokasi" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>PROGRES</label>
-                    <input value="{{ $agenda->progres }}" type="text" name="progres" id="progres" class="form-control" required>
+                    <label for="progres">PROGRES</label>
+                    <select name="progres" id="progres" class="form-control" required>
+                        <option value="1.00">Sudah</option>
+                        <option value="0.00">Belum</option>
+                    </select>
                     <small id="error-progres" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
